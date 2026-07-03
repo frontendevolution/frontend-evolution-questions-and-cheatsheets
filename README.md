@@ -10,12 +10,20 @@ This repository covers:
 * 🎯 **Role-Based Preparation** – Questions tailored for different experience levels (Beginner → Advanced)
 * ⚡ **Quick Revision Friendly** – Structured for last-minute prep before interviews
 
-## 📂 What You’ll Find
+## 📂 What You'll Find
 
 * Topic-wise organized questions
 * Clear and concise answers
 * Real-world scenarios and explanations
 * Frequently asked and high-impact questions
+
+## 📚 Learning Paths & Resources
+
+### Tech-Based Questions
+- [📘 HTML Document Structure](./TechBasedQuestions/HTML5/README.md) – Deep questions on HTML fundamentals, semantics, and best practices
+
+### Cheat Sheets
+- [📋 CSS Box Model & Layout](./cheatsheets/CSSBoxModel/README.md) – Comprehensive guide to CSS box model, display properties, and positioning
 
 ## 🎯 Goal
 
