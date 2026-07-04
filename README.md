@@ -25,7 +25,8 @@ This repository covers:
 ### Cheat Sheets
 - [📘 HTML Document Structure](./cheatsheets/HTML5/README.md) – Comprehensive guide to HTML fundamentals, semantics, and best practices
 - [📋 CSS Box Model & Layout](./cheatsheets/CSSBoxModel/README.md) – Comprehensive guide to CSS box model, display properties, and positioning
-
+- [ Forms](./cheatsheets/FORMS/README.md) – Comprehensive guide to Forms and its attributes
+  
 ## 🎯 Goal
 
 To help developers **revise smarter, not harder** and walk into interviews with confidence.
