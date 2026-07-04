@@ -1,0 +1,83 @@
+Here's a full interview question set for HTML Document Structure, Semantic HTML, Head Tags & SEO — 20 questions across conceptual, applied, edge case, comparison, React/Next.js, and AI-era categories.
+
+## Conceptual
+
+**1. What does the `<!DOCTYPE html>` declaration actually do, and what happens if you omit it?**
+It tells the browser to render in standards mode using the modern CSS box-model rules. Omit it and the browser silently falls into quirks mode, where layout math follows legacy pre-CSS2.1 behavior — no error is thrown, so the bug looks like a mysterious CSS issue instead of a missing doctype.
+
+**2. Why does the `lang` attribute on `<html>` matter beyond "best practice"?**
+It tells assistive tech and the browser which pronunciation/voice rules to apply, and it's a real signal for language-targeted search indexing. Without it, screen readers fall back to the OS default language and can mispronounce every word on the page.
+
+**3. What's the actual difference between `<head>` content and `<body>` content in terms of who "reads" the page?**
+Body content is for humans looking at rendered pixels. Head content is read first by browsers, crawlers, and link-preview bots (Slack, LinkedIn, X) before they ever process the visible content — it decides how your page gets represented before a human sees it.
+
+**4. Explain what the accessibility tree is and how it relates to semantic HTML.**
+It's a parallel tree derived from the DOM that exposes roles, names, and states to assistive technology. Semantic elements (`nav`, `main`, `article`, etc.) populate this tree correctly by default; a `div` with a class name populates nothing, no matter how it's styled.
+
+## Applied / Coding
+
+**5. Given a page with three `div`-based sections styled to look like a header, nav, and footer, rewrite it using semantic HTML.**
+Swap the styled `div`s for `<header>`, `<nav>`, and `<footer>` with no visual changes required — the CSS classes stay, only the tag names change. The win isn't visual; it's that DevTools' accessibility tree now shows real landmarks instead of an empty flat structure.
+
+**6. Write the minimum set of `<head>` tags a production page needs to be considered "SEO-ready."**
+At minimum: `<meta charset="UTF-8">`, `<meta name="viewport" content="width=device-width, initial-scale=1">`, a unique `<title>`, a `<meta name="description">`, and a canonical link if the URL has variants. Anything less and you're relying on the crawler to guess.
+
+**7. A page has this heading structure: `h1 → h3 → h2 → h4`. What's wrong, and how do you fix it?**
+The hierarchy skips and reverses levels — `h3` appears before `h2`, breaking the document outline. Fix it by renumbering to strictly nested order (`h1 → h2 → h3 → h4`) based on content hierarchy, not on what font size looked right in the design file.
+
+## Edge Cases
+
+**8. You have two URLs — `/product` and `/product/` — serving identical content. What HTML-level fix prevents duplicate-content SEO penalties?**
+Add a `<link rel="canonical">` tag pointing to the single preferred URL on both variants. This tells search engines which version to index and consolidates ranking signals instead of splitting them across duplicates.
+
+**9. Can a page have more than one `<main>` element? What actually happens if it does?**
+No — the spec allows exactly one visible `<main>` per page. Multiple `<main>` elements don't throw a browser error, but they break assistive tech's "jump to main content" landmark navigation, since it no longer has a single unambiguous target.
+
+**10. Why might `<meta charset="UTF-8">` placed too far down in `<head>` still cause garbled characters, even though it's present?**
+The spec requires charset to appear within the first 1024 bytes of the document because the browser needs it before decoding subsequent bytes. If earlier tags push it past that limit, some browsers may have already started decoding with a guessed encoding, causing mojibake.
+
+## Explain-to-a-Teammate
+
+**11. A junior dev asks: "Why does it matter if I use `div` or `section` — they look identical?" How do you explain it?**
+"They render identically, but a `div` tells nothing to a screen reader or Google's crawler, while `section` says 'this is a distinct thematic block.' You're not styling for the eye here — you're leaving a note for every non-visual reader of your page."
+
+**12. A teammate says meta descriptions are "just for looks." Correct them.**
+They don't affect ranking, but they're the ad copy under your search result — a bad or missing description gets auto-generated from body text and often reads awkwardly, directly hurting click-through rate even if you rank well.
+
+## Comparisons
+
+**13. `<section>` vs `<article>` — when do you use each?**
+`<article>` is for content that's independently distributable on its own — a blog post, a comment, a product card. `<section>` is for thematically grouping related content within a page that isn't meant to stand alone, typically under its own heading.
+
+**14. `noindex` vs canonical tag — what's the difference in intent?**
+`noindex` says "don't put this page in search results at all." Canonical says "index this content, but attribute it to this other URL as the authoritative version." Mixing them up either de-indexes pages you wanted findable or dilutes ranking across duplicates you meant to consolidate.
+
+## System Design / Applied Judgment
+
+**15. You're architecting a multi-tenant SaaS marketing site with hundreds of dynamically generated landing pages. How do you approach head/meta tag structure at scale?**
+Titles and descriptions need to be templated from structured data (page type, target keyword, tenant name) rather than hand-written per page, with a canonical strategy for any duplicate query-param variants. You'd also want a programmatically generated sitemap and per-template Open Graph images rather than one static fallback image for every page.
+
+**16. How would you audit an existing large Next.js site for structural/SEO debt in a single pass?**
+Check whether metadata is being set per-route via `generateMetadata`/`metadata` exports versus one static default leaking across pages, verify heading hierarchy and landmark usage per template, and confirm a canonical + sitemap/robots setup exists. Then cross-reference against Lighthouse and Search Console to prioritize by actual traffic impact, not by theoretical severity.
+
+## React / Next.js Specific
+
+**17. A CSR React app (Vite-based) has one `index.html` for the whole SPA. Why does this hurt SEO, and what's a mitigation?**
+Every route inherits the same static `<title>`/`<meta>` tags because there's only one HTML shell, so all pages look identical to a crawler on first parse. Mitigation is either migrating to Next.js for per-route server-rendered metadata, or using a library to mutate `document.title`/meta tags client-side, which is a weaker signal than server-rendered head content.
+
+**18. In the Next.js App Router, why might a `generateMetadata` export silently fail to change the page title?**
+The most common cause is the file being marked `"use client"` — metadata exports are silently ignored in Client Components, with no build error or warning. The fix is moving the metadata export (or the whole file) back to a Server Component.
+
+**19. How does `layout.tsx` metadata interact with `page.tsx` metadata in the App Router, and why does this matter for a large site?**
+Root and nested `layout.tsx` files set shared defaults (site name, default OG image), and `page.tsx` metadata merges with or overrides those per route. This matters because it lets you set sane fallbacks once instead of repeating boilerplate metadata across hundreds of pages.
+
+## AI-Era Angle
+
+**20. An AI assistant generates a full page scaffold using only `div`s with class names like `class="header"` and `class="main-content"`. What's actually wrong, and why does this matter even though the page "works"?**
+It renders and looks correct, which is exactly why AI tools default to it — visual correctness is what they're implicitly optimizing for, not the accessibility tree. You still need to manually swap these for real semantic elements (`header`, `main`, `nav`), because no amount of prompting reliably guarantees the model reasons about landmarks and heading hierarchy instead of pattern-matching common div-based templates it's seen.
+
+**21. You ask an AI coding assistant to "add SEO metadata" to a Next.js page. What do you specifically need to check in the generated code?**
+Check whether it correctly used `generateMetadata`/`metadata` export in a Server Component (not a `"use client"` file, which fails silently), whether the title/description are actually dynamic and unique per route rather than copy-pasted boilerplate, and whether it added a canonical tag if the route has URL variants. AI tools frequently generate syntactically correct metadata objects that are semantically identical across every page you ask them to touch.
+
+**22. Why doesn't AI code generation make understanding heading hierarchy and semantic structure obsolete?**
+AI can produce syntactically valid HTML with headings and semantic tags on request, but it can't know your actual content hierarchy or which block is truly the page's "main" landmark — that's a judgment call about meaning, not syntax. Reviewing AI output for this requires you to already understand what correct structure looks like; otherwise you're rubber-stamping code that renders fine but breaks silently for screen readers and crawlers, with no test suite catching it.
