@@ -1,352 +1,227 @@
-# 🧠 HTML Master Cheat Sheet (Structure → Forms → SEO)
+# Core Definitions & Vocabulary
 
-> 🚀 Everything you need for **interviews + real-world frontend development**
+* HTML document: a text file describing structure and meaning of content via nested elements, parsed into the DOM.
+* DOM (Document Object Model): the in-memory tree representation of the parsed HTML that JS and the render engine operate on.
+* Semantic HTML: elements chosen for the meaning of the content they wrap, not just visual appearance (e.g. `<nav>` vs styled `<div>`).
+* Accessibility tree: a parallel tree derived from the DOM, exposing roles/names/states to assistive tech; semantic tags populate it correctly by default.
+* Metadata: data about the page itself (title, description, charset, social preview info) rather than visible content — lives in `<head>`.
+* SEO (Search Engine Optimization): practices that improve how easily a page is crawled, indexed, and ranked by search engines.
+* Crawlability: whether a bot can discover, fetch, and parse a page's content and links at all.
+* Indexability: whether a crawled page is eligible to be stored and shown in search results (controlled via robots directives, canonical tags).
 
----
+# Document Skeleton Syntax
 
-# 📌 1. HTML DOCUMENT STRUCTURE
+* `<!DOCTYPE html>` — must be the first line; triggers standards mode instead of quirks mode.
+* `<html lang="en">` — root element; lang attribute is required for correct screen-reader pronunciation and language-based SEO signals.
+* `<head>` — invisible metadata container: title, meta tags, links, styles, scripts that configure the document.
+* `<body>` — contains all rendered, visible content.
+* Element nesting must be well-formed: opening/closing tags matched, no overlapping tags (e.g. `<b><i></b></i>` is invalid).
+* Void elements (self-closing, no children): `<meta>, <link>, <img>, <br>, <hr>, <input>, <source>, <area>, <base>, <col>, <embed>, <track>, <wbr>`.
+
+# Quirks Mode vs Standards Mode
+
+* Missing or malformed doctype → browser renders in 'quirks mode', using legacy (pre-CSS2.1) box-model and layout rules.
+* Standards mode: box-sizing, table layout, and CSS parsing follow the modern spec consistently across browsers.
+* 'Limited quirks mode' exists too (triggered by certain old doctypes) — mostly irrelevant today but explains odd legacy bug reports.
+* Rule of thumb: always use the exact `<!DOCTYPE html>` — no variations, no omissions.
+
+# All HTML5 Semantic Structural Elements
+
+* `<header>` — introductory content or navigational aids for its nearest sectioning ancestor (can appear multiple times, e.g. per `<article>`).
+* `<nav>` — a section containing primary navigation links.
+* `<main>` — the dominant, unique content of the document; exactly one per page, not nested inside `<article>/<aside>/<header>/<footer>/<nav>`.
+* `<article>` — self-contained, independently distributable content (blog post, comment, product card).
+* `<section>` — a thematic grouping of content, typically with its own heading.
+* `<aside>` — content tangentially related to the surrounding content (sidebars, pull quotes, related links).
+* `<footer>` — closing content for its nearest sectioning ancestor (authorship, copyright, related links).
+* `<figure>` — self-contained media (image, diagram, code) referenced from the main flow.
+* `<figcaption>` — caption for its parent `<figure>`.
+* `<details>` — a disclosure widget that can be toggled open/closed.
+* `<summary>` — the visible summary/label for a parent `<details>` element.
+* `<mark>` — text highlighted or marked for reference relevance.
+* `<time>` — a machine-readable date/time, via the datetime attribute.
+* `<address>` — contact information for the nearest `<article>` or `<body>` ancestor.
+* `<dialog>` — a modal or non-modal dialog box, natively supported with show()/showModal() APIs.
+
+# Head Tag Full Syntax Reference
+
+* `<meta charset="UTF-8">` — must appear within the first 1024 bytes of the document; declares character encoding.
+* `<meta name="viewport" content="width=device-width, initial-scale=1">` — sets rendering width/zoom for mobile devices.
+* `<title>Page Title</title>` — required, unique per page; single strongest on-page SEO ranking signal.
+* `<meta name="description" content="...">` — ~150-160 char summary shown under search results; affects CTR, not ranking directly.
+* `<link rel="canonical" href="https://example.com/page">` — tells search engines the authoritative URL when duplicate/near-duplicate content exists.
+* `<meta name="robots" content="index, follow">` — controls crawling/indexing behavior for this specific page.
+* `<link rel="icon" href="/favicon.ico">` — browser tab favicon; also supports type and sizes attributes for multiple formats.
+* `<link rel="apple-touch-icon" href="/icon.png">` — icon used when page is added to an iOS home screen.
+* `<link rel="manifest" href="/manifest.json">` — links the Web App Manifest for PWA install behavior.
+* `<meta name="theme-color" content="#000000">` — colors the mobile browser UI chrome to match the brand.
+* `<link rel="preconnect" href="https://fonts.example.com">` — opens a connection early to a critical third-party origin.
+* `<link rel="preload" href="/font.woff2" as="font" crossorigin>` — fetches a critical resource early, before the render-blocking discovery would normally find it.
+* `<link rel="dns-prefetch" href="//example.com">` — resolves DNS early for a domain likely to be requested soon.
+* `<link rel="stylesheet" href="/styles.css">` — loads an external CSS file; render-blocking by default.
+
+# Meta 'name' Attribute Values (Common Set)
+
+* viewport — mobile rendering width/scale control.
+* description — search result snippet text.
+* robots — crawl/index directives for this page.
+* author — content author name.
+* generator — tool/framework that generated the page (often auto-injected by site builders).
+* theme-color — mobile browser chrome color.
+* color-scheme — hints supported light/dark rendering modes (e.g. "light dark").
+* referrer — controls what referrer info is sent on outgoing requests/links.
+* format-detection — disables automatic detection of phone numbers/emails as clickable links on mobile.
+* application-name — short name for the web application.
+
+# Robots Meta Directive Values
+
+* index — allow this page to be indexed.
+* noindex — exclude this page from search results.
+* follow — allow crawling of links on this page.
+* nofollow — don't pass link authority/crawl links on this page.
+* none — shorthand for noindex, nofollow.
+* all — shorthand for index, follow (the default).
+* noarchive — don't show a cached copy of the page.
+* nosnippet — don't show a text snippet or preview in results.
+* noimageindex — don't index images on this page.
+
+# Open Graph & Twitter Card Tags
+
+* og:title — title shown in social link previews.
+* og:description — description shown in social link previews.
+* og:image — preview image URL for social shares.
+* og:url — canonical URL for the shared object.
+* og:type — content type, e.g. 'website', 'article', 'product'.
+* og:site_name — the site's brand name shown in the preview card.
+* og:locale — language/region of the content, e.g. en_US.
+* twitter:card — card layout type, e.g. 'summary_large_image'.
+* twitter:title, twitter:description, twitter:image — X/Twitter-specific preview overrides.
+* twitter:site / twitter:creator — attributes the content to an account handle.
+
+# Internal Mechanics (Parsing & Rendering Order)
+
+* Browser reads bytes top-to-bottom; `<head>` is parsed before `<body>`, so head content is known before body rendering begins.
+* charset must be declared early because it affects how every subsequent byte in the file is decoded.
+* Render-blocking resources declared in `<head>` (synchronous `<script>`, `<link rel=stylesheet>`) delay first paint until fetched and parsed.
+* Crawlers largely behave like a very literal, thorough screen reader: they parse the DOM/accessibility tree, not just visible pixels.
+* Modern search engine crawlers execute JavaScript, but on a delayed, resource-capped rendering queue — meaning content requiring JS can be indexed late or incompletely.
+* Heading elements build an implicit outline; assistive tech tools use this outline for heading-based navigation shortcuts.
+
+# Common Mistakes & Gotchas
+
+* Multiple `<h1>` tags or skipped heading levels (h2 straight to h4) — breaks the document outline for assistive tech.
+* Using `<div>`/`<span>` with class names for structure instead of native semantic elements ('div soup').
+* Forgetting lang on `<html>` — assistive tech falls back to OS default language, mispronouncing content.
+* Omitting `<meta charset>` or placing it too late — causes re-decoding and can produce garbled characters (mojibake).
+* Duplicate or missing canonical tags across near-identical pages — causes duplicate-content ranking dilution.
+* Multiple `<main>` elements on one page — violates spec and confuses assistive tech landmark navigation.
+* Meta description left empty or auto-generated from the first paragraph — often produces a poor, truncated search snippet.
+* Forgetting Open Graph tags — social platforms grab arbitrary fallback content for link previews.
+
+# Best Practices
+
+* Exactly one `<h1>` per page; nest subsequent headings in strict order.
+* Reach for semantic elements first; use `<div>`/`<span>` only when no semantic element fits the meaning.
+* Keep meta descriptions unique per page, under ~160 characters, written like ad copy, not a summary.
+* Always declare charset UTF-8 and viewport on every page.
+* Set a real, descriptive, unique `<title>` per page/route — never leave it as a default app name everywhere.
+* Add a canonical URL on any page reachable via multiple URL variants (query params, trailing slash, http/https).
+* Provide Open Graph + Twitter Card tags on any page likely to be shared.
+
+# Anti-Patterns
+
+* Wrapping the entire page body in generic `<div>` containers with no landmark elements at all.
+* Using heading tags purely for their default font-size instead of document meaning (e.g. an h4 used just because it 'looks right').
+* Stuffing meta keywords tag with repeated terms — ignored by modern search engines, can look spammy if audited.
+* Using `<meta http-equiv="refresh">` for redirects instead of a proper HTTP 301/302 redirect.
+* Blocking entire sections via robots.txt while still linking to them internally, creating crawl-budget waste.
+* Hardcoding one static `<title>`/`<meta>` set for an app that serves many distinct routes.
+
+# Comparisons vs Related Concepts
+
+* `<div>` vs semantic element: identical rendering, but only the semantic element conveys meaning to accessibility tree and crawlers.
+* `<title>` vs `<h1>`: title is metadata for browser tab/search results; h1 is the visible on-page heading — best practice keeps them related but not identical.
+* meta description vs og:description: meta description targets search engine snippets; og:description targets social share previews — can differ in tone/length.
+* canonical tag vs robots noindex: canonical says 'this is the preferred version'; noindex says 'don't index this at all' — different intents, don't confuse them.
+* `<section>` vs `<article>`: section groups related thematic content within a page; article is independently distributable/self-contained on its own.
+
+# Performance Implications
+
+* Render-blocking `<link rel=stylesheet>` and synchronous `<script>` in `<head>` delay first paint — defer/async non-critical scripts.
+* preconnect/dns-prefetch reduce connection setup latency for critical third-party origins (fonts, CDNs, analytics).
+* preload should be reserved for genuinely critical above-the-fold assets — overuse competes for bandwidth and can hurt LCP.
+* Bloated `<head>` with excessive tags increases time-to-first-byte-to-parse before the browser reaches visible content.
+
+# Browser/Runtime Support Notes
+
+* All HTML5 semantic elements (header, nav, main, article, section, aside, footer, figure, details, summary, etc.) are fully supported in all modern evergreen browsers.
+* `<dialog>` element's native show()/showModal() API is broadly supported in current Chrome, Edge, Firefox, and Safari.
+* color-scheme meta and prefers-color-scheme are supported across modern browsers for native light/dark UI hinting.
+* Search engine JS rendering capability varies by crawler; Googlebot renders JS but on a separate, delayed queue from initial HTML crawl.
+
+# Security Implications
+
+* Never use `<meta http-equiv="refresh">` for auth-based redirects — it's not a substitute for a real server-side redirect or auth check.
+* referrer meta/header policy affects what URL data leaks to third-party sites via outbound links — set explicitly rather than relying on defaults.
+* Content-Security-Policy can be set via `<meta http-equiv="Content-Security-Policy">` but HTTP header delivery is stronger and covers more directives.
+* Avoid exposing sensitive internal routes in canonical/OG tags meant for public sharing — these are readable by anyone viewing page source.
+
+# Accessibility Implications
+
+* Semantic landmarks (header, nav, main, aside, footer) let screen reader users jump directly between page regions.
+* Correct heading hierarchy enables heading-based navigation shortcuts in screen readers (e.g. NVDA/JAWS 'next heading' command).
+* lang attribute ensures correct pronunciation and voice selection in text-to-speech tools.
+* main landmark (exactly one, not nested in other landmarks) gives assistive tech a reliable 'skip to content' target.
+
+# Short Code Example
 
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Document</title>
-</head>
-<body>
-  <!-- Content -->
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Product Page</title>
+    <meta name="description" content="Buy X with free shipping." />
+    <link rel="canonical" href="https://site.com/product/x" />
+  </head>
+  <body>
+    <header><nav>...</nav></header>
+    <main>
+      <article><h1>Product X</h1></article>
+    </main>
+    <footer>...</footer>
+  </body>
 </html>
 ```
 
-### 🔹 Breakdown
-
-* `<!DOCTYPE html>` → HTML5 declaration
-* `<html lang="en">` → Root + language (SEO + accessibility)
-* `<head>` → Metadata (not visible)
-* `<body>` → UI content
-
-### ⚡ Important
-
-* Browser auto-corrects missing tags (error recovery)
-* DOM is built from this structure
-
----
-
-# 📌 2. SEMANTIC HTML ELEMENTS
-
-### 🔹 Why Semantic?
-
-* SEO improvement
-* Accessibility (screen readers)
-* Clean structure
-
-### 🔹 Core Layout Tags
-
-```html
-<header></header>
-<nav></nav>
-<main></main>
-<section></section>
-<article></article>
-<aside></aside>
-<footer></footer>
-```
-
-### 🔹 Meaning
-
-| Tag         | Purpose                 |
-| ----------- | ----------------------- |
-| `<header>`  | Top content / intro     |
-| `<nav>`     | Navigation links        |
-| `<main>`    | Main content (only one) |
-| `<section>` | Thematic grouping       |
-| `<article>` | Independent content     |
-| `<aside>`   | Sidebar / ads           |
-| `<footer>`  | Bottom content          |
-
-### ⚡ Rules
-
-* Use `<main>` only once
-* Don’t overuse `<section>`
-* `<article>` should make sense standalone
-
----
-
-# 📌 3. HEAD TAG (ADVANCED)
-
-### 🔹 Purpose
-
-Controls:
-
-* SEO
-* Performance
-* Rendering
-* Metadata
-
-### 🔹 Example
-
-```html
-<head>
-  <title>My Website</title>
-
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <meta name="description" content="Learn HTML" />
-  <meta name="author" content="John Doe" />
-
-  <link rel="stylesheet" href="style.css" />
-
-  <script defer src="script.js"></script>
-</head>
-```
-
-### 🔹 Script Loading
-
-| Attribute | Behavior                               |
-| --------- | -------------------------------------- |
-| `defer`   | Loads in parallel, executes after HTML |
-| `async`   | Loads + executes immediately           |
-
----
-
-# 📌 4. META TAGS (FULL)
-
-### 🔹 Core Meta
-
-```html
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="Best HTML guide" />
-<meta name="keywords" content="HTML, CSS, JS" />
-<meta name="author" content="Your Name" />
-```
-
-### 🔹 SEO / Crawling
-
-```html
-<meta name="robots" content="index, follow" />
-```
-
-### 🔹 Open Graph (Facebook, LinkedIn)
-
-```html
-<meta property="og:title" content="Title" />
-<meta property="og:description" content="Description" />
-<meta property="og:image" content="image.jpg" />
-<meta property="og:url" content="https://example.com" />
-```
-
-### 🔹 Twitter Cards
-
-```html
-<meta name="twitter:card" content="summary_large_image" />
-```
-
----
-
-# 📌 5. SEO BASICS (HTML LEVEL)
-
-### 🔹 Must Do
-
-* Use **semantic tags**
-* Proper heading hierarchy
-* Add `alt` to images
-* Clean URLs
-* Fast loading
-
-### 🔹 Example
-
-```html
-<h1>Main Title</h1>
-<h2>Subheading</h2>
-<img src="img.jpg" alt="A description" />
-```
-
-### 🔹 Bad Practice
-
-```html
-<div class="title"></div> ❌ (Use h1 instead)
-```
-
----
-
-# 📌 6. HTML FORMS (COMPLETE)
-
-### 🔹 Basic Structure
-
-```html
-<form action="/submit" method="POST">
-  <label for="name">Name:</label>
-  <input id="name" name="name" type="text" />
-  
-  <button type="submit">Submit</button>
-</form>
-```
-
-### 🔹 Attributes
-
-| Attribute      | Purpose            |
-| -------------- | ------------------ |
-| `action`       | API endpoint       |
-| `method`       | GET / POST         |
-| `autocomplete` | Autofill           |
-| `novalidate`   | Disable validation |
-
----
-
-# 📌 7. INPUT TYPES (FULL LIST)
-
-```html
-<input type="text" />
-<input type="email" />
-<input type="password" />
-<input type="number" />
-<input type="tel" />
-<input type="url" />
-<input type="search" />
-
-<input type="date" />
-<input type="time" />
-<input type="datetime-local" />
-<input type="month" />
-<input type="week" />
-
-<input type="file" />
-<input type="checkbox" />
-<input type="radio" />
-
-<input type="range" />
-<input type="color" />
-
-<input type="hidden" />
-<input type="submit" />
-<input type="reset" />
-<button type="button"></button>
-```
-
----
-
-# 📌 8. FORM ELEMENTS (BEYOND INPUT)
-
-### 🔹 `<textarea>`
-
-```html
-<textarea rows="4" cols="50"></textarea>
-```
-
-### 🔹 `<select>` (Dropdown)
-
-```html
-<select name="country">
-  <option value="">Select</option>
-  <option value="india">India</option>
-</select>
-```
-
-### 🔹 Multiple Select
-
-```html
-<select multiple>
-  <option>HTML</option>
-  <option>CSS</option>
-</select>
-```
-
-### 🔹 `<optgroup>`
-
-```html
-<optgroup label="Frontend">
-  <option>HTML</option>
-</optgroup>
-```
-
-### 🔹 `<fieldset>` + `<legend>`
-
-```html
-<fieldset>
-  <legend>Personal Info</legend>
-  <input type="text" />
-</fieldset>
-```
-
----
-
-# 📌 9. FORM VALIDATION (NATIVE)
-
-### 🔹 Attributes
-
-```html
-<input required />
-<input minlength="3" maxlength="10" />
-<input type="number" min="1" max="100" />
-<input pattern="[A-Za-z]+" />
-<input type="email" />
-```
-
-### 🔹 Example
-
-```html
-<form>
-  <input type="email" required />
-  <button>Submit</button>
-</form>
-```
-
-### 🔹 Disable Validation
-
-```html
-<form novalidate>
-```
-
----
-
-# 📌 10. ACCESSIBILITY (A11Y)
-
-### 🔹 Best Practices
-
-* Always use `<label>`
-
-```html
-<label for="email">Email</label>
-<input id="email" type="email" />
-```
-
-* Use `aria-*` when needed
-
-```html
-<button aria-label="Close"></button>
-```
-
----
-
-# 📌 11. FORM DATA FLOW
-
-### 🔹 GET Method
-
-* Data visible in URL
-* Used for search/filter
-
-### 🔹 POST Method
-
-* Data in request body
-* Used for secure submission
-
----
-
-# 📌 12. INTERVIEW GOLD POINTS
-
-* HTML is parsed → DOM tree created
-* Browser auto-fixes broken HTML
-* Semantic HTML improves SEO + accessibility
-* Use native validation before JS
-* `<select>` ensures controlled input
-* `<meta viewport>` is mandatory for responsive design
-
----
-
-# 🚀 FINAL SUMMARY
-
-> HTML is not just markup — it's **structure + meaning + accessibility + SEO + data handling**.
+# Rapid-Fire Interview One-Liners
+
+* Q: What does a missing doctype cause?
+* A: Quirks mode — legacy box-model/layout rules.
+* Q: Why does lang matter?
+* A: Correct screen-reader pronunciation and language-based indexing.
+* Q: How many `<h1>` per page?
+* A: Exactly one, with headings nesting in strict order after it.
+* Q: Does meta description affect ranking?
+* A: No — it affects click-through rate on the search result, not ranking position.
+* Q: What's the difference between noindex and canonical?
+* A: noindex excludes a page entirely; canonical points to the preferred duplicate.
+* Q: Why is `<main>` important?
+* A: It's the primary landmark assistive tech and 'skip to content' tools rely on; only one per page.
+* Q: Why prefer semantic tags over div+class?
+* A: They populate the accessibility tree automatically, which crawlers also read.
+* Q: What must be true about charset placement?
+* A: It must appear within the first 1024 bytes of the document.
+
+# In React/Next.js Projects
+
+* CSR React apps (Vite/CRA-style) typically ship one static index.html — every route shares the same `<title>`/`<meta>`, hurting per-page SEO unless handled client-side.
+* Next.js App Router replaces manual `<head>` tags with metadata exports/generateMetadata per route segment for per-page titles and descriptions.
+* generateMetadata is async and receives route params — use it when title/description depend on fetched data (e.g. product name, blog slug).
+* Gotcha: metadata (static object or generateMetadata) only works in Server Components — exporting it from a "use client" file is silently ignored, no error thrown.
+* Root layout.tsx typically sets shared defaults (site name, default OG image); child route metadata can override or extend them via metadata merging.
+* Dynamic OG images can be generated per route using next/og's ImageResponse, avoiding hand-maintained static preview images.
+* Hydration mismatch warnings can originate from head content too — e.g. a client-only value (localStorage-derived title) diverging from the server-rendered head.
+* sitemap.ts and robots.ts as App Router special files let you generate sitemap.xml/robots.txt programmatically instead of hand-writing static files.
+* Semantic HTML choices (header/main/nav/footer) map directly onto shared layout.tsx and page.tsx boundaries — a natural place to enforce landmark structure app-wide.
