@@ -1,0 +1,145 @@
+# Interview Questions: Forms, Input Types, Label, Select, Textarea & Validation
+
+*Foundations Done Right — HTML & CSS — 2026*
+
+---
+
+## Conceptual Understanding
+
+**1. Why does a `<label>` need to be programmatically associated with its input, rather than just visually placed near it?**
+Because sighted users can infer the connection visually, but screen readers and other assistive tech can't — they rely on the DOM relationship, not proximity. That association via `for`/`id` (or nesting) is also what makes clicking the label text focus the input. Without it, you've built a form that only works for people who can see and click precisely.
+
+**2. What's the actual difference between `placeholder` and `label`, and why do so many devs treat them as interchangeable?**
+A label is the field's permanent, accessible name; a placeholder is a temporary hint that vanishes the moment the user types. Devs conflate them because visually, an empty placeholder-only field looks identical to a labeled one — the bug is invisible until you actually start typing or run an audit. It's one of the most common accessibility failures on the web precisely because it looks fine.
+
+**3. Explain what "constraint validation" means in the context of native HTML forms.**
+It's the browser's built-in system for checking a field's value against declared rules — `required`, `pattern`, `min`, `max`, `minlength`, and so on — before allowing submission, without any custom JavaScript. The browser exposes this through the `ValidityState` object and methods like `checkValidity()` and `reportValidity()`, so you can hook into it programmatically instead of reinventing it.
+
+**4. Why is `disabled` different from `readonly`, and when would you choose one over the other?**
+A `disabled` field is not focusable and its value is never submitted with the form — it's effectively removed from the data. A `readonly` field is still focusable and still submits its value; the user just can't edit it. Use `readonly` when you want the value visible and sent (like a pre-filled confirmation field), and `disabled` when the field genuinely shouldn't participate in submission, like a conditionally irrelevant option.
+
+---
+
+## Applied / Coding
+
+**5. Write the markup for an accessible email field with proper validation attributes.**
+```html
+<label for="email">Email</label>
+<input
+  id="email"
+  name="email"
+  type="email"
+  required
+  autocomplete="email"
+/>
+```
+The key pieces are the explicit label association, `type="email"` for both keyboard and basic format checking, `required` for native validation, and `autocomplete` so password managers and browser autofill behave correctly.
+
+**6. How would you build a numeric ID field that must stay a string (e.g. leading zeros matter) but still show a numeric keyboard on mobile?**
+Use `type="text"` combined with `inputmode="numeric"` and optionally `pattern="[0-9]*"` — this triggers the numeric keyboard without coercing the value into an actual number type, which would strip leading zeros or cause parsing issues. `type="number"` would be the wrong choice here because it changes what the value actually is, not just how it's entered.
+
+**7. Show how you'd group a set of radio buttons so screen readers announce the group's purpose.**
+```html
+<fieldset>
+  <legend>Preferred contact method</legend>
+  <label><input type="radio" name="contact" value="email" /> Email</label>
+  <label><input type="radio" name="contact" value="phone" /> Phone</label>
+</fieldset>
+```
+Without `fieldset`/`legend`, a screen reader announces each radio in isolation with no context about what the group of choices actually represents.
+
+**8. Write a controlled React input with a custom validation message using the Constraint Validation API.**
+```jsx
+function PasswordField() {
+  const ref = useRef(null);
+  const handleChange = (e) => {
+    ref.current.setCustomValidity(
+      e.target.value.length < 8 ? 'Must be at least 8 characters' : ''
+    );
+  };
+  return <input ref={ref} type="password" onChange={handleChange} required />;
+}
+```
+`setCustomValidity` plugs custom logic directly into the native validation UI, so the browser's own error bubble shows your message — you don't need to build a separate error-rendering system for this case.
+
+---
+
+## Edge Cases
+
+**9. What happens to a checkbox or radio's value if you forget the `name` attribute?**
+It's completely excluded from the submitted `FormData` — no error, no warning, it just silently doesn't exist in the payload. This is a very common invisible bug, especially with dynamically generated form fields.
+
+**10. If two radio inputs share the same `name` but different `id`s, and you forget to give one of them a distinct `id`, what breaks?**
+The `name` grouping still works for the radio behavior itself, but any `label` pointing via `for` to that missing/duplicate `id` won't associate correctly — you'd get a label that either does nothing or attaches to the wrong input, since `id` values must be unique per page.
+
+**11. A `<select multiple>` is submitted inside a form — how does the submitted data represent multiple selections, and what's the gotcha?**
+Each selected option is submitted as a separate `name=value` pair under the same field name. The gotcha is that basic `FormData.get(name)` only returns the first value — you need `FormData.getAll(name)` to retrieve all selections, which is a common miss when wiring this up to a Server Action.
+
+**12. Why might `type="date"` cause a hydration mismatch in a Next.js app?**
+If the default value is computed differently on server vs. client — e.g., using `new Date()` at render time rather than a fixed prop — the server-rendered value and the client-rendered value won't match, and React will throw a hydration warning. Date/time defaults should come from stable data, not runtime calculation during render.
+
+---
+
+## Explain-to-a-Teammate
+
+**13. A junior dev asks: "Why can't I just validate everything in JavaScript and skip all these native attributes?" What do you tell them?**
+I'd tell them native attributes give you validation, accessibility announcements, and mobile keyboard behavior for free, all handled by the browser engine — writing it all in JS means reimplementing behavior the platform already provides, and usually reimplementing it worse. JS validation still has its place for cross-field or async checks, but it should sit on top of native attributes, not replace them.
+
+**14. A teammate says client-side validation is "good enough" because "the form already checks everything." How do you push back?**
+I'd point out that anyone can open DevTools, strip the `required` attribute, or just send a raw POST request directly to the API, completely bypassing the form and its client-side checks. Client validation is a UX convenience that gives users fast feedback — the server is the actual trust boundary, and it has to re-validate everything independently, every time.
+
+---
+
+## Comparison Questions
+
+**15. Native `<select>` vs. a custom-built dropdown component — how do you decide which to use?**
+Native `<select>` gets you keyboard navigation, mobile-optimized UI, and screen reader support automatically, at the cost of limited visual styling. A custom dropdown gives full design control but means you're now responsible for reimplementing all of that accessibility and keyboard behavior correctly. Default to native unless the design genuinely requires visual capability native select can't provide, and even then, reach for a well-tested headless UI primitive rather than building from scratch.
+
+**16. Controlled vs. uncontrolled inputs in React — what's the actual tradeoff, not just the syntax difference?**
+Controlled inputs make React state the source of truth, which enables real-time validation, formatting, and conditional UI, but triggers a re-render on every keystroke. Uncontrolled inputs let the DOM hold the value and you read it via `ref` only when needed — lighter weight, better for large or simple forms where you don't need per-keystroke reactivity. The choice is really about how much you need to react to input changes versus just capture the final value.
+
+---
+
+## System-Design-Style
+
+**17. You're designing a multi-step signup form (email → password → profile info) inside a Next.js app. How do you think about validation across steps?**
+Each step should have its own native/client-side validation for immediate feedback, but the final submission should be validated as a whole — server-side, via a schema library like Zod — because a user could technically manipulate state and skip a step's validation on the client. I'd also persist in-progress state carefully (e.g. via server-side session or URL state) so a refresh doesn't silently lose a completed step's data.
+
+**18. How would you architect form error handling for a large form (20+ fields) with a mix of client and server-side validation, in a way that scales?**
+I'd centralize error shape as a single object keyed by field name, populated by both native constraint checks and server-returned validation (via something like `useActionState`), rather than tracking each field's error in separate local state. That way error display, focus management on submit failure, and accessibility announcements (`aria-live`, `aria-describedby`) all read from one consistent source instead of twenty scattered booleans.
+
+---
+
+## React / Next.js Specific
+
+**19. What's the current idiomatic way to handle form submission in a Next.js App Router project, and how is it different from the older pattern?**
+The current pattern is a native `<form action={serverAction}>` pointing directly at a Server Action, paired with `useActionState` for pending state and returned validation errors — no `onSubmit`, `preventDefault`, or manual `fetch` call needed. The older pattern of `useState` plus `onSubmit` plus manual `fetch` still works, but it's more code, doesn't function before hydration, and re-implements things Server Actions now give you for free.
+
+**20. Why does `for` need to be written as `htmlFor` in JSX, and what happens if you get it wrong?**
+`for` is a reserved word in JavaScript, so JSX renames the attribute to `htmlFor` to avoid the collision. Writing `for` instead silently fails — React just ignores it, there's no console warning, and the label simply never associates with its input, which quietly breaks accessibility without any visible symptom during normal manual testing.
+
+**21. You inherit a React form where every field is a controlled component with its own `useState`, and the form has noticeable input lag with 30+ fields. What's happening, and how would you fix it?**
+Every keystroke in any field triggers a re-render of the whole form component and likely all its children, which compounds badly at that field count. I'd move to `useActionState` with native uncontrolled inputs pulling from `FormData` on submit where live reactivity isn't actually needed, or isolate each field into its own memoized component so a keystroke in one field doesn't re-render the other twenty-nine.
+
+**22. In a Next.js Server Action, how do you extract and validate a `<select multiple>` field's values?**
+You pull all values with `formData.getAll('fieldName')`, since `.get()` only returns the first selected option, then run that array through a schema validator to confirm it against expected enum values before ever trusting it. Forgetting `.getAll()` here is a very common source of "only the first option gets saved" bugs.
+
+---
+
+## AI-Era Angle
+
+**23. An AI assistant generates a "form" using `<div>`s with an `onClick` handler on a styled div acting as the submit button. What's wrong with this, and why does it matter?**
+There's no real `<form>` element and no actual submit button, so pressing Enter in a field does nothing, native constraint validation never fires, and the markup provides zero of the free accessibility and progressive-enhancement behavior real forms get. It looks correct in a visual preview, which is exactly why this pattern slips through review — you have to actually check the underlying elements, not just how it renders.
+
+**24. You ask an AI coding assistant to "add form validation," and it writes a solid client-side check but nothing server-side. What do you do, and what should you have specified up front?**
+I'd flag that client validation alone is a UX layer, not a security boundary, and explicitly prompt for the corresponding server-side re-validation — ideally via a schema library inside the Server Action or API route, matching the same rules. Going forward, I'd bake "include server-side validation" into the prompt itself, since AI tools tend to treat "validation" as satisfied once the visible, client-facing check exists.
+
+**25. How would you review a pull request containing an AI-generated login form to catch the subtle mistakes it's likely to have made?**
+I'd check for a real `<form>` element with a genuine `type="submit"` button inside it, confirm every input has a properly associated label (`htmlFor`/`id` matching, not just a placeholder), verify `name` attributes exist on every field, and confirm there's server-side validation backing any client-side checks. I'd also check whether it used current Next.js idioms — Server Actions and `useActionState` — rather than outdated `onSubmit`-plus-`fetch` boilerplate, since AI training data skews toward older, more common patterns online.
+
+**26. Why doesn't understanding native form behavior become less important just because AI can generate form code instantly?**
+Because AI optimizes for code that looks like a form and compiles without errors, not for code that's accessible, secure, or semantically correct — those are judgment calls that require knowing what each tag and attribute is actually for. A generated form can pass a glance test and a build step while still failing screen readers, skipping server validation, or breaking keyboard submission, and catching that requires the same underlying knowledge you'd need to write the form yourself.
+
+---
+
+*26 questions — spanning conceptual, applied, edge case, comparison, system-design, React/Next.js, and AI-era review scenarios.*
