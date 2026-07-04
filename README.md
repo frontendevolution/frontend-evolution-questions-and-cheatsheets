@@ -23,6 +23,7 @@ This repository covers:
 - [📘 HTML Document Structure](./TechBasedQuestions/HTML5/README.md) – Deep questions on HTML fundamentals, semantics, and best practices
 
 ### Cheat Sheets
+- [📘 HTML Document Structure](./cheatsheets/HTML5/README.md) – Comprehensive guide to HTML fundamentals, semantics, and best practices
 - [📋 CSS Box Model & Layout](./cheatsheets/CSSBoxModel/README.md) – Comprehensive guide to CSS box model, display properties, and positioning
 
 ## 🎯 Goal
