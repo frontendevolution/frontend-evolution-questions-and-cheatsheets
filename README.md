@@ -20,13 +20,14 @@ This repository covers:
 ## 📚 Learning Paths & Resources
 
 ### Tech-Based Questions
-- [ HTML Document Structure](./TechBasedQuestions/HTMLDocumentStructure/README.md) – Deep questions on HTML fundamentals, semantics, and best practices
-- [ Forms](./TechBasedQuestions/Forms/README.md) – Deep questions on HTML Forms and best practices
+- [ HTML Document Structure](./InterviewQuestions/HTMLDocumentStructure/README.md)
+- [ Forms](./InterviewQuestions/Forms/README.md)
+- [CSSBoxModel & Layout](./InterviewQuestions/CSSBoxModel.md)
 
 ### Cheat Sheets
-- [ HTML Document Structure](./cheatsheets/HTML5/README.md) – Comprehensive guide to HTML fundamentals, semantics, and best practices
-- [ Forms](./cheatsheets/FORMS/README.md) – Comprehensive guide to Forms and its attributes
-- [ CSS Box Model & Layout](./cheatsheets/CSSBoxModel/README.md) – Comprehensive guide to CSS box model, display properties, and positioning
+- [ HTML Document Structure](./cheatsheets/HTML5/README.md) 
+- [ Forms](./cheatsheets/FORMS/README.md)
+- [ CSS Box Model & Layout](./cheatsheets/CSSBoxModel/README.md)
 
   
 ## 🎯 Goal
