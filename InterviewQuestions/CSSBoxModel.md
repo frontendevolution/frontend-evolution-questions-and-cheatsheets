@@ -1,0 +1,133 @@
+# Interview Prep: Box Model, Display & Positioning
+**Pillar:** Foundations Done Right | **Category:** HTML & CSS | **Level:** Beginner → Senior
+
+---
+
+## Conceptual
+
+**1. What is the CSS box model, and what are its four components?**
+Every rendered element is a rectangular box made of content, padding, border, and margin, from the inside out. Content holds the actual text or media, padding adds space inside the border, the border wraps that, and margin is transparent space outside the border affecting neighboring elements. Understanding this ordering is what makes width/height math predictable instead of mysterious.
+
+**2. What's the difference between `content-box` and `border-box`, and why does the industry default to `border-box` today?**
+`content-box` (the browser default) means `width`/`height` only size the content area — padding and border get added on top, so the rendered size grows beyond what you set. `border-box` makes `width`/`height` represent the total rendered size, shrinking the content area instead. Nearly every modern reset applies `border-box` globally because it makes sizing math predictable and composable across components.
+
+**3. Explain the difference between `block`, `inline`, and `inline-block`.**
+`block` elements take the full available width and stack vertically, respecting all box model properties. `inline` elements only take as much width as their content, flow within text, and ignore `width`, `height`, and vertical `margin` entirely. `inline-block` is the hybrid — it flows inline like text but respects width, height, and margin like a block element.
+
+**4. What is a "containing block," and why does it matter for positioning?**
+The containing block is the ancestor box that an element's positioning offsets and percentage sizes are calculated against. For `position: absolute`, it's the nearest ancestor with a `position` other than `static` (or one establishing a containing block via `transform`/`filter`/`will-change`); without one, it falls back to the viewport. Not knowing this is the single most common reason absolutely positioned elements end up in the wrong place.
+
+**5. What is a stacking context, and how is it different from just "z-index order"?**
+A stacking context is an isolated layer for z-ordering — elements only compete on z-index with siblings inside the same context, never across contexts. Properties like `opacity < 1`, `transform`, `filter`, and `isolation: isolate` all silently create new stacking contexts. This is why a `z-index: 9999` element can still render behind a `z-index: 1` element if they belong to different contexts.
+
+**6. What is margin collapsing, and when does it not apply?**
+When two block elements in normal flow have adjacent vertical margins, the gap between them becomes the larger of the two margins, not their sum. It only applies to vertical margins of block-level elements in normal flow — it does not happen inside flex or grid containers, or when a Block Formatting Context (like `overflow: hidden` or `display: flow-root`) separates the elements.
+
+---
+
+## Applied / Coding
+
+**7. Given a card with a badge in the corner, write the minimal CSS to correctly position that badge.**
+```css
+.card { position: relative; }
+.badge { position: absolute; top: 8px; right: 8px; }
+```
+The critical piece is `position: relative` on `.card` with no offset values — it does nothing visually but establishes the containing block the badge needs. Skipping this is the classic bug where the badge jumps to the corner of the entire viewport instead.
+
+**8. Write CSS for a sticky table header that stays visible while its rows scroll.**
+```css
+.table-wrapper { overflow-y: auto; max-height: 480px; }
+.table-header { position: sticky; top: 0; z-index: 1; }
+```
+The key thing to verify is that no ancestor between `.table-header` and the scrolling container has `overflow: hidden` or `auto` set incorrectly, since sticky silently stops working if that chain is broken anywhere.
+
+**9. You have `.badge { position: absolute; top: 0; right: 0; }` and it's rendering in the top-right of the entire page instead of the card. What's wrong, and how do you fix it?**
+The card (or whichever intended parent) doesn't have a `position` value other than `static`, so the browser falls back to the initial containing block — the viewport. The fix is adding `position: relative` to the actual intended parent, without any offset values, purely to establish it as the containing block.
+
+**10. How would you build a full-height, full-width overlay backdrop behind a modal using only box model and positioning properties?**
+```css
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgb(0 0 0 / 0.5);
+}
+```
+`inset: 0` is the modern shorthand for `top/right/bottom/left: 0`, and `position: fixed` anchors it to the viewport regardless of scroll — exactly what a backdrop needs, as long as no ancestor has a `transform` that accidentally reassigns its containing block.
+
+---
+
+## Edge Cases
+
+**11. Why does a percentage `height` on a child sometimes do nothing at all?**
+Percentage heights resolve against the parent's computed height — if the parent's height is `auto` (i.e., driven by its own content), there's no defined value to take a percentage of, so the browser treats it as `auto` too. The child needs an ancestor chain with an explicit height (or a flex/grid context that defines cross-axis sizing) for the percentage to resolve.
+
+**12. Why might `position: sticky` silently stop working even though the CSS looks correct?**
+Sticky requires every ancestor between the element and its scrolling container to have `overflow: visible` (the default) — if any ancestor in that chain has `overflow: hidden`, `auto`, or `scroll`, or a clipped/fixed height, sticky breaks with zero errors or warnings. This is one of the most time-consuming CSS bugs precisely because nothing looks wrong in the DevTools computed styles panel.
+
+**13. Why can a `z-index: 9999` element still render behind a `z-index: 1` element?**
+If the two elements belong to different stacking contexts — for example, one is inside a parent with `opacity: 0.99` or a CSS `transform` — their z-index values are never directly compared. Stacking order is resolved within each context first, so the "losing" element's entire parent context is what's actually stacked lower, regardless of the child's own z-index.
+
+**14. What happens to an element's own vertical margins if it has no content, height, border, or padding?**
+Its top and bottom margins can collapse into each other, effectively behaving as if only one margin exists — the larger of the two. This is one of the more surprising forms of margin collapsing because it doesn't require a sibling at all, just an "empty" block in normal flow.
+
+---
+
+## Explain-Like-You'd-Explain-to-a-Teammate
+
+**15. A teammate asks why their flex container's children "won't respect margin" the way block elements used to. What do you tell them?**
+Flex (and grid) containers don't participate in margin collapsing at all — every margin between flex items is honored in full, unlike block-level siblings in normal flow where adjacent margins collapse to the larger value. It's not a bug; it's actually more predictable, which is one of the underrated reasons flex/grid layouts feel less fiddly than old block-based ones.
+
+**16. A teammate's modal is rendering behind the page header despite `z-index: 999`. Walk them through how you'd debug it.**
+First check whether the modal is actually a sibling of the header in the same stacking context, or nested inside something with `transform`/`opacity`/`filter` that creates its own context — DevTools' "Layers" or 3D view can visualize this directly. If it's trapped, the fix isn't a higher z-index, it's either removing the stacking-context-creating property from the ancestor or rendering the modal at a higher point in the DOM (e.g. via a portal) with its own explicit stacking context.
+
+---
+
+## Comparison Questions
+
+**17. `display: none` vs `visibility: hidden` vs `opacity: 0` — compare all three.**
+`display: none` removes the element from layout and the accessibility tree entirely — zero footprint. `visibility: hidden` keeps its layout space reserved but also removes it from the accessibility tree and tab order. `opacity: 0` keeps both the layout space and full interactivity — it's still clickable and focusable unless you explicitly disable that, which is a common accessibility bug.
+
+**18. `position: absolute` vs `position: fixed` — compare their containing block behavior.**
+`absolute` anchors to the nearest ancestor with a non-static position (or a `transform`/`filter`/`will-change` ancestor), falling back to the viewport if none exists. `fixed` anchors to the viewport by default too, but — critically — it's also reassigned to a `transform`/`filter`/`will-change` ancestor if one exists, which surprises people who assume "fixed" always means "locked to the screen no matter what."
+
+**19. `flex` vs `grid` — when do you reach for each?**
+Flex is one-dimensional and content-driven — great for a row or column of items that need to grow, shrink, or wrap based on their own size, like a nav bar or button group. Grid is two-dimensional and layout-driven — better when you're defining an actual page or component structure with explicit rows and columns, like a dashboard or card layout.
+
+---
+
+## System-Design-Style
+
+**20. You're building a design system's `Tooltip` and `Modal` primitives from scratch. How do you architect their positioning so consumers of the library never hit containing-block or stacking-context bugs?**
+I'd render both via a portal into a single dedicated root node at the end of `<body>`, give that root its own isolated stacking context (`isolation: isolate`) so it's never at the mercy of arbitrary ancestor `transform`/`opacity` usage elsewhere in the app, and expose positioning through a JS-calculated anchor system (like Floating UI) rather than relying on consumers to manually set `position: relative` correctly on every trigger element. That removes the most common failure mode — someone forgetting the containing block setup — from the consumer's responsibility entirely.
+
+**21. How would you structure global CSS in a large design system to prevent inconsistent box-sizing math across teams?**
+Apply the universal `box-sizing: border-box` reset once, at the root layer, before any component-level styles load — in Tailwind that's Preflight, in a custom system it's a single low-specificity global rule using cascade layers (`@layer reset`) so component styles can't accidentally override it. I'd also lint against manual `box-sizing: content-box` overrides in component code so the exception has to be deliberate and reviewed, not accidental.
+
+---
+
+## In React / Next.js Projects
+
+**22. Why does a modal rendered with `createPortal(<Modal />, document.body)` sometimes still appear behind other UI, even though it's technically attached to `<body>`?**
+Portals escape the React tree and the DOM tree, but not stacking contexts — if any ancestor of the portal's *call site* wraps the app in a `transform` or `opacity` (common with Framer Motion page-transition wrappers), that can create app-wide stacking issues depending on where the portal root itself lives in the DOM. The fix is making sure the portal target is a sibling at the very end of `<body>`, outside any animated wrapper, with its own explicit stacking context.
+
+**23. In a Next.js App Router project, where's the correct place to apply a global `box-sizing: border-box` reset, and what commonly goes wrong?**
+It belongs in your root `globals.css`, imported once from the root layout, applied universally with a `*` selector — Tailwind projects get this for free via Preflight. What commonly goes wrong is teams mixing CSS Modules per-component without ever confirming the global reset actually loaded before component styles, causing inconsistent sizing that only shows up in specific component combinations.
+
+**24. A dashboard built with a sticky sidebar and a scrollable main content area breaks — the sticky header inside `main` won't stick. What's the likely cause in a typical Next.js layout, and how do you fix it?**
+The scrollable `main` almost certainly has `overflow-y: auto` or `scroll` for its own scrolling behavior, and the sticky header is probably nested inside an additional wrapper `div` between itself and that scroll container — any `overflow` other than `visible` on anything in that chain kills sticky. The fix is auditing every ancestor between the sticky element and the scroll container and removing unnecessary wrapper divs or overflow declarations.
+
+---
+
+## AI-Era
+
+**25. An AI assistant generates `.badge { position: absolute; top: 0; right: 0; }` for "put this badge in the corner of the card." What's wrong, and why did the AI miss it?**
+The AI wrote syntactically correct CSS but didn't add `position: relative` to the card itself, so the badge will anchor to the viewport instead of the card. It missed this because it likely only had the component's local file in context, not the full DOM/component tree, so it has no way to know whether a containing block already exists upstream — that's a structural fact, not a syntax fact.
+
+**26. You ask an AI coding assistant to "fix the z-index issue" on a component that's rendering behind another element. It responds by bumping `z-index: 10` to `z-index: 9999`. Why is this response almost always wrong, and how should you have prompted instead?**
+Raising the number is a pattern-matched guess, not a diagnosis — if the real problem is that the element is trapped inside a lower stacking context (e.g. an ancestor with `opacity` or `transform`), no z-index value will fix it. A better prompt gives the AI the actual structural context: "this component is nested inside a wrapper with a CSS transform for animation — check whether that's creating a stacking context blocking it," which requires you to understand stacking contexts well enough to describe the problem correctly in the first place.
+
+**27. How do you review a pull request where an AI coding assistant added `overflow: hidden` to fix a visual overflow bug?**
+I'd check whether any descendant relies on `position: sticky`, since `overflow: hidden`, `auto`, or `scroll` on an ancestor silently breaks sticky positioning with no warning — AI tools frequently apply `overflow: hidden` as a generic fix without tracing that side effect. I'd also confirm it's not clipping legitimately necessary content like a dropdown or tooltip that's supposed to render outside its parent's bounds.
+
+**28. Why doesn't understanding the box model and positioning become optional just because AI can generate the CSS syntax instantly?**
+Because the bugs in this area — wrong containing blocks, trapped stacking contexts, silently broken sticky positioning, margin collapsing surprises — are structural and contextual, not syntactic, and AI tools working from a limited file window can't see the full DOM/component tree the way a human tracing the actual rendered page can. Your job shifts from typing the CSS to correctly reviewing, debugging, and prompting for it, and none of that is possible without the underlying mental model this topic builds.
