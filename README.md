@@ -1,6 +1,6 @@
-# 🚀 Frontend Evolution – Interview Questions Hub
+# 🚀 Frontend Evolution Hub
 
-A curated collection of **frontend interview questions** designed to help you prepare efficiently before any tech interview.
+A curated collection of **frontend concepts and interview questions** designed to help you prepare efficiently before any tech interview.
 
 This repository covers:
 
