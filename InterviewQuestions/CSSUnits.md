@@ -1,0 +1,113 @@
+# Interview Questions: CSS Units (px, rem, em, vw, %)
+
+## Conceptual Understanding
+
+**1. What is a CSS pixel, and why isn't it the same as a physical screen pixel?**
+A CSS pixel is a reference unit defined by the spec, not a literal hardware pixel — it's calibrated so that objects appear a consistent physical size across devices with different pixel densities. That's why the browser applies a device-pixel-ratio scaling factor under the hood on high-DPI screens. It means you should never reason about px as "one dot on the screen."
+
+**2. Explain the difference between rem and em in your own words.**
+Rem is always relative to the root html element's font-size, so it gives you one predictable, global reference point. Em is relative to the font-size of the element it's applied to — or its parent, if none is set — which makes it context-dependent and capable of compounding through nested elements. Rem gives consistency; em gives local, relative scaling.
+
+**3. Why does em "compound," and can you give an example of where that causes a bug?**
+Because each nested element's em is calculated against its parent's computed font-size, not the root — so if a parent is 1.5em and its child is also 1.5em, the child renders at 2.25 times the base size, not 1.5 times. This commonly breaks nested lists or nested card components where font sizes creep up unexpectedly with each level of nesting.
+
+**4. What determines what percent (%) is relative to in CSS?**
+It depends entirely on the property. Width percentages resolve against the parent's width, height percentages need an explicit height on the parent to resolve against, and things like padding-top as a percentage are famously relative to the parent's *width*, not height. There's no single rule — you have to know the resolution behavior per property.
+
+**5. Why does `height: 100%` sometimes just not work?**
+Percentage height only resolves if the parent has an explicit, defined height in the rendering context — if the parent's height is itself "auto" or content-based, the percentage has nothing concrete to calculate against, so it computes to nothing. This is one of the most common sources of "my div won't fill the screen" bugs.
+
+**6. What's the difference between vw/vh and dvh/svh/lvh?**
+Vw and vh are static viewport percentages that don't account for dynamically appearing UI like a mobile browser's address bar. Dvh (dynamic viewport height) updates as that browser chrome shows or hides, svh represents the smallest possible viewport, and lvh represents the largest — giving you explicit control instead of guessing.
+
+## Applied / Coding
+
+**7. You're given a design with a button that has 12px padding and 16px font-size. How would you convert this to relative units, and why?**
+I'd express the font-size in rem, tied to root scaling, and the padding in em so it scales proportionally with the button's own font-size if that ever changes — for example if the button appears in a "large" variant. That keeps the button's internal spacing visually consistent relative to its text at any size.
+
+**8. Write CSS for a full-screen hero section that won't break on mobile Safari.**
+```css
+.hero {
+  height: 100vh; /* fallback for older browsers */
+  height: 100dvh; /* preferred: adjusts for mobile browser chrome */
+}
+```
+The fallback ensures older browsers still get a reasonable full-screen height, while dvh is used by browsers that support it, since CSS simply ignores unsupported declarations and keeps the last valid one.
+
+**9. A layout has `.parent { width: 300px }` and `.child { height: 100%; width: 50% }`. What actually renders?**
+The width resolves fine — the child becomes 150px wide, since the parent has an explicit width to reference. But the height resolves to zero, or collapses to content size, because the parent has no explicit height for the percentage to be calculated against.
+
+**10. How would you build font sizes that scale fluidly between mobile and desktop without media query breakpoints?**
+Using `clamp()` with a viewport-relative unit in the middle value, like `font-size: clamp(1rem, 0.5rem + 2vw, 2.5rem)`. This lets the browser interpolate the size smoothly across viewport widths while still guaranteeing a minimum and maximum bound, so text never gets unreadably small or absurdly large.
+
+## Edge Cases
+
+**11. If a user sets their browser's default font size to 24px instead of 16px, what happens differently to elements sized in px vs rem?**
+Elements sized in px are completely unaffected — they stay locked at their literal pixel value regardless of user settings. Elements sized in rem scale proportionally, because rem is computed relative to the root font-size, which the browser setting directly changes.
+
+**12. What happens if you nest three elements, each with `font-size: 1.2em`, inside a root with 16px font-size?**
+Each level multiplies against its parent's computed size — so you get 16 × 1.2 = 19.2px, then 19.2 × 1.2 ≈ 23px, then 23 × 1.2 ≈ 27.6px. The compounding is easy to lose track of, which is exactly why deeply nested components rarely use em for font-size.
+
+**13. Why might `100vw` cause an unexpected horizontal scrollbar?**
+Vw is calculated based on the viewport width including the scrollbar's own width in some browsers, so if a vertical scrollbar is present, 100vw can actually be wider than the visible content area, pushing a horizontal scrollbar into existence. This is a classic subtle layout bug that's easy to miss until you test on a real desktop browser with visible scrollbars.
+
+**14. If you set `line-height: 1.5` with no unit versus `line-height: 1.5em`, is there a difference?**
+Yes — a unitless line-height is a multiplier based on the element's own font-size and gets recalculated fresh at each nested level, avoiding compounding. A line-height in em locks in a computed pixel value that then gets inherited and can compound unpredictably through nested elements with different font sizes.
+
+## Comparison Questions
+
+**15. When would you intentionally choose px over rem or em?**
+For things that should never scale regardless of user or root settings — hairline borders, box-shadow offsets, or fine details where scaling would look broken or inconsistent. It's a deliberate exception, not a default.
+
+**16. Rem vs em — which should be the default for a design system's spacing scale, and why?**
+Rem, because a spacing scale needs one predictable, global unit of truth that doesn't shift depending on where a component happens to be nested. Em is reserved for spacing that should intentionally scale with a specific element's own font-size, like button padding.
+
+**17. Vw versus % — when does each make more sense for sizing an element's width?**
+Percent is right when you want an element sized relative to its actual parent container, which is the more common and predictable case in nested layouts. Vw is right when you deliberately want to break out of the parent context and size relative to the whole viewport, like a full-bleed section.
+
+## "Explain to a Teammate"
+
+**18. A junior dev asks you why their button suddenly looks huge inside a specific card component. How do you explain it?**
+I'd check if padding or font-size on the button is set in em, then walk them through checking the computed font-size of every ancestor up to the root, since one of those parents likely has a font-size override that's silently multiplying through. I'd show them the browser dev tools "computed" tab so they can see the actual resolved pixel value at each level, not just the authored CSS.
+
+**19. How would you explain to a teammate why the design team's font sizes look different for users who've changed their browser zoom settings?**
+I'd explain that rem-based sizing is working as intended — it's respecting the user's accessibility preference by scaling with their root font-size setting, which is a deliberate, correct behavior, not a bug. If the concern is really about design consistency, the fix is aligning the design system's expectations with accessibility requirements, not fighting the scaling.
+
+## System Design / Architecture
+
+**20. You're setting up the CSS unit strategy for a new design system used across a Next.js app with a dashboard, a marketing site, and an embeddable widget. How do you approach it?**
+I'd define a base rem scale for typography and spacing tokens so it's consistent and accessible across all three surfaces, use em only for component-internal proportional scaling like button or badge padding, and treat px as a rare exception for hairline details. For the embeddable widget specifically, I'd be careful about em and rem inheritance since it'll be dropped into host pages with unknown root font-sizes, so I'd likely scope its root font-size explicitly rather than trusting the host page's default.
+
+**21. How would you architect responsive typography for an app that needs to support both user browser zoom and multiple viewport sizes?**
+I'd combine rem as the base unit — so it respects browser-level accessibility zoom — with `clamp()` using viewport units in the middle argument, so text also adapts fluidly across screen sizes. The key architectural decision is keeping the rem-based minimum and maximum bounds so viewport scaling never overrides a user's explicit font-size preference entirely.
+
+## React / Next.js Specific
+
+**22. In a shared React component library, why is mixing px and rem in the same component considered a code smell?**
+Because it signals unclear intent — if some values scale with root font-size and others don't, the component behaves inconsistently for users who rely on browser zoom for accessibility, and it becomes unpredictable when the component is reused in different contexts. A reviewer should expect a stated reason whenever px shows up outside of borders or fixed decorative details.
+
+**23. You have a reusable React `<Card>` component using `padding: 1em` internally. What's the hidden coupling risk here, and how would you fix it?**
+The risk is that the card's visual padding silently changes based on whatever font-size is inherited from wherever it's rendered — a dashboard, a modal, a sidebar — creating inconsistent appearance without any prop or style change. I'd fix it by switching to rem for that padding, or by explicitly setting a local font-size context on the card itself if em-based scaling is actually intended.
+
+**24. In a Next.js app using Tailwind, how do design tokens typically map CSS units to configuration, and why does that matter?**
+Tailwind's default spacing and font-size scales are expressed in rem under the hood, which is why a class like `p-4` maps to a fixed rem value regardless of nesting — giving predictable, accessible-by-default scaling out of the box. Understanding this matters because devs sometimes override tokens with raw px values without realizing they're breaking that root-relative consistency.
+
+**25. Why does a full-screen modal or hero section built with `h-screen` in Tailwind (which maps to 100vh) sometimes look broken on mobile in a Next.js app, and what's the fix?**
+Tailwind's `h-screen` traditionally compiles to `height: 100vh`, which doesn't account for the mobile browser's address bar showing or hiding as the user scrolls, causing content to jump or get cut off. The current fix is using Tailwind's `h-dvh` utility, which compiles to `height: 100dvh` and correctly tracks the dynamic viewport.
+
+## AI-Era Angle
+
+**26. An AI coding assistant generates `height: 100vh` for a full-screen section in your Next.js app. What's the risk, and how would you prompt or fix it?**
+It's syntactically correct but ignores mobile browser chrome, so the section can visually jump or get clipped on phones — a bug that won't show up in a desktop preview. I'd either explicitly prompt for "mobile-safe full viewport height" or just review and swap it to `100dvh` myself, since this is exactly the kind of context AI models miss by default.
+
+**27. You're reviewing an AI-generated PR that sets all font-sizes in px across a new component. Do you approve it, and why or why not?**
+I wouldn't approve it as-is — px ignores user browser font-size preferences, which is an accessibility regression, not just a style nitpick. I'd request the change to rem for font-sizing and reserve px only for genuinely fixed details like borders, and I'd leave a comment explaining the accessibility reasoning so it doesn't recur.
+
+**28. Why can't you just trust an AI assistant to "know" when to use em versus rem?**
+Because that choice depends on design intent — whether something should scale with the user's root settings or with its own local text size — and AI has no visibility into that intent unless you explicitly state it in the prompt. It'll default to whatever pattern is statistically common in its training data, which skews toward older, less accessibility-conscious conventions.
+
+**29. If you're using an agentic coding tool to autonomously refactor a legacy CSS codebase from px to relative units, what specifically do you need to review before merging?**
+I'd check that font-sizes and spacing correctly became rem rather than em, since an agent might apply em uniformly without recognizing the compounding risk in nested components. I'd also verify that intentionally fixed values — borders, shadow offsets — weren't swept up in the conversion, since a blanket find-and-replace approach can't distinguish "should scale" from "should never scale."
+
+**30. Why doesn't this topic become obsolete even though AI can write any of these units correctly on command?**
+Because the hard part was never typing `rem` versus `px` — it's knowing which one matches the actual intent behind a specific element in a specific context, including accessibility implications and mobile viewport behavior. AI can execute a decision once you've made it, but a developer still has to make the decision and catch it when the AI's default assumption doesn't match what the product actually needs.
