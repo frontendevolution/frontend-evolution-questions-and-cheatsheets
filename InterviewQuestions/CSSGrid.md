@@ -1,0 +1,149 @@
+# CSS Grid — Senior Frontend Interview Question Bank (2026)
+**Pillar:** Foundations Done Right · **Category:** HTML & CSS · **Level:** Advanced
+
+---
+
+## Conceptual understanding
+
+**1. What's the real difference between Grid being a "layout method" versus a "coordinate system," and why does that framing matter?**
+Grid isn't just about arranging boxes — you're defining an actual coordinate plane of rows and columns, then placing content onto specific cells or spans within it. Thinking of it as a coordinate system is what lets you use line numbers, named lines, and `grid-area` intentionally instead of guessing at properties. Devs who only memorize the properties without this mental model tend to fight the layout instead of directing it.
+
+**2. Explain the difference between the explicit grid and the implicit grid.**
+The explicit grid is whatever you define with `grid-template-columns` and `grid-template-rows`. The implicit grid is whatever the browser auto-generates when content overflows those definitions — controlled by `grid-auto-rows`, `grid-auto-columns`, and `grid-auto-flow`. Most "why is my grid ignoring my sizing" bugs come from content landing in implicit tracks the dev forgot they created.
+
+**3. What exactly is the `fr` unit, and what's the most common misunderstanding about it?**
+`fr` represents a fraction of the *leftover* space after fixed-size tracks, gaps, and content minimums are already subtracted — it's not a percentage of the total container. The common mistake is assuming `1fr 200px 1fr` splits space into three equal parts; in reality the 200px is carved out first, then the remaining space is split evenly between the two `fr` tracks.
+
+**4. What's the difference between `auto-fill` and `auto-fit` in `repeat()`, and when would you actually choose one over the other?**
+`auto-fill` creates as many tracks as physically fit in the row, even if some stay empty — meaning your items can appear left-aligned with dead space instead of stretching. `auto-fit` collapses those empty tracks, so your existing items grow to consume the leftover space. Use `auto-fit` when you want items to visually fill the row, and `auto-fill` when you're intentionally reserving consistent slot widths, like a calendar grid.
+
+**5. What is subgrid, and what problem did it solve that didn't have a clean solution before?**
+Subgrid lets a nested grid container inherit its parent's row or column tracks instead of defining its own, which finally allows independent child components — like cards in a list — to align internal content (titles, footers, buttons) across a shared row. Before subgrid, this required JavaScript-based height/width measuring hacks or accepting visual misalignment between components that don't share a DOM parent-child sizing relationship.
+
+**6. How do container queries change the way you approach Grid layouts in 2026 compared to a few years ago?**
+Container queries let a component's internal grid respond to the size of its own containing element rather than the viewport, which means a card or panel can reflow its internal columns based on where it's dropped in the page — a sidebar versus a main column — without any JavaScript or extra breakpoint logic. This shifts a lot of "responsive design" work from page-level media queries to component-level, self-contained logic.
+
+---
+
+## Applied / coding
+
+**7. Write CSS for a responsive card grid where cards are at least 240px wide, wrap automatically, and stretch to fill any remaining space in the last row — no media queries.**
+```css
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+```
+This uses `auto-fit` specifically because we want the last row's items to stretch and fill the space rather than leaving a gap, which is what `auto-fill` would do.
+
+**8. Build a classic holy-grail layout (header, footer, sidebar, main content) using named grid areas.**
+```css
+.layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    "header header"
+    "sidebar main"
+    "footer footer";
+}
+.header { grid-area: header; }
+.sidebar { grid-area: sidebar; }
+.main { grid-area: main; }
+.footer { grid-area: footer; }
+```
+Named areas keep the visual structure legible at a glance and decouple visual placement from DOM order, which matters for both maintainability and accessibility.
+
+**9. A designer wants three cards to always be equal height regardless of content length, with no JavaScript. How does Grid solve this that Flexbox historically struggled with?**
+Grid rows are sized based on the tallest item in that row by default, since each row is a real track spanning the full grid — placing the three cards as grid items in a single row auto-stretches them to equal height with just `display: grid` and no extra sizing rules. This is one of the cases where Grid is simply the correct tool rather than a stylistic preference over Flexbox.
+
+**10. How would you build a 12-column responsive grid system similar to Bootstrap's, but using native CSS Grid instead of float or flex hacks?**
+```css
+.container {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1rem;
+}
+.col-span-4 { grid-column: span 4; }
+```
+Each item just declares how many of the 12 columns it spans via `grid-column: span N`, which eliminates the nested wrapper divs and negative margins that older grid systems relied on.
+
+---
+
+## Edge cases
+
+**11. Why does a long, unbroken string like a URL sometimes overflow a grid column even though you set an explicit fixed width on that column?**
+Grid and flex items have an implicit `min-width: auto` (and `min-height: auto`) by default, which prevents them from shrinking below their content's intrinsic size regardless of the track size you defined. You have to explicitly set `min-width: 0` on the item to allow it to shrink and let `overflow` or `text-overflow` rules actually take effect.
+
+**12. What happens when you use `grid-column: span 3` on an item, but the grid only has 2 explicit columns defined?**
+The browser creates additional implicit columns to accommodate the span, using whatever sizing is defined in `grid-auto-columns`, or a default `auto` size if you haven't set one. This is a common source of "phantom" columns appearing in a layout that the dev never intended to create.
+
+**13. Can grid items overlap intentionally, and what's a legitimate use case for it?**
+Yes — by explicitly placing two items on the same lines using `grid-row`/`grid-column` (or the same named area), they'll stack, with source order and `z-index` determining which renders on top. A legitimate use case is layering a caption or badge over an image within the same grid cell without resorting to `position: absolute`.
+
+---
+
+## Explain-to-a-teammate style
+
+**14. A junior dev on your team asks, "Why not just use Flexbox for everything, isn't it simpler?" How do you explain when Grid is the right call instead?**
+The real question is whether you know both dimensions of the layout up front — Flexbox distributes items along one axis and only reasons about the other incidentally, while Grid explicitly defines rows and columns together, which is what you need for page-level layouts, dashboards, or anything where alignment across both axes matters. The senior answer isn't "pick a favorite," it's using Grid for the macro structure and Flexbox for micro-alignment inside individual grid cells.
+
+**15. How would you explain `grid-template-areas` to a teammate who's only ever used `grid-column`/`grid-row` numeric placement?**
+Numeric placement ties your layout to line numbers, which becomes unreadable once a layout has more than a handful of items, whereas named areas let you literally draw the layout in the CSS as an ASCII grid of area names. It also means you can visually reorder a layout for different breakpoints by only changing the `grid-template-areas` value, without touching any HTML.
+
+---
+
+## Comparison questions
+
+**16. Compare `grid-template-columns: repeat(auto-fit, minmax(...))` with using an explicit set of media queries to achieve responsiveness. What are the tradeoffs?**
+The `auto-fit`/`minmax()` approach responds continuously to available width and needs zero maintenance as breakpoints change, but you lose fine-grained control over exact column counts at exact widths, which some design systems require for pixel-perfect consistency. Media queries give you that precision at the cost of needing to maintain multiple explicit breakpoints as your design evolves.
+
+**17. Compare CSS Grid subgrid to CSS custom properties (variables) as two different ways of solving cross-component alignment. When would you reach for each?**
+Subgrid solves alignment structurally by having a child literally share the parent's tracks, which is correct when the relationship is inherently a shared grid, like cards in a row. CSS variables solve it by passing a computed value (like a column count or gap) down for a child to use independently, which is more appropriate when components aren't nested in a real subgrid relationship, just need to agree on a shared design token.
+
+---
+
+## System-design style
+
+**18. You're designing the layout system for a component library used across a dozen product teams. How would you decide which layout primitives to expose as reusable Grid-based components versus letting teams write custom Grid CSS?**
+Expose Grid-based primitives for the truly repeated structural patterns — a page shell, a card grid, a form layout — as components with sensible default track sizing and named area conventions, since consistency there prevents a dozen slightly different implementations. Leave granular, one-off grid tweaks to individual teams' local CSS, because over-abstracting Grid into too many configurable props usually creates a worse developer experience than just writing three lines of CSS.
+
+**19. How would you architect a dashboard layout system where widgets can be different sizes (1x1, 2x1, 2x2) and rearranged by users, using CSS Grid as the foundation?**
+Define a base grid with a fixed column count and consistent row height, then let each widget declare its footprint via `grid-column: span N` and `grid-row: span N` based on a size value stored in state, with `grid-auto-flow: dense` to backfill gaps left by differently-sized widgets. The actual rearranging (drag-and-drop) would be handled by updating each widget's stored position/size and letting Grid handle the geometry, rather than manually calculating pixel positions.
+
+---
+
+## React / Next.js specific
+
+**20. Your team stores a grid's column count as a dynamic value computed from API data and sets it via an inline `style` prop in a Next.js Server Component. What can go wrong, and how do you fix it?**
+If the computed value isn't deterministic between the server render and the client hydration pass — for example, if it depends on something not available identically in both environments — React will throw a hydration mismatch warning. The fix is to compute the value once on the server, pass it down as a prop, and apply it through a CSS custom property (`style={{ '--cols': columns }}`) consumed by a stylesheet rule, rather than constructing a full inline style object that could diverge.
+
+**21. You're using Tailwind's grid utilities in a Next.js app, but need a genuinely dynamic column count that isn't one of Tailwind's fixed classes (`grid-cols-1` through `grid-cols-12`). How do you handle it correctly?**
+Tailwind's utility classes are statically generated at build time, so a dynamically computed class name like `` `grid-cols-${n}` `` won't exist in the compiled CSS and silently does nothing — this is one of the most common Tailwind-in-React bugs. The correct approach is to use Tailwind's arbitrary value syntax with a CSS variable, like `grid-cols-[repeat(var(--cols),1fr)]`, or drop to a plain inline style/CSS module for that one dynamic property.
+
+**22. A component using CSS Grid works fine in isolation but breaks alignment when reused inside a different parent layout elsewhere in the app. How do you diagnose and fix this in a component-driven React codebase?**
+First check whether the component's grid assumes a specific parent width or column count that isn't guaranteed by every consumer — this is exactly the kind of cross-component alignment problem subgrid solves when the parent is also a grid, or container queries solve when the fix should be based on the component's own available width instead. In a component library specifically, avoid hardcoding pixel-based track sizes inside reusable components; expose them as CSS custom properties with sensible defaults so consuming teams can override without forking the component.
+
+---
+
+## AI-era questions
+
+**23. You ask an AI coding assistant for a "responsive grid" and it returns a fixed `repeat(3, 1fr)` wrapped in three separate media query breakpoints. What's actually wrong here, and what should the code look like instead?**
+It's not broken, but it's the outdated 2019-era pattern for solving a problem that `auto-fit` with `minmax()` now solves in one line with zero maintenance as content changes. The fix is `grid-template-columns: repeat(auto-fit, minmax(240px, 1fr))`, which the assistant will usually produce correctly if you explicitly ask for it by name, but rarely reaches for by default.
+
+**24. An AI assistant generates a grid layout using `auto-fill` when the visual requirement was clearly "items should stretch to fill the row." Why does this bug slip past code review, and how do you catch it?**
+`auto-fill` and `auto-fit` produce identical output when the row is exactly full, so the bug only becomes visible when there's leftover space — meaning it passes a quick glance and even a screenshot review, and only shows up when you actually resize the browser or the content count changes. Catching it requires understanding the semantic difference well enough to test the specific condition, since reading the code alone won't reveal the bug.
+
+**25. How would you prompt an AI coding assistant to get a modern subgrid-based card alignment solution instead of a JavaScript-based height-matching hack?**
+Name the exact technique and browser support expectation explicitly — something like "align card headers and footers across a row using CSS subgrid, no JavaScript, targeting evergreen browsers" — because generic prompts like "make the cards line up" tend to pull from older, JS-heavy training examples where subgrid support was still inconsistent. This is a case where you need to already know subgrid exists in order to prompt for it at all.
+
+**26. Why doesn't AI-assisted development make deep CSS Grid knowledge obsolete, even though an assistant can write the syntax instantly?**
+An assistant can produce syntactically valid Grid code in seconds, but it can't tell you whether `auto-fit` or `auto-fill` matches your actual design intent, or why a hardcoded pixel track will break the moment your data has one more item than the assistant's example assumed — that judgment call is the actual engineering work. Reviewing AI-generated layout code is fundamentally a comprehension task, and comprehension is exactly what erodes if you rely on the assistant instead of understanding the model underneath it.
+
+**27. During a code review, you see an AI-assisted PR where a developer used deeply nested `grid-template-areas` with duplicated area names across breakpoints instead of reaching for container queries. How do you frame this feedback?**
+Point out that the duplication is a maintenance smell the assistant likely produced because it defaulted to the older viewport-media-query pattern rather than proposing container queries, which are now baseline-supported and better suited to a component that needs to respond to its own container's width. Frame it as "this works, but here's the current idiomatic pattern" rather than a correctness bug — useful feedback for both the PR and for how the dev prompts the assistant next time.
+
+---
+
+**Total: 27 questions** spanning conceptual, applied/coding, edge cases, teammate-explanation, comparison, system-design, React/Next.js-specific, and AI-era categories.
