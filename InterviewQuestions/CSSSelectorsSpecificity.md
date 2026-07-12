@@ -1,0 +1,113 @@
+# Interview Question Bank: Selectors, Specificity & the Cascade
+**Pillar:** Foundations Done Right — HTML & CSS
+**Audience level:** Advanced (senior frontend / React-Next.js focused)
+
+---
+
+## Conceptual — Core Mechanics
+
+**1. What are the actual stages the browser evaluates, in order, when resolving conflicting CSS rules — and where does "specificity" fall in that sequence?**
+The browser resolves conflicts in four stages: origin and importance, cascade layers, specificity, and finally source order as a tiebreaker. Specificity is only stage three — it never gets evaluated unless origin/importance and layer placement are already tied. Most devs treat specificity as the whole algorithm, which is why they misdiagnose bugs that are actually origin or layer problems.
+
+**2. Explain why `!important` isn't really about "specificity" at all.**
+`!important` operates at the origin-and-importance stage, which runs before specificity is even compared, so it isn't "winning on specificity" — it's skipping the specificity contest entirely by escalating to a higher-priority origin tier. That's precisely why it can override a rule with a much higher specificity score, and why treating it as "just a stronger selector" leads to wrong mental models when debugging.
+
+**3. Walk me through how specificity is actually calculated. Why is it wrong to say `.a.b.c` "equals" a score of 3?**
+Specificity is a three-column, lexicographic comparison — IDs, then classes/attributes/pseudo-classes, then types/pseudo-elements — compared column by column, not summed into a single number. `.a.b.c` is 0-3-0; it will always lose to any selector with even one ID, like `#x`, which is 1-0-0, no matter how many classes are stacked, because column one is compared first and decides the outcome immediately.
+
+**4. What does `:where()` do to specificity, and why would a senior developer deliberately choose it over a normal selector?**
+`:where()` always contributes zero specificity regardless of what's inside it, which lets you write precisely targeted, deeply structural selectors without inflating how hard they are to override later. Senior devs reach for it specifically when authoring anything meant to be overridden downstream — component libraries, design systems, shared base styles — so consumers can override with a single plain class instead of an `!important` war.
+
+**5. How is `:is()` different from `:where()` in terms of specificity, and why does that difference matter in practice?**
+`:is()` takes on the specificity of its most specific argument, while `:where()` always contributes zero. Practically, `:is(.card, #hero)` behaves like an ID-level selector even though it looks lightweight, which can silently make a rule far harder to override than the author intended — a subtle trap for anyone assuming `:is()` and `:where()` are interchangeable convenience wrappers.
+
+---
+
+## Cascade Layers — The Modern Curveball
+
+**6. What problem do cascade layers (`@layer`) solve that specificity alone can't?**
+Specificity forces you into an arms race — the only way to guarantee a rule wins is to make it more specific than everything else, which doesn't scale across a team. Cascade layers let you declare a fixed priority order — for example reset, then components, then utilities — so a rule's priority is determined by which layer it's declared in, independent of its specificity, ending the arms race permanently.
+
+**7. If a low-specificity rule is in a later cascade layer than a high-specificity rule, which one wins — and why does that surprise people?**
+The rule in the later layer wins, full stop, regardless of specificity — a single-class utility in a later layer beats a triple-ID selector in an earlier layer. It surprises people because it inverts everything they were taught about specificity being the ultimate arbiter; layers sit above specificity in the resolution order, so they override it entirely.
+
+**8. What happens to CSS that isn't wrapped in any `@layer` block, once your codebase has adopted layers elsewhere?**
+Unlayered CSS is treated as its own implicit layer that comes after every named layer, so it wins over all of them regardless of specificity — functionally similar to an accidental `!important`. This is a common bug source: a developer drops one "quick fix" rule outside the layer system, not realizing it now outranks the entire layered architecture.
+
+---
+
+## Native Nesting & Modern Selector Behavior
+
+**9. How does native CSS nesting affect specificity, and why can a shallow-looking nested selector be more specific than it appears?**
+When you nest a rule, the parent context is effectively folded into the nested selector's specificity calculation similarly to wrapping it in `:is()`, so a nested rule under a highly specific parent inherits that weight even though the nested line itself looks minimal. A developer scanning just the nested line can drastically underestimate its real specificity compared to unrelated rules elsewhere in the codebase.
+
+**10. Compare writing the same override using nesting versus a flat selector — what's the tradeoff for maintainability?**
+Nesting is more readable and colocates related rules, but it can obscure the actual computed specificity, since you have to mentally "flatten" the parent chain to know what you're really competing against. Flat selectors are more verbose but make the true specificity visible at a glance — which matters more as a codebase and its authors scale.
+
+---
+
+## Applied / Coding & Debugging
+
+**11. You're told a button's color isn't updating despite a rule that looks correct and highly specific. Walk me through your debugging process.**
+I'd open the computed styles panel first, not the source, to see which rule the browser actually applied and why it was chosen over mine. Then I'd check, in order: is a higher-origin rule (like an `!important` or an animation) winning, is my rule in an earlier cascade layer than the one that's applying, is my selector's real specificity lower than I assumed — especially if nesting is involved — and only last, is this purely a source-order tie.
+
+**12. Two rules have identical specificity and are in the same cascade layer. Which one applies, and what governs that?**
+Source order decides — whichever rule appears later in the stylesheet, or was injected later at runtime, wins. This is the weakest and last-resorted signal in the whole algorithm, so relying on stylesheet reordering to "fix" a cascade bug usually means the real problem — origin, layer, or specificity — hasn't actually been addressed.
+
+**13. Why would adding `!important` to fix a bug actually make the codebase harder to maintain, even if it visually resolves the issue?**
+`!important` wins at the origin stage, which means it overrides the actual layer and specificity relationships the team designed — so the next person who needs to override that value now has to reach for another `!important` or worse, and the cascade becomes an arms race instead of a designed system. It treats a symptom at the wrong stage of the algorithm instead of fixing the actual specificity or layer conflict underneath it.
+
+---
+
+## Comparisons
+
+**14. Compare `!important`, cascade layers, and `:where()` as three different tools for controlling override behavior. When would you reach for each?**
+`!important` escalates a rule's origin priority and should be reserved for rare, deliberate overrides — not routine styling. Cascade layers set a durable priority order across your whole codebase, independent of specificity, and are the right tool for structuring reset/components/utilities relationships at scale. `:where()` deliberately zeroes out specificity so you'd use it when authoring anything meant to be easily overridden by consumers, like a shared component library.
+
+**15. Compare how utility-first CSS (like Tailwind) and traditional component-scoped CSS each interact with the cascade differently.**
+Utility classes are almost always single-class selectors with identical specificity, so conflicts between them are resolved entirely by stylesheet order rather than specificity — which is why Tailwind organizes its generated output using internal cascade layers to make that order deterministic. Component-scoped CSS, like CSS Modules, still competes on ordinary specificity and source order; scoping changes the class name to avoid collisions, but it doesn't change how the cascade weighs the rule.
+
+---
+
+## React / Next.js — Applied Project Scenarios
+
+**16. In a Next.js App Router project, two different components each import their own CSS Module, and both target the same element property. What actually determines which one wins in production, and why might that differ from what you see in local dev?**
+The winner is determined by the final order the compiled stylesheet ends up in, which depends on the bundler's module/import graph — not the order the components visually render in, and not necessarily the order you see in local dev, since chunking and code-splitting can reorder CSS at build time differently than during development. This is why a cascade conflict can appear to "just work" locally and then flip in a production build.
+
+**17. You're using a runtime CSS-in-JS library (styled-components or Emotion) inside a Next.js App Router project with Suspense-based streaming. Why can two sibling components' styles apply in an unexpected order?**
+Runtime CSS-in-JS injects style tags into the document at the moment a component actually renders, and with Suspense boundaries and streaming SSR, components can resolve and render out of the order they appear in the tree, which changes the order their styles get injected. Since injection order feeds directly into source-order tiebreaking, this turns into a cascade bug that only shows up under specific streaming/timing conditions — making it look flaky rather than deterministic.
+
+**18. A teammate insists Tailwind "has no cascade issues" because it's utility-first. How would you correct that, with a concrete example?**
+Tailwind hasn't removed the cascade, it's just made every utility roughly equal in specificity and pushed the real conflict resolution onto stylesheet order — for example, `className="p-4 p-8"` in JSX means nothing on its own; whichever of `.p-4` or `.p-8` appears later in Tailwind's compiled output wins, and that order is controlled by Tailwind's internal `@layer utilities` structure, not the order you typed the class names. Teams still hit real conflicts, they're just resolved by tooling instead of manually.
+
+**19. You're building a shared component library consumed by multiple product teams inside a Next.js monorepo. How would you structure your internal CSS selectors to avoid override wars with consumer teams?**
+I'd wrap internal structural selectors in `:where()` so the library's own styles carry zero specificity, meaning any consumer can override a single property with a plain class instead of needing an ID selector or `!important`. I'd also consider giving the library its own named cascade layer, declared early in the layer order, so consumer app styles — layered later, or left unlayered — naturally take priority without any specificity gymnastics.
+
+---
+
+## System-Design-Style
+
+**20. You're setting up the CSS architecture for a large Next.js application from scratch, with multiple teams contributing components, a design system, and Tailwind for utilities. How would you use cascade layers to make override behavior predictable across the whole codebase?**
+I'd declare an explicit layer order up front — something like reset, then design-system tokens/components, then app-level component styles, then Tailwind utilities last — so priority is set structurally rather than through specificity battles between teams. I'd also enforce, via lint rule or code review, that no one ships unlayered CSS, since unlayered rules silently outrank the entire layer system regardless of how carefully it was designed.
+
+**21. How would you decide, as an architectural rule for your team, when developers are allowed to reach for `!important`, versus when they should be told to use layers or restructure specificity instead?**
+I'd restrict `!important` to genuinely exceptional cases — typically overriding third-party or generated CSS you don't control — and require a code comment explaining why layers or specificity restructuring weren't viable, since `!important` bypasses the team's intentional layer and specificity design. For anything internal to the codebase, the actual fix is almost always a layer reorganization or a `:where()`-based rewrite, not an origin-level escape hatch.
+
+---
+
+## AI-Era — Reviewing, Prompting, and Debugging AI-Generated CSS
+
+**22. An AI assistant "fixes" a style that wasn't applying by adding `!important`. Why is that often the wrong fix, and what should you actually check first?**
+`!important` operates at the origin stage, so it wins regardless of whether the real issue was a layer conflict, an inherited nesting specificity you didn't expect, or a source-order/injection-timing race — meaning the assistant's fix can "work" while leaving the actual root cause completely undiagnosed for the next person. Before accepting it, I'd check whether the rule is unlayered and silently outranking a layered system, whether a CSS-in-JS injection race is at play, and whether the real specificity — accounting for nesting — was actually lower than assumed.
+
+**23. Why do AI coding assistants tend to struggle specifically with cascade-related bugs, more than with typical logic bugs?**
+Diagnosing a cascade conflict requires visibility into the entire project's layer structure, import/bundling order, and every other rule that could match the same element — context that usually isn't available within a single file or a single prompt's scope. Logic bugs are usually locally reasoned about within a function; cascade bugs are inherently global and cross-file, which is exactly the kind of context window and codebase-wide reasoning AI assistants are weakest at.
+
+**24. You're reviewing a PR where an AI assistant added new component styles. What specifically would you check to make sure it hasn't introduced a cascade problem, even if the styles "look right" in the diff?**
+I'd check whether the new rule was placed inside the correct existing `@layer`, or whether it slipped in unlayered and now silently outranks the whole layered system regardless of specificity. I'd also check whether it used nesting in a way that inherits more specificity than the flat selector suggests, and whether any `!important` it introduced is masking a root cause that will resurface as a harder bug later.
+
+**25. How would you prompt an AI coding assistant differently, once you actually understand cascade layers and `:where()`, compared to a developer who only understands basic specificity?**
+Instead of asking it to "make this style override the other one," I'd explicitly instruct it to place the rule inside our existing `components` layer, avoid `!important` entirely, and use `:where()` if the selector is meant to be overridable by other parts of the app. The quality of what an agentic tool produces in your styling layer is bounded by how precisely you can specify cascade intent — which you can only do if you understand the four-stage algorithm yourself, not just specificity in isolation.
+
+**26. Why doesn't understanding the cascade become obsolete just because AI tools can generate valid CSS syntax?**
+An AI assistant can produce a syntactically correct selector in seconds, but it can't reliably reason about where that rule sits relative to your project's entire layer structure, bundling order, and runtime injection timing — that requires whole-codebase judgment a prompt-scoped model doesn't reliably have. The engineer's job shifts from writing the selector to being the one person in the loop who can catch that the AI's "working" fix actually broke the architecture's override guarantees for everyone downstream.
