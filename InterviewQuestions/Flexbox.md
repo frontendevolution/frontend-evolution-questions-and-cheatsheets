@@ -1,0 +1,135 @@
+# FOUNDATIONS DONE RIGHT — Interview Question Bank: Flexbox
+**Category:** HTML & CSS | **Level:** Beginner-to-Senior calibration | **2026 current practices**
+
+---
+
+## Conceptual
+
+**1. What problem does flexbox actually solve that block/inline layout doesn't?**
+Flexbox gives you a one-dimensional distribution algorithm — it can grow, shrink, and reorder items along a single axis based on available space, which normal flow can't do. Before flexbox, doing that meant floats, negative margins, or table-layout hacks. It's not "a way to center things," that's just a side effect of a more general capability.
+
+**2. Explain the difference between the main axis and the cross axis.**
+The main axis is whatever direction `flex-direction` points — row or column. The cross axis is perpendicular to it. Every flex property is scoped to one axis or the other: `justify-content` and `flex-basis`/grow/shrink act on the main axis, `align-items` and `align-content` act on the cross axis. Once you internalize that split, the property list stops feeling arbitrary.
+
+**3. What's the actual difference between `flex-grow`, `flex-shrink`, and `flex-basis`?**
+`flex-basis` sets the item's starting size before any distribution happens. `flex-grow` determines how much of the leftover space (if any) an item claims, proportionally against siblings. `flex-shrink` determines how aggressively an item gives up space when the container is too small to fit everyone at their basis. They're three independent decisions, and the shorthand `flex` just bundles them.
+
+**4. Why does `flex: 1` behave differently from `flex: 1 1 auto`?**
+`flex: 1` expands to `flex: 1 1 0%`, meaning the item's starting basis is treated as zero, so all sizing comes purely from the grow ratio. `flex: 1 1 auto` keeps the item's natural content size as the basis and only distributes the *extra* leftover space. This is the single most common source of "why is this item a different width than I expected" bugs.
+
+**5. What does `align-self` do that `align-items` doesn't?**
+`align-items` sets cross-axis alignment for every child in the container at once. `align-self` overrides that for one specific item. It's the correct tool any time you'd otherwise reach for an unnecessary wrapper div just to nudge a single element.
+
+---
+
+## Edge Cases
+
+**6. Why do flex items sometimes refuse to shrink below their content size even with `flex-shrink: 1` set?**
+Because flex items have an implicit `min-width: auto` (or `min-height: auto` in column direction) by default, which sets a floor at the content's intrinsic size — `flex-shrink` can't push an item smaller than that floor. You have to explicitly override it with `min-width: 0` (or `min-height: 0`) to allow real shrinking, which is also required for `text-overflow: ellipsis` or `overflow: hidden` to actually take effect inside a flex item.
+
+**7. Why would a flex item ignore `justify-content` even though you set it correctly?**
+`justify-content` only distributes leftover space along the main axis — if the items already fill or overflow the container, there's no leftover space to distribute, so it has no visible effect. This is often mistaken for a "bug" when it's actually the algorithm doing exactly what it's supposed to.
+
+**8. What happens with `flex-wrap: wrap` and multiple rows — which property controls spacing *between* those rows?**
+`align-content`, not `align-items`. `align-items` aligns items within a single line on the cross axis; `align-content` controls how multiple lines are distributed relative to each other when there's extra cross-axis space. This distinction only becomes visible once wrapping produces more than one line, which is why it's a common blind spot.
+
+**9. Why might `gap` not behave the way a developer expects in an older codebase?**
+`gap` in flexbox is a relatively recent, now well-supported addition, but if a codebase still has legacy negative-margin spacing hacks layered on top of it, the two systems double up and produce inconsistent spacing. In a 2026 codebase there's no good reason to still be using the margin-hack pattern — `gap` should be the default.
+
+---
+
+## Comparison
+
+**10. Flexbox vs Grid — how do you decide, and how would you explain that decision to a teammate?**
+Flexbox is for one-dimensional, content-driven distribution — you don't necessarily know how many items there are or exactly how big they should be, and you want the algorithm to figure it out. Grid is for when you're defining an intentional two-dimensional structure — explicit rows and columns you actually designed. A toolbar or button group is flexbox; a dashboard or card grid with defined columns is grid. Picking based on "which one am I more comfortable with" instead of the actual shape of the problem is a tell in a code review.
+
+**11. When would you reach for flexbox instead of CSS multi-column layout for something like a list of tags?**
+Multi-column layout flows content down columns first, which reorders visual reading order in a way that's often wrong for UI elements like tags or nav items. Flexbox with `flex-wrap` preserves the intended left-to-right, top-to-bottom reading order while still wrapping — which is almost always what you actually want for interactive UI.
+
+---
+
+## Applied / Coding
+
+**12. Write the CSS to build a horizontal navbar with a logo on the left, nav links centered, and a CTA button pinned right — no absolute positioning.**
+```css
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.navbar__links {
+  display: flex;
+  gap: 24px;
+  margin-inline: auto; /* pushes links toward center between logo and CTA */
+}
+```
+The key insight here is `space-between` handles the outer distribution, and `margin-inline: auto` on the middle group is what actually centers it rather than fighting `justify-content` with nested flex containers.
+
+**13. A card component has a fixed-width icon and a text label that should truncate with an ellipsis instead of wrapping or overflowing. Write it.**
+```css
+.card { display: flex; align-items: center; gap: 8px; }
+.card__icon { flex-shrink: 0; }
+.card__label {
+  min-width: 0;         /* required — overrides default auto floor */
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+```
+Without `min-width: 0`, the ellipsis rule is silently inert because the item can never shrink past its content's natural width.
+
+**14. Given three flex items with `flex: 1`, `flex: 2`, and `flex: 1 1 100px`, walk through how the container distributes 500px of width.**
+The third item takes its 100px basis first since it isn't part of the pure-ratio group. The remaining 400px is distributed between the first two by grow ratio — 1:2 — so item one gets roughly 133px, item two gets roughly 267px, item three stays at 100px. Being able to trace this by hand, not just trust the browser, is what separates "uses flexbox" from "understands flexbox."
+
+---
+
+## Explain-to-a-Teammate
+
+**15. A junior dev asks why their flex items aren't lining up in a column the way they expected. How do you explain what's happening in plain language?**
+I'd ask them what `flex-direction` they're using — if it's `column`, the main axis just rotated 90 degrees, which means `justify-content` is now controlling vertical space and `align-items` is controlling horizontal space, the opposite of what they're picturing from the row examples they learned first. The properties didn't change, the axis did.
+
+**16. How would you explain to a teammate why their card layout works fine in dev but breaks in production with real user data?**
+I'd tell them it's almost certainly the default `min-width: auto` on flex items — their test data was short, so the layout never hit its actual constraint, but a real, longer title exposes that the item was never actually allowed to shrink. It's an invisible default, not a logic bug, which is why it's easy to miss in review.
+
+---
+
+## System-Design-Style
+
+**17. You're designing a reusable `<Toolbar>` component that needs to support an arbitrary, dynamic number of action buttons, plus responsive collapsing into a dropdown below a certain width. How do you architect the layout layer?**
+I'd use flexbox with `flex-wrap` for the base layout since the item count is dynamic and unknown ahead of time, combine it with `gap` for consistent spacing regardless of count, and handle the responsive collapse as a separate concern — either a container query or a resize observer swapping into a dropdown pattern below a threshold, rather than trying to force flexbox itself to "hide" overflow items. Flexbox handles distribution; it's not the right tool for conditional visibility logic.
+
+**18. How would you structure the CSS layer of a design system so that flex-based spacing stays consistent across dozens of components built by different teams?**
+I'd centralize spacing as design tokens (a fixed scale) and enforce `gap` as the only sanctioned spacing mechanism inside flex containers, rather than allowing arbitrary margins on children — margin-based spacing is what causes drift and collapse issues at scale, while `gap` is contained entirely to the parent and can't leak or double up.
+
+---
+
+## React / Next.js Specific
+
+**19. Where does the `min-width: auto` flexbox default most commonly cause production bugs in a React codebase?**
+In reusable list or card components that render dynamic, user-generated content — a `Card`, `ListItem`, or `Chip` component that looks correct with placeholder or test data but overflows the moment it renders a real, longer string, because nobody added `min-width: 0` to the text wrapper. It's especially dangerous because the component looks fine in Storybook with short sample data and only breaks in production.
+
+**20. A responsive component uses `flex-col md:flex-row` in Tailwind, and alignment breaks specifically at the `md` breakpoint. Why?**
+Flipping `flex-direction` flips which axis `justify-content` and `align-items` apply to — a `justify-between` that worked for vertical spacing in column mode suddenly controls horizontal spacing in row mode, and vice versa for `items-center`. The classes didn't change, but their meaning did, so responsive direction changes need their alignment utilities reconsidered at each breakpoint, not just carried over.
+
+**21. How would you review a PR where a teammate wrapped every flex item in `<div className="flex-1">` to make a layout "just work"?**
+I'd want to know if they actually need equal growth, or if they're using `flex-1` as a workaround for a layout that isn't distributing space the way they expect for another reason — like a missing `min-width: 0` or an unset `flex-basis`. `flex-1` on everything often masks the actual bug rather than fixing it, and it usually shows up again the next time content length varies.
+
+---
+
+## AI-Era
+
+**22. An AI assistant generates a flex-based card component but the text overflows with real production data even though `flex-shrink` is set. What did it miss, and why does this happen so consistently?**
+It almost certainly omitted `min-width: 0` on the text element, because the model has no visibility into what your real content actually looks like — it optimized for syntactic correctness against whatever short example it inferred, not against the data your app will actually render. This is one of the most common AI-generated flexbox bugs precisely because the code is valid CSS and passes a surface-level glance review.
+
+**23. How do you review AI-generated flexbox CSS differently from AI-generated JavaScript logic?**
+With JS you're mostly checking correctness against explicit inputs and outputs; with flexbox CSS you're checking for invisible defaults and context the model couldn't know — content length variability, viewport behavior, and whether `flex-basis` was left at its default in a way that changes sizing. The bug is rarely a typo; it's a missing consideration the model had no way to infer from the prompt alone.
+
+**24. If you're prompting an AI coding assistant to build a flex layout, what should you specify that most developers leave out?**
+Explicitly state the content constraints — whether text can be long or dynamic, whether items should wrap, and whether truncation is expected — because without that, the assistant defaults to whatever produces valid-looking CSS for a short example, not CSS that's resilient to your actual data. Prompting "build a flex row with an icon and a label" versus "build a flex row with an icon and a label that must truncate with long, dynamic text" produces meaningfully different, more correct output.
+
+**25. Why doesn't flexbox knowledge become obsolete just because an AI assistant can generate the syntax instantly?**
+Because writing valid flexbox and writing *correct* flexbox for your actual data are different problems — the model handles the first reliably and the second inconsistently, since correctness depends on context the model can't see: real content, real viewport behavior, real edge cases. Reviewing, debugging, and prompting AI-generated layout code all require understanding the underlying algorithm; without that, you can't tell the difference between code that looks right and code that is right.
+
+---
+
+**Total questions: 25**
