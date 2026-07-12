@@ -1,0 +1,272 @@
+# FOUNDATIONS DONE RIGHT — Cheatsheet: Flexbox
+**Category:** HTML & CSS | **Level:** Beginner → Senior reference | **Current as of 2026**
+
+*Keep this open while you code. If you're double-checking a property or debugging a layout, it's in here.*
+
+---
+
+## 1. Core Definitions & Vocabulary
+
+- **Flex container** — any element with `display: flex` or `display: inline-flex`. Its direct children become flex items.
+- **Flex item** — a direct child of a flex container. Grandchildren are not flex items unless they're also given `display: flex` themselves.
+- **Main axis** — the axis `flex-direction` points along (row = horizontal, column = vertical). Most main-axis properties control *distribution* of space.
+- **Cross axis** — perpendicular to the main axis. Cross-axis properties control *alignment*, not distribution.
+- **Main size / cross size** — an item's size measured along the main axis vs the cross axis (width and height swap meaning depending on direction).
+- **Flex line** — a single row (or column) of items. Only relevant once wrapping produces more than one line.
+- **Flex basis** — an item's hypothetical starting main size before grow/shrink is applied.
+- **Available space / leftover space** — the difference between the container's size and the sum of items' basis sizes. This is what `flex-grow` and `justify-content` actually distribute.
+
+---
+
+## 2. Enabling Flex
+
+```css
+.container { display: flex; }        /* block-level flex container */
+.container { display: inline-flex; } /* inline-level flex container */
+```
+`inline-flex` behaves like `inline-block` from the outside, but its children still follow full flex rules internally.
+
+---
+
+## 3. Container Properties — Full Enumeration
+
+### `flex-direction`
+- `row` (default) — main axis left→right (in LTR).
+- `row-reverse` — main axis right→left.
+- `column` — main axis top→bottom.
+- `column-reverse` — main axis bottom→top.
+
+### `flex-wrap`
+- `nowrap` (default) — all items forced onto one line, shrinking as needed.
+- `wrap` — items wrap onto new lines, top→bottom (or left→right in column mode).
+- `wrap-reverse` — items wrap onto new lines in reverse cross-axis order.
+
+### `flex-flow` (shorthand)
+```css
+flex-flow: <flex-direction> <flex-wrap>;
+/* e.g. flex-flow: row wrap; */
+```
+
+### `justify-content` (main-axis distribution)
+- `flex-start` (default) — items packed at the start of the main axis.
+- `flex-end` — items packed at the end.
+- `center` — items packed at the center.
+- `space-between` — equal gaps between items, no gap at the edges.
+- `space-around` — equal gaps around each item (edges get half-gaps).
+- `space-evenly` — fully equal gaps, including edges.
+- `start` / `end` — logical equivalents of flex-start/flex-end, writing-mode aware.
+- `left` / `right` — physical alignment (row direction only, rarely used).
+
+### `align-items` (cross-axis alignment, applies per line)
+- `stretch` (default) — items stretch to fill the cross axis (unless a size is explicitly set).
+- `flex-start` / `start` — items aligned to the start of the cross axis.
+- `flex-end` / `end` — items aligned to the end.
+- `center` — items centered on the cross axis.
+- `baseline` — items aligned by their text baseline.
+- `self-start` / `self-end` — writing-mode-aware start/end alignment.
+- `normal` — behaves like `stretch` in most contexts (the actual CSS default keyword).
+
+### `align-content` (distribution of multiple flex lines — only matters with wrapping)
+- `flex-start` / `start` — lines packed at the start.
+- `flex-end` / `end` — lines packed at the end.
+- `center` — lines packed at the center.
+- `space-between` — equal gaps between lines.
+- `space-around` — equal gaps around each line.
+- `space-evenly` — fully equal gaps including edges.
+- `stretch` (default) — lines stretch to fill the cross axis.
+- `normal` — default packing behavior, effectively stretch in most engines.
+
+### Gap properties (not flex-specific, but essential in flex layouts)
+- `gap: <row-gap> <column-gap>;` — shorthand.
+- `row-gap: <length>;` — space between lines (cross-axis in row mode).
+- `column-gap: <length>;` — space between items on a line (main-axis in row mode).
+- `gap` replaces margin-hack spacing entirely — there is no reason to still use negative margins for this in a 2026 codebase.
+
+---
+
+## 4. Item Properties — Full Enumeration
+
+### `order`
+- `<integer>` — default `0`. Items are laid out in ascending `order` value, then source order for ties. Purely visual — does not change DOM order, tab order, or screen reader order.
+
+### `flex-grow`
+- `<number>` — default `0`. Proportional share of *leftover* space claimed relative to siblings. `0` means the item never grows beyond its basis.
+
+### `flex-shrink`
+- `<number>` — default `1`. Proportional share of the *deficit* an item gives up when items collectively overflow the container. `0` means the item never shrinks below its basis.
+
+### `flex-basis`
+- `auto` (default) — use the item's own width/height (or content size) as the starting size.
+- `content` — size based purely on content, ignoring any explicit width/height.
+- `<length>` (e.g. `200px`, `20%`) — explicit starting size before grow/shrink is applied.
+- `0` / `0%` — starting size of zero; all sizing comes from `flex-grow` alone.
+
+### `flex` (shorthand — the one you'll use most)
+- `flex: initial;` → `0 1 auto` — default behavior, item can shrink but won't grow.
+- `flex: auto;` → `1 1 auto` — item can grow and shrink, basis from content/size.
+- `flex: none;` → `0 0 auto` — item is fully rigid, ignores available space entirely.
+- `flex: 1;` → `1 1 0%` — item grows/shrinks purely by ratio, ignoring intrinsic size.
+- `flex: <grow> <shrink> <basis>;` — explicit three-value form.
+
+### `align-self`
+- `auto` (default) — defers to the container's `align-items` value.
+- `flex-start` / `start` / `self-start` — aligns this item to the cross-axis start.
+- `flex-end` / `end` / `self-end` — aligns this item to the cross-axis end.
+- `center` — centers this item on the cross axis.
+- `baseline` — aligns this item's text baseline with siblings.
+- `stretch` — stretches this item to fill the cross axis.
+
+---
+
+## 5. Internal Mechanics — Step by Step
+
+1. Browser computes each item's **flex-basis** (explicit value, or content/intrinsic size if `auto`).
+2. Browser sums all basis values and compares against the container's main-axis size.
+3. **If there's leftover space** → distribute it proportionally using each item's `flex-grow` value.
+4. **If items overflow** (deficit) → remove space proportionally using each item's `flex-shrink` value, weighted by each item's basis size (bigger items shrink more in absolute terms for the same shrink factor).
+5. Apply `min-width`/`min-height` constraints — including the implicit `auto` floor — which can prevent an item from shrinking as far as step 4 calculated.
+6. Position items along the main axis per `justify-content`.
+7. Align items on the cross axis per `align-items`, then per-item `align-self` overrides.
+8. If wrapped, distribute the resulting lines on the cross axis per `align-content`.
+
+---
+
+## 6. Common Mistakes & Gotchas
+
+- **`min-width: auto` default** — flex items won't shrink below their content's intrinsic size unless you explicitly set `min-width: 0` (or `min-height: 0` in column mode). This silently breaks truncation and causes overflow.
+- **Confusing `flex: 1` with `flex: 1 1 auto`** — the former zeroes out the basis, the latter keeps content size as a starting point. They produce different final widths.
+- **Expecting `justify-content` to work with no leftover space** — if items already fill or overflow the container, there's nothing to distribute, so it appears to "do nothing."
+- **Forgetting `align-content` exists** — multi-line wrapped layouts often need it, and `align-items` alone won't control spacing between lines.
+- **Using `order` for accessibility-relevant sequencing** — it never changes DOM, focus, or reading order, only paint order.
+- **Nesting flex containers to fake grid behavior** — usually a sign the layout should be CSS Grid instead.
+- **Still using margin hacks for spacing** — `gap` has long been supported in flexbox; there's no reason to avoid it now.
+
+---
+
+## 7. Best Practices
+
+- Default to `gap` for spacing between flex items instead of margins.
+- Reach for the three-value `flex` shorthand explicitly (`flex: 1 1 200px`) when a layout needs a specific starting size, rather than guessing with `flex: 1`.
+- Add `min-width: 0` (or `min-height: 0`) proactively on any flex item that contains dynamic or user-generated text.
+- Use `flex-wrap: wrap` plus `gap` for any layout where item count is dynamic or unknown ahead of time.
+- Use semantic HTML first, then apply `display: flex` — flexbox is a layout mechanism, not a substitute for correct markup.
+
+---
+
+## 8. Anti-Patterns
+
+- Using flexbox to build an intentional two-dimensional grid (explicit rows *and* columns) — that's Grid's job.
+- Wrapping every item in `flex-1` as a blanket fix without understanding why the layout wasn't distributing space correctly in the first place.
+- Using `order` to "fix" markup that's in the wrong order for accessibility reasons instead of fixing the markup.
+- Faking equal-height columns with min-height hacks pre-flexbox-era instead of just using `align-items: stretch` (the default).
+- Using absolute positioning inside a flex container to sidestep understanding `justify-content`/`align-self`.
+
+---
+
+## 9. Flexbox vs Related Concepts
+
+| Concept | Best for | Dimensionality |
+|---|---|---|
+| **Flexbox** | Distributing items along one axis, especially with unknown/variable count or size | One-dimensional |
+| **CSS Grid** | Defining an explicit, intentional row/column structure | Two-dimensional |
+| **Multi-column (`columns`)** | Flowing long-form text/content down columns (like a newspaper) | Content-flow, not item-based |
+| **Normal flow / block layout** | Simple stacked document content with no distribution needs | One-dimensional, non-distributive |
+
+Rule of thumb: if you're *defining structure*, use Grid. If you're *distributing items* whose count or size you don't fully control, use flexbox.
+
+---
+
+## 10. Performance Implications
+
+- Flexbox layout calculations are generally cheap, but deeply nested flex containers (flex-in-flex-in-flex) increase layout recalculation cost on resize/reflow.
+- Changing `flex-basis`, `flex-grow`, or `flex-direction` via JS on every frame (e.g. in an animation) forces layout, not just paint — prefer `transform` for animated movement instead of animating flex properties directly.
+- `align-items: stretch` (the default) can cause unexpected reflows when child content size changes dynamically, since siblings' heights are interdependent.
+
+---
+
+## 11. Browser & Runtime Support Notes
+
+- Flexbox itself has been fully supported in all evergreen browsers for years — there is no meaningful compatibility concern in a 2026 project.
+- `gap` in flex containers is also fully supported in all current evergreen browsers — safe to use without fallbacks.
+- The only realistic legacy concern is very old, no-longer-relevant browser versions (pre-2020), which are not a practical target for any modern React/Next.js project.
+
+---
+
+## 12. Accessibility Implications
+
+- `order` and any visual reordering via flexbox changes paint order only — screen readers and keyboard tab order still follow DOM source order, which can create a mismatch between what's seen and what's announced/focused.
+- If you visually reorder content with flexbox, verify the DOM order still makes sense read linearly — don't rely on visual order alone for comprehension.
+- `flex-direction: row-reverse` / `column-reverse` have the same caveat — visual order flips, logical/DOM order does not.
+- Ensure focus outlines remain visible when flex alignment (e.g. `align-items: center`) causes elements to sit close together — don't let tight gap values clip focus rings.
+
+---
+
+## 13. Security Implications
+
+- Flexbox itself carries no direct security surface. The only adjacent concern is layout-based UI redress (e.g. using flex/z-index tricks to visually disguise or overlay interactive elements) — a general clickjacking-adjacent pattern, not something specific to flexbox's mechanics.
+
+---
+
+## 14. Quick Code Reference
+
+```css
+.container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  align-content: stretch;
+  gap: 16px;
+}
+
+.item {
+  order: 0;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 200px;
+  /* shorthand: flex: 1 1 200px; */
+  align-self: auto;
+}
+```
+
+---
+
+## 15. Rapid-Fire Interview One-Liners
+
+- Flexbox is one-dimensional; Grid is two-dimensional.
+- `justify-content` = main axis. `align-items` = cross axis.
+- `flex-basis: auto` uses content size; `flex-basis: 0` ignores it.
+- `flex: 1` = `1 1 0%`. `flex: auto` = `1 1 auto`. `flex: none` = `0 0 auto`.
+- Flex items have an implicit `min-width: auto` floor that blocks shrinking below content size.
+- `order` changes paint order only, never DOM/focus/reading order.
+- `align-content` only matters once there's more than one flex line.
+- `gap` replaced margin hacks for spacing — no reason to use the old pattern now.
+- `flex-direction: column` rotates which property controls which axis, not the properties themselves.
+- If items overflow, `justify-content` has nothing to distribute and appears to do nothing.
+
+---
+
+## 16. In React/Next.js Projects
+
+- **Reusable card/list components are the #1 place `min-width: auto` bites** — a `Card` or `ListItem` component tested with short placeholder text looks correct, then overflows in production with real, longer user-generated content. Add `min-width: 0` to text wrappers proactively.
+- **Responsive direction flips (`flex-col md:flex-row` in Tailwind) silently change which axis your alignment utilities act on** — `justify-between` and `items-center` need to be re-verified at each breakpoint, not assumed to carry over.
+- **Conditional flex classes tied to component state** (sidebar collapse, toolbar reflow) mean the main/cross axis itself can change at runtime — treat direction changes as a layout-logic decision, not a pure style toggle.
+- **`flex-1` used as a blanket fix across a component tree** often masks an actual missing `min-width: 0` or unset `flex-basis` rather than solving the real distribution problem — a common code-review smell in PRs.
+- **Server-rendered layouts with dynamic content length** (Next.js pages pulling from a CMS or API) are especially exposed to the min-width overflow bug, since content length is unknown at build time and often under-tested in review.
+- **Design systems built with Tailwind's flex utilities** should standardize on `gap-*` classes for spacing between flex children rather than mixing in `space-x-*`/margin utilities, to avoid double-spacing bugs when components are composed together.
+
+---
+
+## 17. In the AI Era
+
+- **AI assistants reliably generate valid flex syntax but consistently omit `min-width: 0`** on text-containing items, because the model has no visibility into your actual production content length — it optimizes for the example it inferred, not your real data.
+- **AI-generated card/list components often pass a surface-level glance review** because the CSS is syntactically correct; the bug only appears once real, longer content is rendered, which a quick code review with short test data won't catch.
+- **AI tools frequently default to `flex: 1` everywhere** as a generic "make it fill space" fix, without distinguishing whether the intended behavior actually needed `flex: 1 1 auto` or an explicit basis — subtly wrong final sizing that still "looks fine" in a quick check.
+- **When prompting an AI assistant for a flex layout, explicitly state content constraints** — whether text is dynamic/long, whether wrapping is desired, whether truncation is required — since without that context the assistant defaults to whatever is valid for a short example.
+- **Reviewing AI-generated flexbox CSS requires checking for missing invisible defaults**, not typos — `min-width`, `flex-basis`, and `align-content` (in wrapped layouts) are the three most common silent omissions.
+- **This knowledge doesn't become obsolete because AI can write the syntax** — the model can produce valid CSS instantly, but only a developer who understands the grow/shrink/basis algorithm and the min-width default can tell the difference between code that looks right and code that's actually correct for real data.
+
+---
+
+*Foundations Done Right — Flexbox reference complete.*
