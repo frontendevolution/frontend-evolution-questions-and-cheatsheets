@@ -1270,7 +1270,7 @@
     
     Note that while render props are a powerful pattern, React's Hooks API (introduced in React 16.8) provides an alternative and often more concise way to achieve similar functionality, especially when it comes to sharing stateful logic and behavior between components.
     
-- Explain in detail what are different lifecycle methods with code
+51. **Explain in detail what are different lifecycle methods with code**
     
     In React, **lifecycle methods** are special methods that allow you to hook into different stages of a component's lifecycle, from its creation to its rendering and eventual removal from the DOM. Some of these methods are considered "legacy" because they were used in class components, but with the introduction of React Hooks, functional components can replicate the behavior of these methods using the `useEffect` hook. Below, I'll explain the different lifecycle methods along with examples in both class components and functional components using hooks.
     
@@ -1412,7 +1412,7 @@
     
     As of my last update in September 2021, the class-based lifecycle methods are considered "legacy" because functional components with hooks provide a more consistent and concise way to manage component lifecycles and side effects. However, the class-based lifecycle methods are still relevant in existing projects and for understanding the history of React development.
     
-- console log output interview questions based on lifecycle methods
+52. **console log output interview questions based on lifecycle methods**
     
     Certainly! Here are some interview-style questions related to console.log output based on React's lifecycle methods:
     
@@ -1585,7 +1585,7 @@
     
     Remember that these questions and examples are meant to help you understand the sequence and behavior of lifecycle methods or their equivalent hooks in different scenarios. Always consider the specific context of the component and the order in which methods are called to accurately predict the console output.
     
-- Explain in detail What are the different hooks
+53. **Explain in detail What are the different hooks**
     
     React Hooks are a set of functions introduced in React 16.8 that allow you to use state and other React features without writing a class. Hooks provide a more concise and consistent way to manage state, side effects, and other React features in functional components. Here's a detailed explanation of the most commonly used React Hooks:
     
@@ -1777,7 +1777,7 @@
     
     commonly used React Hooks, each serving a specific purpose in enhancing functional components with state management, side effects, and more. By using hooks, you can simplify your component code, improve reusability, and make your React codebase more consistent.
     
-- Explain in detail useEffect
+54. **Explain in detail useEffect**
     
     The `useEffect` hook in React is a fundamental hook that allows you to perform side effects in functional components. Side effects are operations that have an impact outside the scope of the component rendering, such as data fetching, DOM manipulation, subscribing to services, and more. `useEffect` is a replacement for lifecycle methods like `componentDidMount`, `componentDidUpdate`, and `componentWillUnmount` in class components. It provides a cleaner and more streamlined way to manage side effects in functional components.
     
@@ -1873,7 +1873,7 @@
     
     In summary, the `useEffect` hook is a versatile tool for managing side effects in functional components. It helps maintain clean, readable code while efficiently handling various asynchronous tasks and interactions with external resources.
     
-- Explain in detail What is use of useMemo
+55. **Explain in detail What is use of useMemo**
     
     The `useMemo` hook is used in React to optimize the performance of functional components by memoizing the results of expensive calculations. It prevents unnecessary recalculations of values that depend on certain inputs or props. This hook is particularly helpful when dealing with computations that are time-consuming or resource-intensive, as it helps avoid redundant calculations and improves the overall efficiency of your application.
     
@@ -1937,7 +1937,7 @@
     
     Remember that while `useMemo` is a powerful optimization tool, it's important to avoid premature optimization. Use it when you identify actual performance bottlenecks and measure the impact of using `useMemo` versus not using it.
     
-- Explain in detail use of usecallback
+56. **Explain in detail use of usecallback**
     
     The `useCallback` hook in React is used to optimize the performance of functional components by memoizing functions. It prevents unnecessary re-creations of functions, which can lead to unnecessary re-renders of child components. This hook is particularly useful when dealing with callbacks that are passed as props to child components, as it helps avoid unnecessary component updates due to new function references.
     
@@ -2022,7 +2022,7 @@
     
     However, remember that while `useCallback` is a useful optimization tool, it's important to use it judiciously. Focus on optimizing functions that are likely to cause re-renders in child components due to new function references.
     
-- Explain in detail react.memo
+57. **Explain in detail react.memo**
     
     `React.memo` is a higher-order component (HOC) provided by React that is used to optimize the performance of functional components by preventing unnecessary re-renders. It's similar to the `PureComponent` class component, but it's applied to functional components. `React.memo` works by memoizing the rendered output of the component, and if the props haven't changed, it returns the cached result, thus avoiding rendering the component again.
     
@@ -2098,8 +2098,7 @@
     
     However, avoid prematurely optimizing every component with `React.memo`. Focus on components that actually contribute to performance issues and measure the impact of using `React.memo` versus not using it.
     
-- Explain in detail how can we write our own memoization function
-    
+58. **Explain in detail how can we write our own memoization function**    
     Writing your own memoization function can be helpful when you want to optimize the performance of specific calculations or functions that are frequently called with the same input parameters. Memoization involves caching the results of function calls based on their input parameters, so that if the same parameters are provided again, the cached result can be returned instead of recomputing the function.
     
     Here's a step-by-step guide to writing your own memoization function:
@@ -2163,7 +2162,7 @@
     
     While writing your own memoization function can be a great learning exercise, keep in mind that modern JavaScript libraries and frameworks often provide built-in memoization utilities that handle various edge cases and optimizations.
     
-- Explain in detail how to create custom hook for input
+59. **Explain in detail how to create custom hook for input**
     
     Creating a custom hook for managing input fields in React can be a helpful way to encapsulate input-related logic and state management, making it easier to reuse across multiple components. Let's walk through the steps to create a custom hook for input handling:
     
@@ -2323,7 +2322,7 @@
     **In Summary:**
     Higher-Order Components are a powerful way to enhance and compose components in React. They promote code reusability and encapsulation, making your codebase more maintainable and efficient. While they can be incredibly useful, it's important to understand their caveats and consider other patterns as well.
     
-- Explain in detail compound component pattern
+60. **Explain in detail compound component pattern**
     
     The Compound Component Pattern is a design pattern used in React to create components that manage and encapsulate a group of related sub-components. It allows you to compose and control multiple components together while keeping them closely related in terms of functionality. This pattern promotes code organization, reusability, and clear separation of concerns.
     
@@ -2383,7 +2382,7 @@
     
     The Compound Component Pattern helps to keep related functionality organized and encourages better code reuse. It also provides a clean and intuitive way for users of your components to understand their intended usage and behavior.
     
-- Explain in detail How react router works
+61. **Explain in detail How react router works**
     
     React Router is a popular library that enables navigation and routing in React applications, allowing you to build single-page applications (SPAs) with multiple views or pages. It provides a way to manage the application's URL and map it to different components, providing a seamless user experience without full-page reloads. React Router is built on top of React's component architecture and leverages its declarative approach.
     
@@ -2501,7 +2500,7 @@
     
     In summary, React Router allows you to create a smooth and navigable user experience within your React applications. It enables you to define routes, navigate between views, and manage the application's URL structure, all while leveraging React's component-based architecture.
     
-- interview questions related to react router with answers
+62. **interview questions related to react router with answers**
     
     Sure, here are some interview questions related to React Router along with their answers:
     
@@ -2547,7 +2546,7 @@
     
     Remember that these answers provide a basic understanding of each question. For an interview, it's important to have a deep understanding of React Router's concepts and features, as well as practical experience with implementing routing in React applications.
     
-- Explain in detail How redux works
+63. **Explain in detail How redux works**
     
     Redux is a predictable state management library for JavaScript applications, commonly used with React but also compatible with other UI libraries or frameworks. It provides a centralized way to manage the state of your application, making it easier to maintain and debug complex applications by enforcing a unidirectional data flow. Redux follows the Flux architecture pattern and is based on three main principles: a single source of truth, read-only state, and changes through pure functions.
     
@@ -2578,7 +2577,7 @@
     
     In summary, Redux provides a structured approach to managing state in JavaScript applications by enforcing a clear flow of data and changes. It emphasizes a single source of truth and immutability, making it easier to reason about the behavior of your application. While Redux adds some complexity upfront, it becomes immensely valuable as your application grows and state management becomes more complex.
     
-- Explain in detail what is the need of middlewares in redux
+64. **Explain in detail what is the need of middlewares in redux**
     
     Middlewares in Redux serve as a powerful extension point that allow you to add extra functionality to the dispatching of actions and handling of the state change process. They provide a way to intercept and modify actions and enable asynchronous operations, logging, API calls, and more without cluttering your reducers or components with complex logic. Here's a detailed explanation of why middlewares are needed in Redux:
     
@@ -2605,7 +2604,7 @@
     
     In conclusion, middlewares in Redux serve as a crucial tool for adding various types of behavior and capabilities to your application's state management process. They address many challenges that arise when dealing with asynchronous operations, side effects, and cross-cutting concerns, making your Redux codebase more maintainable, clean, and efficient.
     
-- Explain in detail what are error boundaries with example
+65. **Explain in detail what are error boundaries with example**
     
     Error boundaries are a feature in React that allow you to capture and handle errors that occur during rendering or within the lifecycle methods of a component's subtree. They provide a way to prevent the entire application from crashing due to a single component's error. Error boundaries are implemented using special error boundary components and the `componentDidCatch` lifecycle method.
     
@@ -2675,7 +2674,7 @@
     
     Remember that error boundaries only catch errors that occur during rendering or within lifecycle methods. They do not catch errors that occur in event handlers, asynchronous operations, or outside of the component tree. To handle those cases, you would still need to use standard error handling techniques, such as `try`/`catch` blocks or error-handling libraries.
     
-- Explain in detail how to optimize react component
+66. **Explain in detail how to optimize react component**
     
     Optimizing React components is crucial for improving the performance and user experience of your application. Optimization techniques aim to reduce unnecessary renders, improve rendering speed, and optimize memory usage. Here are several strategies you can use to optimize your React components:
     
@@ -2710,7 +2709,7 @@
     
     Remember that optimization should be based on specific use cases and profiling results. Not all components require the same level of optimization, so focus on the parts of your application that have the most impact on performance.
     
-- Explain in detail what is difference between SSG and SSR
+67. **Explain in detail what is difference between SSG and SSR**
     
     SSG (Static Site Generation) and SSR (Server-Side Rendering) are two popular techniques used in web development to optimize performance and enhance user experience, particularly in the context of modern frontend frameworks like React, Vue, and Next.js. Let's delve into the differences between SSG and SSR:
     
@@ -2747,7 +2746,7 @@
     
     In some cases, you might want to combine both techniques. For example, you can use SSG for the majority of pages to achieve fast loading times and SEO benefits, while using SSR for specific pages that require real-time data. Next.js, a popular React framework, supports both SSG and SSR, giving you the flexibility to choose the best approach for each part of your application.
     
-- Explain in detail what is tree shaking
+68. **Explain in detail what is tree shaking**
     
     Tree shaking is a process in modern JavaScript bundlers, like Webpack and Rollup, that eliminates unused or dead code from your final bundle. It helps reduce the size of the bundle by removing functions, classes, and variables that are imported but never actually used in your application. This optimization technique is particularly important for optimizing the performance of web applications.
     
@@ -2772,7 +2771,7 @@
     
     In summary, tree shaking is a powerful optimization technique that helps remove unused code from your JavaScript bundles, resulting in smaller bundle sizes and improved application performance. By using ES6 module syntax and relying on static analysis, you can take advantage of tree shaking to optimize your codebase.
     
-- Explain in detail what are service workers and its usecases
+69. **Explain in detail what are service workers and its usecases**
     
     Service workers are a type of JavaScript worker that run separately from the main browser thread, acting as a proxy between the web application, the browser, and the network. They provide powerful capabilities for enabling various features in web applications, particularly related to offline support, caching, and background tasks. Service workers are a core component of Progressive Web Apps (PWAs) and can greatly enhance the user experience.
     
@@ -2803,7 +2802,7 @@
     
     In summary, service workers are a powerful tool for creating Progressive Web Apps and enhancing web applications with offline support, caching, background tasks, push notifications, and more. They provide developers with the ability to build responsive and engaging web experiences that rival those of native applications.
     
-- Explain in detail about prototypes
+70. **Explain in detail about prototypes**
     
     Prototypes are a fundamental concept in JavaScript's object-oriented programming model. They play a central role in how inheritance and object sharing work in the language. Understanding prototypes is crucial for mastering JavaScript's object-oriented capabilities. Let's explore prototypes in detail:
     
@@ -2885,7 +2884,7 @@
     
     In summary, prototypes are the foundation of JavaScript's object-oriented nature. They provide a mechanism for objects to inherit properties and methods from other objects, allowing for code reusability and creating a hierarchy of related objects. Understanding how prototypes work is essential for effective JavaScript programming.
     
-- Explain in detail what is next js, gatsby and how it is useful as compared to react
+71. **Explain in detail what is next js, gatsby and how it is useful as compared to react**
     
     **Next.js:**
     Next.js is a popular React framework designed for building server-rendered React applications and static websites. It provides a set of tools and conventions that make it easy to create dynamic and performant web applications. Next.js is built on top of React and offers features like server-side rendering (SSR), static site generation (SSG), routing, and more.
@@ -2923,7 +2922,7 @@
     
     In summary, Next.js and Gatsby are two powerful frameworks that extend React's capabilities and simplify various aspects of web development. Choosing between them depends on your specific project requirements, such as the need for server rendering, data fetching, and the type of website you're building.
     
-- Can we update state using context?
+72. **Can we update state using context?**
     
     In React, you cannot directly update the state of a component using context. The purpose of the context API is to provide a way to pass data down the component tree to descendants, not to directly modify state. State in React components should be managed within the component itself or through a state management library like Redux or Mobx.
     
@@ -2985,7 +2984,7 @@
     
     So, to update state within the context, you provide functions within the context provider that can modify the state, and components that consume the context can use those functions to trigger updates. Directly modifying the state from outside the provider is not a recommended practice in React.
     
-- What are Hooks?
+73. **What are Hooks?**
     
     Hooks are a feature introduced in React 16.8 to allow functional components to have state, lifecycle features, and other functionalities that were previously available only in class components. Hooks enable developers to write complex logic in functional components without using classes, making code more concise, readable, and reusable.
     
@@ -3032,7 +3031,7 @@
     
     Hooks have significantly enhanced React's capabilities and development practices, providing a more functional and efficient way to manage state and side effects in modern React applications.
     
-- What is need of hooks?
+74. **What is need of hooks?**
     
     Hooks were introduced in React to address several issues and limitations associated with class components and class-based state management. Here are the primary needs that hooks fulfill:
     
@@ -3057,7 +3056,7 @@
     
     Overall, hooks were introduced to enhance the development experience, improve code organization, promote reusability, and allow functional components to have state and side effects. They have become an essential part of modern React development and have significantly influenced the way developers write and structure React applications.
     
-- Conditional rendering in react
+75. **Conditional rendering in react**
     
     Conditional rendering in React refers to the ability to conditionally display components or elements based on certain conditions. It allows you to control the UI output dynamically, depending on the state of your application or other variables. There are several ways to achieve conditional rendering in React:
     
@@ -3140,7 +3139,7 @@
     
     These are some common ways to implement conditional rendering in React. Depending on your application's complexity and requirements, you might choose the one that best suits your needs. Always ensure to use meaningful conditions to keep your code clear and maintainable.
     
-- List rendering in react
+76. **List rendering in react**
     
     In React, list rendering refers to the process of rendering a list of elements or components dynamically based on an array of data. It allows you to create multiple instances of a component or element by iterating over an array and generating content for each item in the array. React provides several ways to achieve list rendering:
     
@@ -3210,7 +3209,7 @@
     
     List rendering is a powerful feature in React that allows you to dynamically generate content based on data, making your components more flexible and reusable. When rendering lists, always remember to use a unique `key` prop and ensure that the key is stable across renders to optimize performance.
     
-- What is potential bug if we use index as keys
+77. **What is potential bug if we use index as keys**
     
     Using the index as keys in React can lead to potential bugs and performance issues in certain scenarios. While it might seem convenient at first, it's not recommended to use the index as keys, especially when dealing with dynamic lists and frequent updates. Here are some potential issues:
     
@@ -3241,7 +3240,7 @@
     
     By using stable and unique keys, you can ensure that your list rendering is reliable, performant, and less prone to bugs caused by incorrect updates or reordering.
     
-- Class component lifecycle method
+78. **Class component lifecycle method**
     
     In React class components, you have access to several lifecycle methods that allow you to perform specific actions at different stages of a component's life. These methods help you manage component initialization, rendering, updates, and unmounting. However, with the introduction of React Hooks, functional components can also achieve similar functionality using hooks like `useEffect`.
     
@@ -3258,7 +3257,7 @@
     
     Please note that the above lifecycle methods are based on the traditional React class components. With the increasing popularity of functional components and React Hooks, many developers are moving away from using class components and adopting functional components with hooks like `useEffect`, `useState`, `useContext`, etc., for managing state and lifecycle-related functionalities. If you are starting a new project or working with the latest versions of React, consider using functional components with hooks for a more concise and modern approach.
     
-- Context API and how to use it
+79. **Context API and how to use it**
     
     The Context API is a feature in React that allows you to pass data through the component tree without having to pass props manually at every level. It's particularly useful when you have data that needs to be accessed by multiple components at different levels of the component tree.
     
@@ -3351,7 +3350,7 @@
     
     Using the Context API can help simplify the data flow in your React applications and avoid excessive prop drilling. However, keep in mind that the Context API is best suited for managing global data or data that is shared across a large portion of your application. For smaller, localized state management, consider using React's built-in state or a state management library like Redux.
     
-- Hooks for lifecycle methods
+80. **Hooks for lifecycle methods**
     
     In React, you can achieve similar functionality to class component lifecycle methods using React Hooks in functional components. The most commonly used hook for this purpose is the `useEffect` hook. `useEffect` allows you to perform side effects in functional components, such as fetching data, subscribing to events, or cleaning up resources. It replaces the functionality of `componentDidMount`, `componentDidUpdate`, and `componentWillUnmount` lifecycle methods.
     
@@ -3442,7 +3441,7 @@
     
     By using the `useEffect` hook, you can handle the component's lifecycle-related functionalities in functional components in a more concise and modern way. It's important to remember that `useEffect` can replace multiple lifecycle methods, but you may need to manage the side effects and cleanup explicitly depending on your use case.
     
-- What is need of hooks
+81. **What is need of hooks**
     
     React Hooks were introduced to address several pain points and limitations associated with using class components. Here are some key reasons why React Hooks were introduced and their benefits:
     
@@ -3457,7 +3456,7 @@
     
     Overall, React Hooks simplify state management, reduce boilerplate, improve performance, and encourage functional programming practices. While class components are still fully supported in React, Hooks provide a more modern and efficient way of building components and are now the preferred approach in most new React projects.
     
-- `useRef`
+82. **`useRef`**
     
     In React, the `useRef` hook allows you to create a mutable reference to a DOM element or any value that persists across renders. It is particularly useful for accessing and modifying DOM elements, managing focus, and caching values without triggering a re-render. The `useRef` hook is an alternative to using the `ref` attribute with class components.
     
@@ -3518,7 +3517,7 @@
     
     Keep in mind that `useRef` is not just for DOM elements; it can be used to store any mutable value that should persist across renders. Also, remember that `useRef` values should not be directly used to trigger re-renders or be relied upon for storing the latest state; for that, you should use `useState`.
     
-- Explain useState useContext and useEffect and how are they related to lifecycle methods componentDidMount, componentDidUpdate and componentDidUnmount
+83. **Explain useState useContext and useEffect and how are they related to lifecycle methods componentDidMount, componentDidUpdate and componentDidUnmount**
     
     `useState`, `useContext`, and `useEffect` are three of the most commonly used React Hooks that serve different purposes and have their relation to class component lifecycle methods.
     
@@ -3610,7 +3609,7 @@
     
     In summary, `useState`, `useContext`, and `useEffect` are React Hooks that allow functional components to handle state management, consume data from context, and manage side effects, respectively. They replace the functionality of class component lifecycle methods, making it easier to manage the component's behavior and improve code organization.
     
-- Pure components
+84. **Pure components**
     
     In React, a "Pure Component" is a class component that automatically performs a shallow comparison of its props and state to determine whether it needs to re-render or not. When a Pure Component is updated and its props or state haven't changed (based on a shallow comparison), React skips the re-rendering process, preventing unnecessary updates and rendering optimizations.
     
@@ -3642,7 +3641,7 @@
     
     As a general rule, use Pure Components when the props and state of a component are simple, and its rendering depends solely on the shallow comparison of its props. For more complex scenarios, you might still need to implement custom `shouldComponentUpdate` logic or consider using React's `memo` Higher-Order Component (HOC) or the `useMemo` hook for functional components.
     
-- React memo
+85. **React memo**
     
     `React.memo` is a Higher-Order Component (HOC) or a React Hook that provides a performance optimization by preventing unnecessary re-renders of functional components. It works similarly to `React.PureComponent` for class components, but it is designed specifically for functional components.
     
@@ -3736,7 +3735,7 @@
     
     Remember that `useCallback` is not always necessary. Only use it when you notice performance issues related to function recreation and unnecessary re-renders of child components. Otherwise, focus on optimizing other parts of your application first, and then consider using `useCallback` if needed.
     
-- useMemo
+86. **useMemo**
     
     `useMemo` is a React Hook that is used to memoize the result of a function call and cache it so that it is not recomputed on every render, especially when the computation is expensive or time-consuming. It is used to optimize performance by preventing unnecessary re-computation of values.
     
@@ -3771,7 +3770,7 @@
     
     Also, consider whether `useMemo` is necessary, as it adds some overhead. If you are unsure whether to use `useMemo`, you can first implement your component without it and then profile the performance to identify potential bottlenecks. If you notice that specific computations are causing performance issues, that's when you can consider using `useMemo` to optimize those specific parts of your component.
     
-- Difference between useMemo and useCallback
+87. **Difference between useMemo and useCallback**
     
     Both `useMemo` and `useCallback` are React Hooks that are used to optimize performance by memoizing values and functions, respectively. While they share similarities, they have different use cases and purposes.
     
@@ -3821,7 +3820,7 @@
     
     In summary, `useMemo` and `useCallback` are useful tools for optimizing functional components in React. `useMemo` is used to memoize values, and `useCallback` is used to memoize functions. Choose the one that suits your specific use case: `useMemo` for memoizing the result of a function and `useCallback` for memoizing functions themselves, especially when they are used as props or dependencies in other parts of your component.
     
-- How to share components across components
+88. **How to share components across components**
     
     In React, there are several ways to share components across multiple components. Sharing components helps you reuse code, keep a consistent UI, and improve maintainability. Here are some common approaches to achieve component sharing:
     
@@ -3932,7 +3931,7 @@
     
     These are just a few ways to share components across multiple components in React. Depending on your project's structure and requirements, you can choose the approach that best fits your needs. Each method has its advantages, and the choice depends on the level of reusability and customization you require.
     
-- How to share logic across components
+89. **How to share logic across components**
     
     To share logic across components in React, you have several options depending on the complexity and reusability of the logic. Here are some common techniques to achieve this:
     
@@ -4077,7 +4076,7 @@
     
     Choose the approach that best suits your use case and the level of reusability and complexity you require. Higher-Order Components, Render Props, and Custom Hooks all provide ways to share logic across components and promote code reusability and maintainability in your React applications.
     
-- What is redux and how does it work
+90. **What is redux and how does it work**
     
     Redux is an open-source state management library for JavaScript applications, commonly used with React, but it can be used with any other UI library or framework. Redux helps manage the state of an application and provides a predictable and centralized way to handle data and state changes.
     
@@ -4155,7 +4154,7 @@
     
     This is a basic overview of how Redux works. As your application grows, you can add more actions, reducers, and store middleware to handle more complex state management scenarios. Redux provides a predictable and structured way to manage state in your application, making it easier to reason about and maintain.
     
-- How to choose between context and redux
+91. **How to choose between context and redux**
     
     Choosing between React Context and Redux depends on the specific needs and complexity of your application. Both Context and Redux are state management solutions, but they have different strengths and use cases. Here are some factors to consider when making your decision:
     
@@ -4182,7 +4181,7 @@
     
     Ultimately, both Context and Redux are powerful tools, and the decision should be based on your specific project requirements and team familiarity with the technologies. In some cases, you might even use a combination of both to leverage the strengths of each approach in different parts of your application.
     
-- Redux store?
+92. **Redux store?**
     
     In Redux, the "store" is a centralized container that holds the entire state of a React application. It is the single source of truth for the application's state, and all components can access the state through the store. The store is a fundamental concept in Redux, and it plays a crucial role in managing and updating the application's state in a predictable way.
     
@@ -4241,7 +4240,7 @@
     
     The Redux store provides a powerful and predictable way to manage the state of your application, making it easier to reason about data flow and state changes. However, Redux might add some additional complexity compared to simpler state management solutions like React Context. Therefore, it's essential to evaluate whether Redux is the right fit for the complexity and size of your application.
     
-- Actions in redux
+93. **Actions in redux**
     
     In Redux, "actions" are plain JavaScript objects that represent an intention to change the state of the application. Actions are the only way to modify the state in a Redux store. They describe what type of change should be made and, optionally, include additional data (payload) required to make the change.
     
@@ -4297,7 +4296,7 @@
     
     Actions in Redux provide a clear and structured way to describe state changes in the application. By dispatching actions, you ensure that all state modifications occur through a central point (the store), making it easier to manage and track changes to the state. This predictability and centralization of state management are some of the main reasons Redux is widely used for state management in complex React applications.
     
-- What are action creators in redux
+94. **What are action creators in redux**
     
     In Redux, action creators are functions that create and return action objects. They provide a convenient way to encapsulate the process of creating actions with specific types and payloads. Instead of manually creating an action object each time you want to dispatch an action, you can use action creators to generate the action objects for you.
     
@@ -4357,7 +4356,7 @@
     
     Using action creators helps keep your codebase organized and improves the maintainability of your Redux application. It also encourages consistent action creation across different parts of your application, making it easier to reason about state changes and manage your application's state effectively.
     
-- What are reducers
+95. **What are reducers**
     
     In Redux, reducers are pure functions that specify how the application's state should change in response to dispatched actions. Reducers take the current state and an action as input and return a new state that reflects the desired changes based on the action's type and payload.
     
@@ -4407,7 +4406,7 @@
     
     Reducers play a fundamental role in Redux as they dictate how the state changes in response to actions. By maintaining the immutability of the state and using pure functions, reducers provide a predictable and reliable way to manage the state of your Redux application.
     
-- How the control flows in redux
+96. **How the control flows in redux**
     
     In Redux, the control flow follows a specific pattern to manage state changes and data flow in a predictable manner. The key components involved in the control flow are actions, reducers, and the Redux store. Here's how the control flows in Redux:
     
@@ -4436,7 +4435,7 @@
     
     The strict unidirectional data flow and the centralization of state management in the Redux store make it easier to reason about the application's data flow and state changes, especially in complex applications with multiple components that depend on shared state. Additionally, Redux provides a reliable mechanism to track state changes, making it easier to debug and maintain the application's state.
     
-- Connect function in react redux library
+97. **Connect function in react redux library**
     
     In the React Redux library, the `connect` function is a higher-order function used to connect a React component to the Redux store. It enables the component to access the state from the store and dispatch actions to update the state.
     
@@ -4487,7 +4486,7 @@
     
     By using the `connect` function, the connected component automatically re-renders whenever the relevant state in the store changes, ensuring that the UI reflects the latest state of the application.
     
-- Why should we dispatch action and not update store directly in redux
+98. **Why should we dispatch action and not update store directly in redux**
     
     In Redux, actions should be dispatched and not update the store directly because following this pattern ensures a predictable and reliable state management flow. Directly updating the store without using actions and reducers can lead to several issues:
     
@@ -4499,7 +4498,7 @@
     
     Using actions and reducers to manage state changes in Redux provides a clear and structured approach to state management. It ensures that state updates follow a predictable flow and makes it easier to reason about data flow and state changes in your application. Directly updating the store would bypass this flow and could lead to unexpected and difficult-to-debug issues. Therefore, it is strongly recommended to dispatch actions to update the Redux store and rely on reducers to handle the state changes in a controlled and predictable manner.
     
-- In reducer why should we return new object and not update existing one
+99. **In reducer why should we return new object and not update existing one**
     
     In Redux, reducers should return a new object representing the updated state, and not modify the existing state directly. This is because Redux relies on immutability to ensure predictable state management and avoid unintended side effects. Mutating the existing state directly could lead to several issues:
     
@@ -4532,7 +4531,7 @@
     
     By returning a new state object, you ensure that the state updates are predictable, traceable, and avoid potential issues related to state mutability. This immutability is a key principle in Redux and contributes to its reliable and consistent state management.
     
-- How to use usecallback for function that is passed down to child
+100. **How to use usecallback for function that is passed down to child**
     
     In React, the `useCallback` hook is used to create a memoized version of a function that only changes if one of its dependencies has changed. It is often used to optimize the performance of functional components by preventing unnecessary re-creations of functions, especially when passing functions as props to child components.
     
@@ -4590,7 +4589,7 @@
     
     Keep in mind that not all functions need to be memoized using `useCallback`. Only memoize functions that are passed as props to child components or used in contexts where performance optimizations are necessary. Overusing `useCallback` can lead to unnecessary complexity and reduced performance.
     
-- How do you decide to use functional or class components
+101. **How do you decide to use functional or class components**
     
     The decision to use functional components or class components in React depends on various factors. Both types of components have their own advantages and use cases. Here's how you can decide which one to use:
     
@@ -4616,7 +4615,7 @@
     
     Keep in mind that the React team has been promoting functional components and hooks as the future of React development, so it's a good idea to become familiar with them regardless of whether you decide to use class components.
     
-- Advantages of using react js over vanilla js for website
+102. **Advantages of using react js over vanilla js for website**
     
     Using React.js offers several advantages over using vanilla JavaScript for building websites. Here are some of the key benefits of using React.js:
     
@@ -4634,7 +4633,7 @@
     
     While using vanilla JavaScript is certainly possible for building websites, React's advantages in terms of code organization, performance optimization, and development speed make it a popular and powerful choice for modern web development.
     
-- Explain local storage,session storage, persistent storage
+103. **Explain local storage,session storage, persistent storage**
     
     Local Storage, Session Storage, and Persistent Storage are mechanisms available in web browsers to store data on the client side. They provide different ways to store data locally, each with its own characteristics and use cases.
     
@@ -4658,7 +4657,7 @@
     
     For more robust data storage needs, such as offline caching, advanced synchronization, and larger datasets, you might consider using technologies like IndexedDB or Web Storage API in combination with service workers. These technologies provide more advanced control over data management and synchronization between the client and server.
     
-- Cookies
+104. **Cookies**
     
     Cookies are small pieces of data that websites store on a user's browser. They are used to remember various types of information across different browsing sessions. Cookies are widely used for a variety of purposes, including user authentication, tracking user behavior, storing user preferences, and implementing features like shopping carts in e-commerce websites.
     
@@ -4685,7 +4684,7 @@
     
     It's important to note that while cookies are widely used, they have limitations. Their limited size, potential security vulnerabilities, and user privacy concerns have led to the development of alternative storage mechanisms like Local Storage and Session Storage, as well as stricter privacy regulations like the General Data Protection Regulation (GDPR) that regulate how cookies can be used to track user data.
     
-- Lifecycle of cookies, storage
+105. **Lifecycle of cookies, storage**
     
     The lifecycle of cookies and web storage (Local Storage and Session Storage) involves several stages, including creation, storage, retrieval, expiration, and removal. Here's an overview of the lifecycle for each:
     
@@ -4707,7 +4706,7 @@
     
     It's important to consider the storage solution that best fits your application's needs. Cookies are suitable for small amounts of data that need to be sent to the server with each request. Web storage is more appropriate for larger amounts of data that don't need to be sent to the server but should persist across sessions (Local Storage) or within a single session (Session Storage). Each mechanism has its own advantages and limitations, so understanding the lifecycle of each will help you choose the right one for your use case.
     
-- Security measures you take while building an application
+106. **Security measures you take while building an application**
     
     Building a secure application involves implementing various security measures to protect user data, prevent unauthorized access, and mitigate potential vulnerabilities. Here are some essential security measures to consider while building an application:
     
@@ -4756,7 +4755,7 @@
     
     Building a secure application is an ongoing process that requires vigilance, continuous monitoring, and adapting to evolving security threats. Implementing a combination of these security measures will help you create a robust and resilient application that safeguards user data and maintains the trust of your users.
     
-- Typescript benefits over javascript
+107. **Typescript benefits over javascript**
     
     TypeScript offers several benefits over JavaScript, making it a popular choice for many developers, especially in larger and more complex projects. Here are some of the key benefits of TypeScript:
     
@@ -4776,7 +4775,7 @@
     
     However, it's important to note that TypeScript introduces some additional complexity with type annotations, and there is a learning curve associated with mastering its features. For small and simple projects, JavaScript might still be the preferred choice. The decision to use TypeScript depends on the nature of the project, team expertise, and the benefits it brings to code quality, maintainability, and scalability.
     
-- What is BOM? Hierarchy of BOM
+108. **What is BOM? Hierarchy of BOM**
     
     BOM stands for Browser Object Model. It is a set of objects and APIs provided by web browsers that allows JavaScript to interact with and manipulate the browser window, document, and other browser-related features. The BOM provides JavaScript with the ability to control various aspects of the browser environment, such as opening new windows, manipulating the URL, handling user interactions, and more.
     
@@ -4795,7 +4794,7 @@
     
     It's important to note that the BOM is not standardized, so its features and behavior can vary between different browsers. Some features might be available in one browser but not in another. This variability can lead to compatibility issues when writing code that relies heavily on BOM features. To ensure cross-browser compatibility, developers often use feature detection or polyfills to handle differences between browser implementations of the BOM.
     
-- Difference between BOM/DOM
+109. **Difference between BOM/DOM**
     
     The BOM (Browser Object Model) and the DOM (Document Object Model) are two distinct concepts in web development that provide different ways to interact with the browser environment and the web page content. Here's a breakdown of the key differences between BOM and DOM:
     
@@ -4826,7 +4825,7 @@
     
     In summary, the BOM provides tools for interacting with the browser itself and managing browser-specific features, while the DOM provides a structured representation of the content within an HTML or XML document, allowing for manipulation of elements and attributes. Understanding the differences between BOM and DOM is essential for effective web development, as it helps developers choose the appropriate methods and APIs for different tasks and ensures compatibility across various browsers.
     
-- In class based components why super is called in constructor and why props are passed
+110. **In class based components why super is called in constructor and why props are passed**
     
     In class-based components in React, the `super` keyword is used in the constructor to call the constructor of the parent class (the base class). Additionally, the `props` are passed to the constructor for initializing the component's state and accessing the props within the component.
     
@@ -4863,7 +4862,7 @@
     
     In the example above, the `super(props)` call ensures that the component correctly inherits from `React.Component`, and the `props` object is used to initialize the initial state of the component. This pattern is common in class-based components to set up the component's inheritance chain and initialize its state based on the initial props.
     
-- If i use useEffect with a function that has dependencies, how to wrap that function with useCallback to ensure that useEffect runs correctly when the dependencies change.
+111. **If i use useEffect with a function that has dependencies, how to wrap that function with useCallback to ensure that useEffect runs correctly when the dependencies change.**
     
     When you use the `useEffect` hook with a function that has dependencies, you can use the `useCallback` hook to wrap that function to ensure that the function is memoized and doesn't change on every render. This is especially useful when the function is used as the effect's callback in `useEffect`, as it helps prevent unnecessary re-renders and effect executions.
     
@@ -4909,7 +4908,7 @@
     
     By wrapping the function with `useCallback`, you ensure that the function is stable and only changes when its dependencies change. This can help improve performance and prevent unexpected behavior in your components.
     
-- Difference between react and express routing
+112. **Difference between react and express routing**
     
     React and Express are both popular frameworks used in web development, but they serve different purposes and are used in different parts of the web application stack. As a result, the way routing is handled in React and Express differs significantly:
     
@@ -4931,7 +4930,7 @@
     
     In summary, React routing focuses on managing client-side navigation and rendering components based on URLs within a single-page application. It uses the `react-router` package to achieve this. Express routing, on the other hand, handles server-side logic and routing for back-end applications and APIs. It uses routing middleware to respond to requests from clients and is typically used in multi-page applications.
     
-- Redux using usedispatch and useselector
+113. **Redux using usedispatch and useselector**
     
     Sure, let's discuss using `useDispatch` and `useSelector` in a Redux-based application. These are hooks provided by the `react-redux` library, which make it easier to interact with your Redux store and dispatch actions from functional components.
     
@@ -4982,7 +4981,7 @@
     
     By combining `useDispatch` and `useSelector`, you can easily read data from the Redux store and dispatch actions to modify that data within your functional components. This is particularly useful for creating efficient and maintainable React applications when using Redux for state management.
     
-- lifting state up in react
+114. **lifting state up in react**
     
     In React, "lifting state up" is a common pattern used to manage and share state between components. This pattern is particularly useful when you have multiple components that need to access and modify the same piece of state data. By lifting the state up to a common ancestor component, you can ensure that all child components have access to and can update the shared state.
     
