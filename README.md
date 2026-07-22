@@ -26,7 +26,7 @@ This repository covers:
 4. [ CSSFlexbox](./InterviewQuestions/4.CSSFlexbox.md)
 5. [ CSSUnits](./InterviewQuestions/5.CSSUnits.md)
 6. [ CSSSelectorsSpecificity](./InterviewQuestions/6.CSSSelectorsSpecificity.md)
-7. [ CSSGrid.md](./InterviewQuestions/7.CSSGrid.md)
+7. [ CSSGrid](./InterviewQuestions/7.CSSGrid.md)
 
 ### Cheat Sheets
 1. [ HTML Document Structure](./cheatsheets/HTMLDocumentStructure.md)
@@ -35,7 +35,7 @@ This repository covers:
 4. [ CSSFlexbox](./cheatsheets/4.CSSFlexbox.md)
 5. [ CSSUnits](./cheatsheets/5.CSSUnits.md)
 6. [ CSSSelectorsSpecificity](./cheatsheets/6.CSSSelectorsSpecificity.md)
-7. [ CSSGrid.md](./cheatsheets/7.CSSGrid.md)
+7. [ CSSGrid](./cheatsheets/7.CSSGrid.md)
 
   
 ## 🎯 Goal
