@@ -4533,20 +4533,20 @@
     
 100. **How to use usecallback for function that is passed down to child**
     
-    In React, the `useCallback` hook is used to create a memoized version of a function that only changes if one of its dependencies has changed. It is often used to optimize the performance of functional components by preventing unnecessary re-creations of functions, especially when passing functions as props to child components.
+In React, the `useCallback` hook is used to create a memoized version of a function that only changes if one of its dependencies has changed. It is often used to optimize the performance of functional components by preventing unnecessary re-creations of functions, especially when passing functions as props to child components.
     
-    To use `useCallback` for a function that is passed down to a child component, follow these steps:
+To use `useCallback` for a function that is passed down to a child component, follow these steps:
     
-    1. **Import `useCallback`**:
-    Import the `useCallback` hook from the `react` library at the beginning of your functional component file.
+**Import `useCallback`** :
+Import the `useCallback` hook from the `react` library at the beginning of your functional component file.
     
     ```jsx
     import React, { useCallback } from 'react';
     
     ```
     
-    1. **Create the Function**:
-    Define the function that you want to pass down to the child component. This can be any function that you want to memoize.
+**Create the Function** :
+Define the function that you want to pass down to the child component. This can be any function that you want to memoize.
     
     ```jsx
     const MyFunction = () => {
@@ -4555,8 +4555,8 @@
     
     ```
     
-    1. **Use `useCallback`**:
-    Wrap the function using the `useCallback` hook and specify the dependencies array. The dependencies array is an optional parameter that tells React to create a new memoized version of the function only if the dependencies change.
+**Use `useCallback`**:
+Wrap the function using the `useCallback` hook and specify the dependencies array. The dependencies array is an optional parameter that tells React to create a new memoized version of the function only if the dependencies change.
     
     ```jsx
     const MyFunction = () => {
@@ -4568,9 +4568,8 @@
     };
     
     ```
-    
-    1. **Pass the Memoized Function to Child Component**:
-    Pass the `memoizedFunction` as a prop to the child component.
+**Pass the Memoized Function to Child Component**:
+Pass the `memoizedFunction` as a prop to the child component.
     
     ```jsx
     const MyFunction = () => {
@@ -4583,43 +4582,43 @@
     
     ```
     
-    By using `useCallback`, you ensure that the function is memoized and recreated only when the specified dependencies change. This optimization can be beneficial when you have a component that renders often or has child components that rely on the memoized function. It prevents unnecessary re-renders of child components due to new function instances.
+By using `useCallback`, you ensure that the function is memoized and recreated only when the specified dependencies change. This optimization can be beneficial when you have a component that renders often or has child components that rely on the memoized function. It prevents unnecessary re-renders of child components due to new function instances.
     
-    Remember that the `dependencies` array in `useCallback` is essential for achieving the correct memoization behavior. If the dependencies array is empty (`[]`), the function is memoized and never recreated. If you pass specific dependencies, the function is recreated only when those dependencies change.
+Remember that the `dependencies` array in `useCallback` is essential for achieving the correct memoization behavior. If the dependencies array is empty (`[]`), the function is memoized and never recreated. If you pass specific dependencies, the function is recreated only when those dependencies change.
     
-    Keep in mind that not all functions need to be memoized using `useCallback`. Only memoize functions that are passed as props to child components or used in contexts where performance optimizations are necessary. Overusing `useCallback` can lead to unnecessary complexity and reduced performance.
+Keep in mind that not all functions need to be memoized using `useCallback`. Only memoize functions that are passed as props to child components or used in contexts where performance optimizations are necessary. Overusing `useCallback` can lead to unnecessary complexity and reduced performance.
     
 101. **How do you decide to use functional or class components**
     
-    The decision to use functional components or class components in React depends on various factors. Both types of components have their own advantages and use cases. Here's how you can decide which one to use:
+The decision to use functional components or class components in React depends on various factors. Both types of components have their own advantages and use cases. Here's how you can decide which one to use:
     
-    Use Functional Components When:
+Use Functional Components When:
     
-    1. **Simple UI Components**: If you're creating relatively simple UI components without complex state management or lifecycle methods, functional components are often more concise and easier to read.
+   1. **Simple UI Components**: If you're creating relatively simple UI components without complex state management or lifecycle methods, functional components are often more concise and easier to read.
     2. **Hooks Usage**: Functional components are the primary choice when using React Hooks, which allow you to manage state and side effects in a more modular and reusable manner.
     3. **Performance Optimization**: Functional components with hooks can lead to better performance optimizations. Hooks like `useMemo` and `useCallback` can help prevent unnecessary re-renders and improve the efficiency of your components.
     4. **Functional Programming**: If you prefer a functional programming style and the idea of "props in, UI out," functional components align well with that mindset.
     5. **Easier Testing**: Functional components are often easier to test because they're stateless and can be tested with simple input-output scenarios.
     6. **Hooks APIs**: Some React features are only available with hooks, like the `useContext` and `useReducer` hooks, which are essential for certain types of state management.
     
-    Use Class Components When:
+Use Class Components When:
     
-    1. **Complex State and Lifecycle Management**: If you need to manage complex component state or use lifecycle methods like `componentDidMount`, `componentDidUpdate`, or `componentWillUnmount`, class components are still relevant.
+   1. **Complex State and Lifecycle Management**: If you need to manage complex component state or use lifecycle methods like `componentDidMount`, `componentDidUpdate`, or `componentWillUnmount`, class components are still relevant.
     2. **Third-Party Libraries**: Some third-party libraries or legacy codebases might expect class components due to their earlier prevalence in the React ecosystem.
     3. **Ref Usage**: If you need to work with the `ref` API directly, class components provide a more straightforward way to access refs.
     4. **HOCs or Render Props**: If you're working with higher-order components (HOCs) or render prop patterns, class components are a common choice due to their more advanced lifecycle methods.
     5. **Legacy Codebases**: In existing codebases, class components might already be in use, and transitioning to functional components might require significant changes.
     6. **Team Familiarity**: If your team is more comfortable with class components or has existing patterns based on class components, it might make sense to continue using them.
     
-    In most cases, functional components with hooks are recommended for new development due to their simplicity, better performance, and improved organization of code. However, there might still be situations where class components are more appropriate, especially when dealing with legacy codebases or specific use cases that require class component features.
+   In most cases, functional components with hooks are recommended for new development due to their simplicity, better performance, and improved organization of code. However, there might still be situations where class components are more appropriate, especially when dealing with legacy codebases or specific use cases that require class component features.
     
-    Keep in mind that the React team has been promoting functional components and hooks as the future of React development, so it's a good idea to become familiar with them regardless of whether you decide to use class components.
+   Keep in mind that the React team has been promoting functional components and hooks as the future of React development, so it's a good idea to become familiar with them regardless of whether you decide to use class components.
     
 102. **Advantages of using react js over vanilla js for website**
     
-    Using React.js offers several advantages over using vanilla JavaScript for building websites. Here are some of the key benefits of using React.js:
+Using React.js offers several advantages over using vanilla JavaScript for building websites. Here are some of the key benefits of using React.js:
     
-    1. **Component-Based Architecture**: React promotes a modular and reusable architecture through its component-based approach. Components allow you to encapsulate UI elements and their logic, making it easier to manage and maintain code.
+   1. **Component-Based Architecture**: React promotes a modular and reusable architecture through its component-based approach. Components allow you to encapsulate UI elements and their logic, making it easier to manage and maintain code.
     2. **Virtual DOM and Performance Optimization**: React utilizes a virtual DOM, which is an in-memory representation of the actual DOM. This enables React to perform efficient updates by comparing the virtual DOM with the real DOM and making minimal changes. This results in better performance and fewer unnecessary re-renders.
     3. **Declarative Syntax**: React uses a declarative syntax, where you describe how the UI should look based on the current state. This makes the code more intuitive, easier to understand, and less error-prone compared to manually manipulating the DOM.
     4. **Data Binding**: React's one-way data binding ensures a clear flow of data from parent to child components. This improves predictability and reduces unexpected side effects in your application.
@@ -4631,39 +4630,39 @@
     10. **Testing and Debugging**: React components are modular and isolated, making them easier to test in isolation. React also provides tools like React DevTools for debugging and inspecting component hierarchies.
     11. **Future-Proofing**: React is developed and maintained by Facebook and has a strong commitment to backward compatibility. This means that applications built with React are likely to receive updates and improvements over time.
     
-    While using vanilla JavaScript is certainly possible for building websites, React's advantages in terms of code organization, performance optimization, and development speed make it a popular and powerful choice for modern web development.
+   While using vanilla JavaScript is certainly possible for building websites, React's advantages in terms of code organization, performance optimization, and development speed make it a popular and powerful choice for modern web development.
     
 103. **Explain local storage,session storage, persistent storage**
     
-    Local Storage, Session Storage, and Persistent Storage are mechanisms available in web browsers to store data on the client side. They provide different ways to store data locally, each with its own characteristics and use cases.
+Local Storage, Session Storage, and Persistent Storage are mechanisms available in web browsers to store data on the client side. They provide different ways to store data locally, each with its own characteristics and use cases.
     
-    1. **Local Storage**:
+1. **Local Storage**:
         - Local Storage is a web storage solution that allows you to store key-value pairs in the user's browser with no expiration time. The data you store in Local Storage persists even after the user closes the browser or navigates away from the page.
         - It provides a larger storage capacity compared to cookies, typically around 5-10 MB per domain.
         - Local Storage is often used to store user preferences, cached data, and other information that should persist across sessions.
         - Data stored in Local Storage is accessible across different tabs or windows of the same browser.
         - Example usage: `localStorage.setItem('key', 'value');`
-    2. **Session Storage**:
+2. **Session Storage**:
         - Session Storage is similar to Local Storage, but the data stored in Session Storage is available only within the current browser tab or window and is cleared when the tab or window is closed.
         - It's useful for storing temporary data that you want to be available for the duration of the user's visit to a specific webpage.
         - Like Local Storage, Session Storage provides a way to store key-value pairs.
         - Data stored in Session Storage is isolated to the tab or window where it was created and is not accessible by other tabs or windows.
         - Example usage: `sessionStorage.setItem('key', 'value');`
-    3. **Persistent Storage**:
+3. **Persistent Storage**:
         - Persistent Storage is a more general term that encompasses both Local Storage and Session Storage. It refers to the capability of web browsers to store data on the client side for an extended period, even when the browser is closed and reopened.
         - Both Local Storage and Session Storage can be considered forms of persistent storage because they allow data to persist beyond the current session or visit.
     
-    It's important to note that while Local Storage and Session Storage are convenient for storing small amounts of data on the client side, they are not intended for storing sensitive information like passwords or critical user data. Additionally, the data stored in these mechanisms is subject to the storage limits imposed by the browser and may be cleared by the user or automatically by the browser in some cases.
+It's important to note that while Local Storage and Session Storage are convenient for storing small amounts of data on the client side, they are not intended for storing sensitive information like passwords or critical user data. Additionally, the data stored in these mechanisms is subject to the storage limits imposed by the browser and may be cleared by the user or automatically by the browser in some cases.
     
-    For more robust data storage needs, such as offline caching, advanced synchronization, and larger datasets, you might consider using technologies like IndexedDB or Web Storage API in combination with service workers. These technologies provide more advanced control over data management and synchronization between the client and server.
+For more robust data storage needs, such as offline caching, advanced synchronization, and larger datasets, you might consider using technologies like IndexedDB or Web Storage API in combination with service workers. These technologies provide more advanced control over data management and synchronization between the client and server.
     
 104. **Cookies**
     
-    Cookies are small pieces of data that websites store on a user's browser. They are used to remember various types of information across different browsing sessions. Cookies are widely used for a variety of purposes, including user authentication, tracking user behavior, storing user preferences, and implementing features like shopping carts in e-commerce websites.
+Cookies are small pieces of data that websites store on a user's browser. They are used to remember various types of information across different browsing sessions. Cookies are widely used for a variety of purposes, including user authentication, tracking user behavior, storing user preferences, and implementing features like shopping carts in e-commerce websites.
     
-    Key characteristics of cookies:
+Key characteristics of cookies:
     
-    1. **Storage**: Cookies are small text files that are stored on the user's device (browser). Each cookie typically contains a key-value pair representing the data being stored.
+   1. **Storage**: Cookies are small text files that are stored on the user's device (browser). Each cookie typically contains a key-value pair representing the data being stored.
     2. **Expiration**: Cookies can have an expiration time, which determines how long they remain on the user's device. Cookies can be set to expire when the browser session ends or at a specific date and time.
     3. **Scope**: Cookies can have different scopes:
         - Session Cookies: These are temporary cookies that are stored for the duration of the user's browsing session. They are removed when the user closes the browser.
@@ -4675,42 +4674,42 @@
     6. **Size Limit**: Cookies have a size limit (usually around 4KB per cookie) imposed by browsers. This limits the amount of data that can be stored in a single cookie.
     7. **Cross-Origin Restrictions**: Due to security concerns, cookies are subject to the same-origin policy, which restricts how cookies can be accessed by websites from different origins (domains).
     
-    Examples of cookie usage:
+Examples of cookie usage:
     
-    - **Authentication**: Cookies are often used to remember a user's login session, allowing them to stay logged in across different page visits.
-    - **Tracking and Analytics**: Cookies can be used to track user behavior and gather analytics data, helping website owners understand user interactions and preferences.
-    - **Personalization**: Websites use cookies to store user preferences, such as language settings or theme choices.
-    - **E-commerce**: Cookies are used to maintain shopping cart contents and store user-specific product recommendations.
+   - **Authentication**: Cookies are often used to remember a user's login session, allowing them to stay logged in across different page visits.
+   - **Tracking and Analytics**: Cookies can be used to track user behavior and gather analytics data, helping website owners understand user interactions and preferences.
+   - **Personalization**: Websites use cookies to store user preferences, such as language settings or theme choices.
+   - **E-commerce**: Cookies are used to maintain shopping cart contents and store user-specific product recommendations.
     
     It's important to note that while cookies are widely used, they have limitations. Their limited size, potential security vulnerabilities, and user privacy concerns have led to the development of alternative storage mechanisms like Local Storage and Session Storage, as well as stricter privacy regulations like the General Data Protection Regulation (GDPR) that regulate how cookies can be used to track user data.
     
 105. **Lifecycle of cookies, storage**
     
-    The lifecycle of cookies and web storage (Local Storage and Session Storage) involves several stages, including creation, storage, retrieval, expiration, and removal. Here's an overview of the lifecycle for each:
+The lifecycle of cookies and web storage (Local Storage and Session Storage) involves several stages, including creation, storage, retrieval, expiration, and removal. Here's an overview of the lifecycle for each:
     
-    **Cookies Lifecycle:**
+**Cookies Lifecycle:**
     
-    1. **Creation**: Cookies are created and set by a web server by including the appropriate `Set-Cookie` header in the HTTP response. The header contains the cookie's name, value, and optional attributes like expiration time, domain, and path.
+   1. **Creation**: Cookies are created and set by a web server by including the appropriate `Set-Cookie` header in the HTTP response. The header contains the cookie's name, value, and optional attributes like expiration time, domain, and path.
     2. **Storage**: Once received by the browser, cookies are stored on the user's device. They are stored in a text file associated with the browser.
     3. **Retrieval**: Whenever the user makes a request to the same domain, the browser includes the stored cookies in the request headers. This allows the server to access the stored data and provide personalized responses.
     4. **Expiration**: Cookies can have an expiration time specified when they are set. When the expiration time is reached, the browser automatically removes the expired cookies from storage.
     5. **Removal**: Cookies can be explicitly removed or deleted by the server by sending a response with the `Set-Cookie` header and an expiration date set to the past. Additionally, users can manually clear cookies from their browser settings.
     
-    **Web Storage (Local Storage and Session Storage) Lifecycle:**
+   **Web Storage (Local Storage and Session Storage) Lifecycle:**
     
-    1. **Creation**: Data is stored in Local Storage or Session Storage by using the `setItem` method, which takes a key and a value. The data is stored as key-value pairs.
+   1. **Creation**: Data is stored in Local Storage or Session Storage by using the `setItem` method, which takes a key and a value. The data is stored as key-value pairs.
     2. **Storage**: Data is stored on the user's device in the browser's storage area. Both Local Storage and Session Storage are persistent and remain even after the user closes the browser tab or navigates away from the page.
     3. **Retrieval**: Data can be retrieved from Local Storage or Session Storage using the `getItem` method by providing the key. The retrieved value can be used to populate UI elements or perform logic.
     4. **Expiration**: Unlike cookies, Local Storage data does not have an automatic expiration mechanism. It remains until it is explicitly removed by the user or cleared programmatically.
     5. **Removal**: Data can be removed from Local Storage or Session Storage using the `removeItem` method by providing the key. Alternatively, all data can be cleared using the `clear` method.
     
-    It's important to consider the storage solution that best fits your application's needs. Cookies are suitable for small amounts of data that need to be sent to the server with each request. Web storage is more appropriate for larger amounts of data that don't need to be sent to the server but should persist across sessions (Local Storage) or within a single session (Session Storage). Each mechanism has its own advantages and limitations, so understanding the lifecycle of each will help you choose the right one for your use case.
+   It's important to consider the storage solution that best fits your application's needs. Cookies are suitable for small amounts of data that need to be sent to the server with each request. Web storage is more appropriate for larger amounts of data that don't need to be sent to the server but should persist across sessions (Local Storage) or within a single session (Session Storage). Each mechanism has its own advantages and limitations, so understanding the lifecycle of each will help you choose the right one for your use case.
     
 106. **Security measures you take while building an application**
     
-    Building a secure application involves implementing various security measures to protect user data, prevent unauthorized access, and mitigate potential vulnerabilities. Here are some essential security measures to consider while building an application:
+   Building a secure application involves implementing various security measures to protect user data, prevent unauthorized access, and mitigate potential vulnerabilities. Here are some essential security measures to consider while building an application:
     
-    1. **Authentication and Authorization**:
+   1. **Authentication and Authorization**:
         - Implement strong authentication mechanisms to verify user identities. Use multi-factor authentication (MFA) for added security.
         - Use proper authorization controls to ensure users can only access the resources they are allowed to.
         - Protect sensitive operations with role-based access control (RBAC) and permissions.
@@ -4757,9 +4756,9 @@
     
 107. **Typescript benefits over javascript**
     
-    TypeScript offers several benefits over JavaScript, making it a popular choice for many developers, especially in larger and more complex projects. Here are some of the key benefits of TypeScript:
+   TypeScript offers several benefits over JavaScript, making it a popular choice for many developers, especially in larger and more complex projects. Here are some of the key benefits of TypeScript:
     
-    1. **Static Type Checking**: TypeScript introduces static typing, allowing you to declare the types of variables, parameters, and return values. This helps catch type-related errors during development, improving code quality and reducing runtime errors.
+   1. **Static Type Checking**: TypeScript introduces static typing, allowing you to declare the types of variables, parameters, and return values. This helps catch type-related errors during development, improving code quality and reducing runtime errors.
     2. **Enhanced Code Readability**: Type annotations provide clear documentation of the expected data types and structures, making the code more self-explanatory and easier to understand.
     3. **Early Detection of Errors**: TypeScript's static analysis catches errors before runtime, which can save a significant amount of time in debugging and testing phases.
     4. **Better IDE Support**: TypeScript is designed to work seamlessly with modern integrated development environments (IDEs) like Visual Studio Code. These IDEs offer enhanced code completion, intelligent suggestions, and real-time error highlighting.
@@ -4773,17 +4772,17 @@
     12. **Community and Tooling**: TypeScript has a growing community and strong tooling support. Popular libraries and frameworks often provide TypeScript type definitions, enhancing the development experience.
     13. **Active Development**: TypeScript is developed and maintained by Microsoft, which means it receives regular updates, improvements, and new features.
     
-    However, it's important to note that TypeScript introduces some additional complexity with type annotations, and there is a learning curve associated with mastering its features. For small and simple projects, JavaScript might still be the preferred choice. The decision to use TypeScript depends on the nature of the project, team expertise, and the benefits it brings to code quality, maintainability, and scalability.
+However, it's important to note that TypeScript introduces some additional complexity with type annotations, and there is a learning curve associated with mastering its features. For small and simple projects, JavaScript might still be the preferred choice. The decision to use TypeScript depends on the nature of the project, team expertise, and the benefits it brings to code quality, maintainability, and scalability.
     
 108. **What is BOM? Hierarchy of BOM**
     
-    BOM stands for Browser Object Model. It is a set of objects and APIs provided by web browsers that allows JavaScript to interact with and manipulate the browser window, document, and other browser-related features. The BOM provides JavaScript with the ability to control various aspects of the browser environment, such as opening new windows, manipulating the URL, handling user interactions, and more.
+BOM stands for Browser Object Model. It is a set of objects and APIs provided by web browsers that allows JavaScript to interact with and manipulate the browser window, document, and other browser-related features. The BOM provides JavaScript with the ability to control various aspects of the browser environment, such as opening new windows, manipulating the URL, handling user interactions, and more.
     
-    The BOM is not a standardized part of the JavaScript language like the Document Object Model (DOM) is for manipulating web content. Instead, the BOM is specific to each browser and can vary in terms of features and behavior.
+   The BOM is not a standardized part of the JavaScript language like the Document Object Model (DOM) is for manipulating web content. Instead, the BOM is specific to each browser and can vary in terms of features and behavior.
     
-    The hierarchy of the BOM typically includes the following major objects:
+   The hierarchy of the BOM typically includes the following major objects:
     
-    1. **Window Object**: The top-level object in the BOM hierarchy. It represents the browser window and serves as the global object for JavaScript in a web page. It provides methods and properties to control the browser's behavior and interact with other BOM objects.
+   1. **Window Object**: The top-level object in the BOM hierarchy. It represents the browser window and serves as the global object for JavaScript in a web page. It provides methods and properties to control the browser's behavior and interact with other BOM objects.
     2. **Navigator Object**: Represents information about the user's browser, including details about the browser name, version, platform, and whether certain features are supported.
     3. **Screen Object**: Provides information about the user's screen, such as screen dimensions, color depth, and pixel ratio.
     4. **History Object**: Represents the browser's session history, allowing you to navigate back and forth between previously visited pages.
@@ -4792,15 +4791,15 @@
     7. **XMLHttpRequest Object**: Although now largely replaced by the more modern Fetch API, the XMLHttpRequest object is part of the BOM and is used to make HTTP requests from JavaScript.
     8. **Timers**: Functions like `setTimeout` and `setInterval` are part of the BOM and allow you to schedule code execution at specific intervals.
     
-    It's important to note that the BOM is not standardized, so its features and behavior can vary between different browsers. Some features might be available in one browser but not in another. This variability can lead to compatibility issues when writing code that relies heavily on BOM features. To ensure cross-browser compatibility, developers often use feature detection or polyfills to handle differences between browser implementations of the BOM.
+   It's important to note that the BOM is not standardized, so its features and behavior can vary between different browsers. Some features might be available in one browser but not in another. This variability can lead to compatibility issues when writing code that relies heavily on BOM features. To ensure cross-browser compatibility, developers often use feature detection or polyfills to handle differences between browser implementations of the BOM.
     
 109. **Difference between BOM/DOM**
     
-    The BOM (Browser Object Model) and the DOM (Document Object Model) are two distinct concepts in web development that provide different ways to interact with the browser environment and the web page content. Here's a breakdown of the key differences between BOM and DOM:
+   The BOM (Browser Object Model) and the DOM (Document Object Model) are two distinct concepts in web development that provide different ways to interact with the browser environment and the web page content. Here's a breakdown of the key differences between BOM and DOM:
     
-    **BOM (Browser Object Model):**
+   **BOM (Browser Object Model):**
     
-    1. **Scope and Purpose**:
+   1. **Scope and Purpose**:
         - The BOM represents the browser itself and provides objects and APIs to interact with the browser window, manage navigation, control browser behavior, and handle browser-specific features.
         - It focuses on controlling the browser environment rather than manipulating the content of web pages.
     2. **Objects and Functionality**:
@@ -4811,9 +4810,9 @@
     4. **Cross-Browser Compatibility**:
         - Because the BOM is not standardized, its features and behavior can differ between browsers, which can lead to compatibility issues.
     
-    **DOM (Document Object Model):**
+   **DOM (Document Object Model):**
     
-    1. **Scope and Purpose**:
+   1. **Scope and Purpose**:
         - The DOM represents the structure and content of an HTML or XML document, providing a way to manipulate and interact with the elements and attributes within the document.
         - It focuses on presenting the document's content as a structured hierarchy of objects that can be accessed and manipulated.
     2. **Objects and Functionality**:
@@ -4823,15 +4822,15 @@
     4. **Cross-Browser Compatibility**:
         - While there can still be minor differences in DOM implementation across browsers, the standardization of the DOM helps reduce major compatibility issues compared to the BOM.
     
-    In summary, the BOM provides tools for interacting with the browser itself and managing browser-specific features, while the DOM provides a structured representation of the content within an HTML or XML document, allowing for manipulation of elements and attributes. Understanding the differences between BOM and DOM is essential for effective web development, as it helps developers choose the appropriate methods and APIs for different tasks and ensures compatibility across various browsers.
+   In summary, the BOM provides tools for interacting with the browser itself and managing browser-specific features, while the DOM provides a structured representation of the content within an HTML or XML document, allowing for manipulation of elements and attributes. Understanding the differences between BOM and DOM is essential for effective web development, as it helps developers choose the appropriate methods and APIs for different tasks and ensures compatibility across various browsers.
     
 110. **In class based components why super is called in constructor and why props are passed**
     
-    In class-based components in React, the `super` keyword is used in the constructor to call the constructor of the parent class (the base class). Additionally, the `props` are passed to the constructor for initializing the component's state and accessing the props within the component.
+   In class-based components in React, the `super` keyword is used in the constructor to call the constructor of the parent class (the base class). Additionally, the `props` are passed to the constructor for initializing the component's state and accessing the props within the component.
     
-    Here's why `super` is used and why `props` are passed in the constructor:
+   Here's why `super` is used and why `props` are passed in the constructor:
     
-    1. **`super` Keyword in Constructor**:
+   1. **`super` Keyword in Constructor**:
         - When you create a class-based component that extends another class (usually `React.Component`), you're creating a subclass that inherits properties and methods from its parent class (superclass).
         - The `super` keyword is used to call the constructor of the parent class, which is necessary to properly set up the inheritance chain and initialize any properties defined in the parent class. This ensures that the component has access to the behavior and state management provided by `React.Component`.
         - If you don't call `super()` in the constructor of the subclass, you won't be able to access `this` or use lifecycle methods properly, as they are defined in the parent class.
@@ -4860,13 +4859,13 @@
     
     ```
     
-    In the example above, the `super(props)` call ensures that the component correctly inherits from `React.Component`, and the `props` object is used to initialize the initial state of the component. This pattern is common in class-based components to set up the component's inheritance chain and initialize its state based on the initial props.
+In the example above, the `super(props)` call ensures that the component correctly inherits from `React.Component`, and the `props` object is used to initialize the initial state of the component. This pattern is common in class-based components to set up the component's inheritance chain and initialize its state based on the initial props.
     
 111. **If i use useEffect with a function that has dependencies, how to wrap that function with useCallback to ensure that useEffect runs correctly when the dependencies change.**
     
-    When you use the `useEffect` hook with a function that has dependencies, you can use the `useCallback` hook to wrap that function to ensure that the function is memoized and doesn't change on every render. This is especially useful when the function is used as the effect's callback in `useEffect`, as it helps prevent unnecessary re-renders and effect executions.
+When you use the `useEffect` hook with a function that has dependencies, you can use the `useCallback` hook to wrap that function to ensure that the function is memoized and doesn't change on every render. This is especially useful when the function is used as the effect's callback in `useEffect`, as it helps prevent unnecessary re-renders and effect executions.
     
-    Here's how you can wrap a function with `useCallback` and use it in `useEffect`:
+Here's how you can wrap a function with `useCallback` and use it in `useEffect`:
     
     ```jsx
     import React, { useState, useEffect, useCallback } from 'react';
@@ -4900,9 +4899,9 @@
     
     ```
     
-    In the example above:
+ In the example above:
     
-    1. The `handleEffect` function is defined, and it uses the `count` value as a dependency.
+   1. The `handleEffect` function is defined, and it uses the `count` value as a dependency.
     2. The `useCallback` hook is used to wrap the `handleEffect` function. The second argument of `useCallback` is the dependencies array, which includes the `count` dependency. This ensures that the memoized callback only changes when the `count` dependency changes.
     3. Inside the `useEffect` hook, the `memoizedEffectCallback` is used as the effect's callback. Since `memoizedEffectCallback` is memoized, it doesn't change on every render when the `count` changes.
     
@@ -4910,29 +4909,29 @@
     
 112. **Difference between react and express routing**
     
-    React and Express are both popular frameworks used in web development, but they serve different purposes and are used in different parts of the web application stack. As a result, the way routing is handled in React and Express differs significantly:
+   React and Express are both popular frameworks used in web development, but they serve different purposes and are used in different parts of the web application stack. As a result, the way routing is handled in React and Express differs significantly:
     
-    **React Routing:**
+   **React Routing:**
     
-    1. **Front-End Framework**: React is a front-end JavaScript library used for building user interfaces. It focuses on creating dynamic and interactive UI components for web applications.
+   1. **Front-End Framework**: React is a front-end JavaScript library used for building user interfaces. It focuses on creating dynamic and interactive UI components for web applications.
     2. **Single-Page Applications (SPAs)**: React is commonly used to build single-page applications where the entire app is loaded as a single HTML page, and navigation happens without full page reloads.
     3. **React Router**: React provides a package called `react-router` (or `react-router-dom` for web applications) that helps manage client-side routing in SPAs. It allows you to define routes, render different components based on URLs, and manage navigation using components like `BrowserRouter` and `Link`.
     4. **Declarative Routing**: React Router uses a declarative approach to routing, where you define your routes using components and JSX syntax. Routes are matched against the URL to determine which component should be rendered.
     5. **History Manipulation**: React Router handles URL changes without triggering full page reloads. It uses the browser's History API to manipulate the URL and render the appropriate component without sending requests to the server.
     
-    **Express Routing:**
+   **Express Routing:**
     
-    1. **Back-End Framework**: Express is a back-end web framework for Node.js used to build server-side applications and APIs. It focuses on handling server-side logic, routing, and interacting with databases.
+   1. **Back-End Framework**: Express is a back-end web framework for Node.js used to build server-side applications and APIs. It focuses on handling server-side logic, routing, and interacting with databases.
     2. **Multi-Page Applications (MPAs)**: Express can be used to build multi-page applications where different URLs correspond to different HTML pages or views.
     3. **Routing Middleware**: In Express, routing is handled using routing middleware. You define routes using methods like `app.get()`, `app.post()`, etc. These routes specify what should happen when specific routes are accessed by clients.
     4. **Server-Side Routing**: Express routes handle requests from clients and determine how the server responds. This includes rendering templates, fetching data from databases, and returning data to the client.
     5. **URL Handling**: Express routes are used to handle incoming requests based on the URL paths and HTTP methods. They can also parse URL parameters and query parameters.
     
-    In summary, React routing focuses on managing client-side navigation and rendering components based on URLs within a single-page application. It uses the `react-router` package to achieve this. Express routing, on the other hand, handles server-side logic and routing for back-end applications and APIs. It uses routing middleware to respond to requests from clients and is typically used in multi-page applications.
+In summary, React routing focuses on managing client-side navigation and rendering components based on URLs within a single-page application. It uses the `react-router` package to achieve this. Express routing, on the other hand, handles server-side logic and routing for back-end applications and APIs. It uses routing middleware to respond to requests from clients and is typically used in multi-page applications.
     
 113. **Redux using usedispatch and useselector**
     
-    Sure, let's discuss using `useDispatch` and `useSelector` in a Redux-based application. These are hooks provided by the `react-redux` library, which make it easier to interact with your Redux store and dispatch actions from functional components.
+Sure, let's discuss using `useDispatch` and `useSelector` in a Redux-based application. These are hooks provided by the `react-redux` library, which make it easier to interact with your Redux store and dispatch actions from functional components.
     
     ### `useDispatch`:
     
@@ -4958,7 +4957,7 @@
     
     ```
     
-    In the example above, when the button is clicked, the `handleIncrement` function is called, which dispatches the `increment` action using the `dispatch` function obtained via `useDispatch`.
+In the example above, when the button is clicked, the `handleIncrement` function is called, which dispatches the `increment` action using the `dispatch` function obtained via `useDispatch`.
     
     ### `useSelector`:
     
@@ -4977,15 +4976,15 @@
     
     ```
     
-    In this example, `useSelector` is used to select the `counter` slice from the Redux store's state. Whenever the `counter` slice changes in the Redux store, this component will automatically re-render with the updated count.
+In this example, `useSelector` is used to select the `counter` slice from the Redux store's state. Whenever the `counter` slice changes in the Redux store, this component will automatically re-render with the updated count.
     
-    By combining `useDispatch` and `useSelector`, you can easily read data from the Redux store and dispatch actions to modify that data within your functional components. This is particularly useful for creating efficient and maintainable React applications when using Redux for state management.
+By combining `useDispatch` and `useSelector`, you can easily read data from the Redux store and dispatch actions to modify that data within your functional components. This is particularly useful for creating efficient and maintainable React applications when using Redux for state management.
     
 114. **lifting state up in react**
     
-    In React, "lifting state up" is a common pattern used to manage and share state between components. This pattern is particularly useful when you have multiple components that need to access and modify the same piece of state data. By lifting the state up to a common ancestor component, you can ensure that all child components have access to and can update the shared state.
+In React, "lifting state up" is a common pattern used to manage and share state between components. This pattern is particularly useful when you have multiple components that need to access and modify the same piece of state data. By lifting the state up to a common ancestor component, you can ensure that all child components have access to and can update the shared state.
     
-    Here's how you can implement the "lifting state up" pattern in React:
+Here's how you can implement the "lifting state up" pattern in React:
     
     1. Identify the Shared State: Determine the piece of state that needs to be shared among multiple components. This could be any data that your application needs to display or manipulate.
     2. Create a Parent Component: Create a parent or ancestor component that will be responsible for managing and storing the shared state. This component will have the state and methods to modify it.
@@ -4993,7 +4992,7 @@
     4. Implement Callback Functions: To update the shared state, you'll also need to pass down callback functions from the parent component to the child components. Child components can call these functions to request changes to the shared state.
     5. Update State in the Parent: In the callback functions provided by the parent component, update the state as needed using the `setState` method.
     
-    Here's a simplified example to illustrate this concept:
+Here's a simplified example to illustrate this concept:
     
     ```jsx
     import React, { Component } from 'react';
@@ -5043,6 +5042,6 @@
     
     ```
     
-    In this example, the `ParentComponent` manages the shared state, passes it down to `ChildComponent` as a prop, and provides a callback function to update the state. When the button in the `ChildComponent` is clicked, it calls the callback function to modify the shared state, and the change is reflected in both components.
+In this example, the `ParentComponent` manages the shared state, passes it down to `ChildComponent` as a prop, and provides a callback function to update the state. When the button in the `ChildComponent` is clicked, it calls the callback function to modify the shared state, and the change is reflected in both components.
     
     This pattern allows you to maintain a single source of truth for your state while sharing it among multiple components in a React application.
