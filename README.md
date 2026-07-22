@@ -20,14 +20,22 @@ This repository covers:
 ## 📚 Learning Paths & Resources
 
 ### Tech-Based Questions
-- [ HTML Document Structure](./InterviewQuestions/HTMLDocumentStructure/README.md)
-- [ Forms](./InterviewQuestions/Forms/README.md)
-- [CSSBoxModel & Layout](./InterviewQuestions/CSSBoxModel.md)
+1. [ HTML Document Structure](./InterviewQuestions/HTMLDocumentStructure.md)
+2. [ Forms](./InterviewQuestions/Forms.md)
+3. [ CSSBoxModel](./InterviewQuestions/CSSBoxModel.md)
+4. [ CSSFlexbox](./InterviewQuestions/4.CSSFlexbox.md)
+5. [ CSSUnits](./InterviewQuestions/5.CSSUnits.md)
+6. [ CSSSelectorsSpecificity](./InterviewQuestions/6.CSSSelectorsSpecificity.md)
+7. [ CSSGrid.md](./InterviewQuestions/7.CSSGrid.md)
 
 ### Cheat Sheets
-- [ HTML Document Structure](./cheatsheets/HTML5/README.md) 
-- [ Forms](./cheatsheets/FORMS/README.md)
-- [ CSS Box Model & Layout](./cheatsheets/CSSBoxModel/README.md)
+1. [ HTML Document Structure](./cheatsheets/HTMLDocumentStructure.md)
+2. [ Forms](./cheatsheets/Forms.md)
+3. [ CSSBoxModel](./cheatsheets/CSSBoxModel.md)
+4. [ CSSFlexbox](./cheatsheets/4.CSSFlexbox.md)
+5. [ CSSUnits](./cheatsheets/5.CSSUnits.md)
+6. [ CSSSelectorsSpecificity](./cheatsheets/6.CSSSelectorsSpecificity.md)
+7. [ CSSGrid.md](./cheatsheets/7.CSSGrid.md)
 
   
 ## 🎯 Goal
