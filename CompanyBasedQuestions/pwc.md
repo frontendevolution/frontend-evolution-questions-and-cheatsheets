@@ -4,7 +4,7 @@ topic: "generic"
 format: "interview-questions"
 difficulty: "medium"
 companies: 
-    -PwC
+    - PwC
 ---
 
 
