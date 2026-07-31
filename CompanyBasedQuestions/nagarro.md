@@ -3,7 +3,8 @@ title: "FE Questions asked in Nagarro"
 topic: "generic"
 format: "interview-questions"
 difficulty: "medium"
-companies: - Nagarro
+companies: 
+    - Nagarro
 publishedAt: "2026-07-31"
 ---
 
