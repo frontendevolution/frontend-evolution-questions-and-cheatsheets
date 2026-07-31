@@ -1,3 +1,16 @@
+---
+title: "FE Questions asked in Nagarro"
+topic: "generic"
+format: "interview-questions"
+framework: "Interview Questions"
+difficulty: "medium"
+description: "10 interview questions asked in Nagarro"
+companies: []
+publishedAt: "2026-07-31"
+---
+
+
+
 1. What are css preprocessors?
     
     CSS preprocessors are scripting languages that extend the capabilities of CSS (Cascading Style Sheets), which is the standard language used for styling web pages. Preprocessors provide additional features and functionality that make it easier and more efficient to write and manage CSS code.
