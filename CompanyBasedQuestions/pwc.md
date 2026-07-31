@@ -1,3 +1,15 @@
+---
+title: "FE Questions asked in PWC"
+topic: "generic"
+format: "interview-questions"
+framework: "Interview Questions"
+difficulty: "medium"
+description: "12 interview questions asked in PWC"
+companies: []
+publishedAt: "2026-07-31"
+---
+
+
 1. Code splitting in react
     
     Code splitting is a technique used in modern web development, especially in frameworks like React, to optimize the loading performance of web applications. It involves breaking down your application's code into smaller chunks (bundles) that can be loaded on-demand, rather than all at once when the application is initially loaded. This helps reduce the initial load time and improve the user experience.
