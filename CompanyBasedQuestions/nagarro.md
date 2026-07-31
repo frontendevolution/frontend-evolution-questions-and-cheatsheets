@@ -2,10 +2,8 @@
 title: "FE Questions asked in Nagarro"
 topic: "generic"
 format: "interview-questions"
-framework: "Interview Questions"
 difficulty: "medium"
-description: "10 interview questions asked in Nagarro"
-companies: []
+companies: - Nagarro
 publishedAt: "2026-07-31"
 ---
 
