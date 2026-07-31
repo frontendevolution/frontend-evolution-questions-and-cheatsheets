@@ -2,11 +2,9 @@
 title: "FE Questions asked in PWC"
 topic: "generic"
 format: "interview-questions"
-framework: "Interview Questions"
 difficulty: "medium"
-description: "12 interview questions asked in PWC"
-companies: []
-publishedAt: "2026-07-31"
+companies: 
+    -PwC
 ---
 
 
