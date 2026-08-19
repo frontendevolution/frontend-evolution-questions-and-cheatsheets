@@ -1,0 +1,99 @@
+# Foundations Done Right: HTML Document Structure, Semantic HTML, Head Tags, Meta Tags & SEO Basics
+
+Pillar: Foundations Done Right | Category: HTML & CSS | Level: Beginner
+
+---
+
+## Core Concept
+
+Every HTML document is a contract between your markup and three different readers: the browser, the search engine crawler, and assistive technology (screen readers, voice control). Most devs only write for the first one. Document structure, semantic HTML, and head metadata are how you write for all three at once — and this is exactly the layer React/Next.js developers skip because a component "renders something on screen" and that feels like success.
+
+The core idea to teach: HTML is not a rendering instruction, it's a **meaning declaration**. `<div>` says nothing. `<nav>`, `<article>`, `<button>` say something. Everything downstream — SEO ranking, accessibility tree generation, browser behavior (like `<button>` getting keyboard support for free) — depends on that meaning being correct.
+
+## Full Mechanics: Document Structure
+
+A minimal, correct HTML5 document:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Title</title>
+</head>
+<body>
+  <!-- visible content -->
+</body>
+</html>
+```
+
+Mechanics worth being precise about:
+
+- `<!DOCTYPE html>` triggers **standards mode**. Omit it and browsers fall into quirks mode, silently changing box-model and CSS behavior. This still trips people up when generating static HTML fragments or SSR shells.
+- `lang` on `<html>` isn't decorative. It drives screen reader pronunciation, browser translation prompts, and is a documented accessibility (WCAG) requirement.
+- `<meta charset="UTF-8">` must be within the first 1024 bytes of the document — this is why it's always the first line inside `<head>`.
+- The viewport meta tag is what makes responsive CSS actually responsive on mobile; without it, mobile browsers render at a fake desktop-width viewport (~980px) and scale down.
+- `<head>` holds metadata (not rendered), `<body>` holds content (rendered). Anything visual placed in `<head>` is simply ignored by the browser.
+
+## Semantic HTML: Full Landscape
+
+Semantic elements describe *role*, not appearance. The commonly under-taught set:
+
+- Structural: `<header>`, `<nav>`, `<main>`, `<section>`, `<article>`, `<aside>`, `<footer>`
+- Text-level: `<time>`, `<mark>`, `<figure>`/`<figcaption>`, `<address>`
+- Interactive: `<button>`, `<details>`/`<summary>`, `<dialog>`
+
+Key distinctions people get wrong:
+
+- **`<section>` vs `<div>`**: a `<section>` should generally have a heading and represent a thematic grouping. If you're not giving it a heading, it's probably a `<div>`.
+- **`<article>` vs `<section>`**: `<article>` is self-contained content that would make sense distributed on its own (a blog post, a card in a feed, a comment). `<section>` is a grouping within a larger whole.
+- **Only one `<main>` per page**, never nested.
+- `<button>` vs a styled `<div onClick>`: `<button>` gets keyboard focus, `Enter`/`Space` activation, and correct accessibility role for free. A `<div>` gets none of it unless you manually reimplement all of it with `tabIndex`, `role`, and key handlers — which is more code, not less.
+
+Heading hierarchy (`<h1>`–`<h6>`) should reflect document outline, not font size. Skipping levels for visual sizing (using `<h4>` because it "looks right") breaks the accessibility outline and confuses SEO crawlers about page structure. Style headings with CSS, choose the tag by semantic level.
+
+## Head Tags & Meta Tags: What Actually Matters
+
+Beyond charset/viewport/title, the meta tags that matter in 2026:
+
+```html
+<meta name="description" content="Concise, unique summary under ~155 characters.">
+<link rel="canonical" href="https://example.com/page">
+<meta property="og:title" content="Page Title">
+<meta property="og:description" content="Shown in social link previews.">
+<meta property="og:image" content="https://example.com/preview.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="robots" content="index, follow">
+```
+
+- `meta description` doesn't directly boost ranking, but it directly influences click-through rate from search results — SEO impact is indirect but real.
+- **Canonical URLs** matter more than most beginners realize: they tell search engines which URL is the "real" one when the same content is reachable via multiple paths (query params, trailing slashes, tracking params) — critical for avoiding duplicate-content penalties.
+- Open Graph (`og:*`) and Twitter Card tags control link preview cards on social/messaging apps — not "SEO" in the search sense, but part of the same discoverability layer, and frequently the thing beginners forget entirely.
+- `<meta name="robots">` and `robots.txt`/`sitemap.xml` are separate mechanisms: robots meta controls per-page indexing instructions, `robots.txt` controls crawler access, sitemaps help discovery. Confusing these three is extremely common.
+
+## Common Misconceptions
+
+- "Semantic HTML is only for accessibility." It also directly affects SEO (crawlers weight `<h1>`/`<article>`/`<nav>` semantically) and reduces JS needed for interactivity.
+- "SEO is mostly keywords." In 2026, SEO is dominated by structured data, page performance (Core Web Vitals), mobile usability, and crawlable server-rendered content — keyword stuffing is actively penalized.
+- "`<div>` with a `role` attribute is just as good as the real element." ARIA roles patch *some* semantics but never fully replicate native behavior (keyboard handling, default focus order) — the first rule of ARIA is "don't use ARIA if a native element already does the job."
+- "Meta tags = SEO." Meta tags are one input among many; actual indexability depends on whether the crawler can see rendered content at all (a major issue for client-only rendering, covered below).
+
+## Why It Matters at a Senior Level
+
+Junior devs treat markup as a styling target. Senior devs treat it as an API — for crawlers, assistive tech, and future maintainers. A senior engineer reviewing a PR full of `<div>`s where semantic elements belong isn't being pedantic; they're flagging a real, measurable cost: worse SEO, broken keyboard navigation, and accessibility lawsuits are not hypothetical at scale. This is also one of the few areas where "it works on my screen" is actively misleading — the browser renders a `<div>` and a `<button>` similarly, but the accessibility tree and search index see something completely different.
+
+## Relevance in React/Next.js Projects
+
+- **JSX hides the div-itis problem.** It's trivial to write `<div onClick={...}>` in a component because event handlers attach identically to any element. React makes semantic *shortcuts* easier, not semantic *correctness* easier — the discipline has to be intentional.
+- **`<head>` management differs by rendering model.** In the Next.js App Router, metadata is no longer hand-written `<head>` tags — it's the `metadata` object or `generateMetadata()` function exported from a `layout.tsx`/`page.tsx`, which Next.js compiles into the actual head tags server-side. Writing raw `<meta>` tags inside a component body is an outdated App Router anti-pattern carried over from the old Pages Router's `next/head`.
+- **Client-side rendering can hide content from crawlers.** A component that fetches data in `useEffect` and renders after mount may serve an empty shell to crawlers that don't execute JS fully or wait long enough. This is a core reason Next.js's server components/SSR exist — semantic, populated HTML must arrive in the initial response for reliable SEO, not be bolted on client-side.
+- **Dynamic routes need dynamic metadata.** A blog built on `/blog/[slug]` needs `generateMetadata()` per slug (unique title, description, canonical, OG image) — a static metadata object across all dynamic pages is a common and costly mistake that flattens SEO value across every post.
+- **Component abstraction can erase semantics.** A `<Card>` component that internally renders a `<div>` instead of `<article>`, or a `<Nav>` component missing an actual `<nav>` root, silently strips semantics from every place it's reused — one bad primitive multiplies across the whole app.
+
+## Relevance in the AI Era
+
+- AI assistants are excellent at generating *visually correct*, semantically *hollow* markup. Prompted for "a card component," tools like Copilot or Cursor will very often default to nested `<div>`s with Tailwind classes rather than `<article>`/`<h3>`/`<a>`, because visually-matching training data (styled div soup) vastly outnumbers well-structured semantic examples.
+- AI-generated Next.js metadata is a frequent source of subtle bugs: models often still generate the legacy `next/head` pattern (a Pages Router API) inside App Router projects, or hardcode a single static `metadata` export in a dynamic route where `generateMetadata()` is actually required. It looks correct, builds fine, and quietly ships duplicate titles/descriptions across every dynamic page.
+- AI tools frequently get heading hierarchy wrong across composed components — each component "looks right" in isolation (e.g., defaults to `<h2>`), but when assembled into a page, you end up with multiple `<h1>`s or skipped levels, because the model has no visibility into the full document outline.
+- What a dev must still understand manually: the *purpose* of each tag (not just its output), the App Router's actual metadata API surface, and how to read the accessibility tree/Lighthouse output to verify structure — because AI tools optimize for "compiles and looks right," not "means the right thing." This topic never becomes obsolete: an AI can produce syntactically valid HTML in seconds, but only a human reviewer who understands semantics, SEO mechanics, and Next.js's rendering model can catch that the output is meaningless underneath.
