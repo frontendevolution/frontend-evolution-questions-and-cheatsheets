@@ -1,3 +1,15 @@
+---
+title: "Coding Practice Questions"
+topic: "FE"
+format: "Tech Based Interview Questions"
+framework: "FE"
+difficulty: "Beginner-Senior"
+description: ""
+companies: []
+publishedAt: "2026-07-31"
+---
+
+
 - **sum(2)(3)(4)(5)....(n)**
     
     You can achieve this functionality by creating a chain of curried functions that accumulate the values as they are passed in. Here's an example implementation:

@@ -1,4 +1,16 @@
-- **What are semantic elements and how they are useful ?**
+---
+title: "HTML_CSS_JS"
+topic: "FE"
+format: "Tech Based Interview Questions"
+framework: "FE"
+difficulty: "Beginner-Senior"
+description: ""
+companies: []
+publishedAt: "2026-07-31"
+---
+
+
+1. **What are semantic elements and how they are useful ?**
     
     Semantic elements, in the context of web development and HTML, refer to HTML elements that carry meaning or convey specific types of information about the content they enclose. These elements provide a structural and descriptive role to the content, making it more understandable both for developers and, importantly, for search engines, assistive technologies, and other automated systems that interpret web content.
     
@@ -23,7 +35,7 @@
     
     ---
     
-- **Request life cycle**
+2. **Request life cycle**
     
     In the context of web development, the request life cycle refers to the sequence of events and processes that occur when a user or a client's browser makes a request to a web server, and the server processes that request and sends back a response. Here's a general overview of the typical request life cycle:
     
@@ -44,7 +56,7 @@
     
     ---
     
-- **How does browser understand JS Code**
+3. **How does browser understand JS Code**
     
     Browsers understand JavaScript code through a process that involves several steps, including parsing, compilation, and execution. Here's an overview of how a browser processes and executes JavaScript code:
     
@@ -72,7 +84,7 @@
     
     ---
     
-- **What is async and defer in script tags**
+4. **What is async and defer in script tags**
     
     The `async` and `defer` attributes in HTML `<script>` tags are used to control the loading and execution of external JavaScript files. They are particularly useful for improving the performance and loading behavior of web pages by optimizing the way scripts are handled during the page rendering process.
     
@@ -87,7 +99,7 @@
     
     ```
     
-    1. **`defer` Attribute:**
+    2. **`defer` Attribute:**
         - When you add the `defer` attribute to a `<script>` tag, it also indicates that the script should be fetched asynchronously, but it will only be executed after the HTML parsing is complete.
         - The script will be executed in the order they appear in the HTML, right before the `DOMContentLoaded` event.
         - This is beneficial for scripts that rely on the DOM structure because they are guaranteed to be executed after the entire DOM is available.
@@ -113,7 +125,7 @@
     
     ---
     
-- **use of preconnect in css**
+5. **use of preconnect in css**
     
     The `preconnect` directive in CSS is not a standard or commonly used property. However, you might be referring to the `<link rel="preconnect">` HTML tag, which is used to establish early connections to the domains that will be used for fetching resources like stylesheets, scripts, images, and more. While it's not a CSS property, I'll explain the usage of `<link rel="preconnect">` since it seems relevant to your question.
     
@@ -142,7 +154,7 @@
     
     ---
     
-- **CSS specificity**
+6. **CSS specificity**
     
     CSS specificity is a concept used to determine which CSS rules should be applied when multiple conflicting styles target the same HTML element. It's a way to define the hierarchy or "weight" of CSS rules to resolve conflicts and determine the final visual presentation of elements on a web page.
     
@@ -173,7 +185,7 @@
     
     ---
     
-- **CSS selectors and rules**
+7. **CSS selectors and rules**
     
     CSS (Cascading Style Sheets) selectors and rules are fundamental concepts in web development used to apply styling to HTML elements. CSS selectors target specific elements in the HTML structure, while CSS rules define how those elements should be styled. Let's delve into both concepts:
     
@@ -220,7 +232,7 @@
         
         CSS selectors and rules allow you to define consistent and visually appealing styles for your web pages. By carefully choosing selectors and properties, you can create a well-designed and user-friendly interface.
         
-- **What are mixins ? How are they in CSS helpful**
+8. **What are mixins ? How are they in CSS helpful**
     
     Mixins are a feature in some CSS preprocessors that allow you to define reusable blocks of CSS code that can be included (or "mixed in") within other CSS rules. They provide a way to abstract and reuse common styles without duplicating code. Mixins are particularly useful for creating consistent and maintainable styles across your project. Preprocessors like Sass and Less support mixins.
     
@@ -282,7 +294,7 @@
     
     In summary, mixins in CSS preprocessors are a powerful tool for creating reusable and modular styles. They enhance code organization, readability, and maintainability while promoting a consistent design language throughout your project.
     
-- **CSS style for coloring odd elements**
+9. **CSS style for coloring odd elements**
     
     To style odd elements using CSS, you can use the `:nth-child()` pseudo-class selector. This selector allows you to target elements based on their position within a parent element. In your case, to style odd elements, you can use the `:nth-child(odd)` selector. Here's an example:
     
@@ -308,7 +320,7 @@
     
     Remember that `:nth-child()` counts all children of the parent, regardless of their type. If you need to target only a specific type of child element (e.g., only odd `<div>` elements within a container), you can modify the selector accordingly.
     
-- **CSS style for coloring only number of element**
+10. **CSS style for coloring only number of element**
     
     If you want to style elements based on their position, specifically by their index or numerical position, you can use the `:nth-child()` pseudo-class selector with specific numeric values. Here's an example of how you can style the 3rd, 5th, and 7th elements within a container:
     
@@ -327,7 +339,7 @@
     
     You can adjust the numeric values to match the positions of the elements you want to style. Keep in mind that `:nth-child()` counts all children of the parent, regardless of their type. If you need to target only specific types of child elements, modify the selector accordingly.
     
-- **Implement flexbox at six divs keeping them 3 in row**
+11. **Implement flexbox at six divs keeping them 3 in row**
     
     Sure, I can provide you with an example of how to use flexbox to arrange six `<div>` elements with three in each row. Flexbox is a great way to create flexible and responsive layouts. Here's how you can achieve this:
     
@@ -373,7 +385,7 @@
     
     Feel free to modify the styles according to your design needs. This example demonstrates how you can use flexbox to create a responsive layout with three boxes in each row.
     
-- **Scopechain in js**
+12. **Scopechain in js**
     
     The scope chain, also known as the scope hierarchy or lexical scope, is a concept in JavaScript that determines how the variables and functions are accessible within nested functions. Understanding the scope chain is crucial for understanding how variable scoping and closures work in JavaScript.
     
@@ -418,7 +430,7 @@
     
     Understanding the scope chain is crucial when working with closures, as closures "remember" the variables from their containing scopes even after those scopes have finished executing. Closures leverage the scope chain to maintain access to their surrounding environment's variables.
     
-- **How JS reads scopechain**
+13. **How JS reads scopechain**
     
     JavaScript reads the scope chain during the execution of code to determine the values of variables and functions. The scope chain is essential for understanding how variable scoping and closures work in JavaScript. Here's how JavaScript reads the scope chain:
     
@@ -461,7 +473,7 @@
     
     Understanding how JavaScript reads the scope chain is crucial for writing code that behaves as expected, especially when dealing with closures, nested functions, and variable scoping.
     
-- **Hoisting**
+14. **Hoisting**
     
     Hoisting is a JavaScript behavior where variable and function declarations are moved to the top of their containing scope during the compilation phase, before the code is executed. This might lead to some unexpected behavior if not understood properly. It's important to note that only the declarations are hoisted, not the initializations or assignments.
     
@@ -513,7 +525,7 @@
     
     Note that with the introduction of `let` and `const` in ECMAScript 2015 (ES6), block-scoped variables are not hoisted in the same way as `var` variables. They are hoisted to the top of their block scope, but they are not accessible before their declaration in the code. This behavior helps in avoiding some of the issues associated with hoisting and variable scoping.
     
-- **Difference b/w forEach and map**
+15. **Difference b/w forEach and map**
     
     `forEach()` and `map()` are both methods available for arrays in JavaScript that allow you to iterate through the elements of an array. However, they have different purposes and return values:
     
@@ -557,7 +569,7 @@
     
     Both methods are useful in different scenarios, so choose the one that best suits your needs. If you need to modify existing elements or perform side effects, `forEach()` might be more appropriate. If you need to transform elements and create a new array, `map()` is a better choice.
     
-- **this keyword**
+16. **this keyword**
     
     The `this` keyword in JavaScript is a special identifier that refers to the current execution context, which can vary based on how a function is called or how an object method is invoked. The value of `this` is dynamically determined at runtime and can have different meanings depending on the context in which it's used.
     
@@ -674,7 +686,7 @@
     
     These methods are particularly useful when dealing with function invocations that need to be controlled, such as callbacks, method chaining, or situations where you need to modify the `this` context of a function.
     
-- **Difference between ES5/ES6**
+17. **Difference between ES5/ES6**
     
     ES5 (ECMAScript 5) and ES6 (ECMAScript 2015) are different versions of the ECMAScript specification, which is the standard that defines the scripting language features of JavaScript. ES6 introduced significant enhancements and new features to the language compared to ES5. Here are some of the key differences between ES5 and ES6:
     
@@ -708,7 +720,7 @@
     
     These are just a few of the major differences between ES5 and ES6. ES6 brought numerous improvements to JavaScript, making the language more expressive, powerful, and easier to work with, especially in modern web development practices.
     
-- **Encapsulation in JS**
+18. **Encapsulation in JS**
     
     Encapsulation is one of the fundamental principles of object-oriented programming (OOP) that emphasizes bundling the data (attributes) and methods (functions) that operate on the data into a single unit called an object. Encapsulation helps in organizing code, reducing complexity, and promoting data privacy by controlling the access to the internal state of an object.
     
@@ -781,7 +793,7 @@
     
     These are some ways to achieve encapsulation in JavaScript. However, it's important to note that JavaScript's dynamic nature means that these encapsulation techniques can be bypassed, and there's no true enforcement of private access like in some other languages. Developers often rely on conventions and documentation to indicate the intended level of access and usage for properties and methods.
     
-- **How closures are useful in JS**
+19. **How closures are useful in JS**
     
     Closures are one of the most powerful and fundamental concepts in JavaScript, and they are incredibly useful in various programming scenarios. A closure occurs when a function "remembers" the variables and scope in which it was created, even after the outer function has finished executing. This behavior allows closures to retain access to their containing scope's variables, even when they are called outside of that scope. Here are some ways closures are useful in JavaScript:
     
@@ -826,7 +838,7 @@
     
     Closures play a crucial role in various programming paradigms, including functional programming and asynchronous programming, and they contribute to the flexibility and expressive power of JavaScript.
     
-- **Explain What are promises**
+20. **Explain What are promises**
     
     Promises are a built-in feature in JavaScript introduced to handle asynchronous operations more effectively and provide a structured way to manage asynchronous code. They help in avoiding callback hell (also known as "pyramid of doom") and make asynchronous code easier to read and maintain.
     
@@ -883,7 +895,7 @@
     
     ES6 introduced promises, and they have become an essential tool for dealing with asynchronous operations in a more organized and structured way. Promises pave the way for even more advanced asynchronous patterns like async/await.
     
-- **Explain in detail How promises are diff from async await**
+21. **Explain in detail How promises are diff from async await**
     
     Promises and `async/await` are both JavaScript features that deal with asynchronous programming, but they have different approaches and levels of abstraction. Here's a detailed comparison of the two:
     
@@ -943,7 +955,7 @@
     
     In the `async/await` example, the code is structured in a more linear and synchronous-looking way, which can make it easier to follow. It's worth noting that `async/await` is built on top of promises, so they are not mutually exclusive; you can mix them as needed. Ultimately, choosing between them depends on factors like code readability, complexity, and your team's familiarity with the syntax.
     
-- **Explain in detail how to handle errors in js**
+22. **Explain in detail how to handle errors in js**
     
     Handling errors in JavaScript is essential to ensure your code remains robust and provides meaningful feedback to users or developers when something goes wrong. There are several ways to handle errors in JavaScript:
     
@@ -1026,7 +1038,7 @@
     
     Remember that error handling should not be used solely for suppressing errors; it's important to handle them appropriately and provide relevant feedback to the user or the developer. Also, avoid using broad `catch` blocks that catch all errors without proper handling, as this can lead to difficulties in debugging and fixing issues.
     
-- **Explain in detail difference between promise.all and promise.race**
+23. **Explain in detail difference between promise.all and promise.race**
     
     `Promise.all()` and `Promise.race()` are two methods provided by the Promise object in JavaScript for handling multiple promises. They have different use cases and behaviors. Let's dive into the differences between them:
     
@@ -1086,7 +1098,7 @@
     
     Both methods are powerful tools for managing asynchronous operations and can be used in different scenarios based on your specific use case.
     
-- **Explain in detail what are prototypes in JS**
+24. **Explain in detail what are prototypes in JS**
     
     In JavaScript, prototypes are a fundamental concept used to implement inheritance and object properties sharing between objects. Understanding prototypes is essential to grasp how inheritance and object-oriented programming work in JavaScript. Let's dive into the details of prototypes:
     
@@ -1168,7 +1180,7 @@
     
     In summary, prototypes in JavaScript enable objects to inherit properties and methods from other objects, allowing for a flexible and efficient way to structure code and implement inheritance. The prototype chain is at the heart of JavaScript's object-oriented programming paradigm.
     
-- **Explain in detail what are function compositions**
+25. **Explain in detail what are function compositions**
     
     Function composition is a powerful concept in functional programming that involves combining multiple functions to create a new function. It enables you to build complex behavior by chaining together simpler functions, creating a pipeline of operations. Each function takes the output of the previous function as its input, producing a sequence of transformations. Function composition promotes code reusability, modularity, and a more declarative programming style.
     
@@ -1232,7 +1244,7 @@
     
     Function composition is a key concept in functional programming and is particularly beneficial when dealing with data transformations, pipeline operations, and complex workflows. It encourages a more modular and composable code structure, which can lead to clearer and more maintainable code.
     
-- **Explain in detail what are HOF**
+26. **Explain in detail what are HOF**
     
     Higher-order functions (HOF) are a fundamental concept in functional programming, and they play a significant role in languages like JavaScript. A higher-order function is a function that either takes one or more functions as arguments or returns a function as its result. HOFs provide a powerful way to abstract and manipulate behavior, enabling more concise and modular code. Here's a detailed explanation of higher-order functions:
     
@@ -1297,7 +1309,7 @@
     
     Higher-order functions provide a powerful tool for building modular, reusable, and maintainable code by leveraging the flexibility of functions as first-class citizens. They are a key feature of functional programming paradigms and are widely used in JavaScript development.
     
-- **Explain in detail DRY principles**
+27. **Explain in detail DRY principles**
     
     DRY, which stands for "Don't Repeat Yourself," is a software development principle that promotes code reusability, maintainability, and reduction of redundancy. The core idea behind the DRY principle is that every piece of knowledge or logic in a software system should have a single, unambiguous representation. This avoids duplication of code, reduces the chances of inconsistencies, and simplifies maintenance. Let's delve into the details of the DRY principle:
     
@@ -1341,7 +1353,7 @@
     
     In summary, the DRY principle advocates for reducing code duplication to improve maintainability, readability, and efficiency. It encourages developers to identify patterns, extract reusable components, and centralize common knowledge, resulting in more robust and maintainable software systems.
     
-- **Explain in detail SOLID principles**
+28. **Explain in detail SOLID principles**
     
     SOLID is a set of five principles in object-oriented programming and design that aim to create more maintainable, flexible, and understandable software. These principles provide guidelines for designing and organizing code in a way that promotes separation of concerns, modularity, and extensibility. The SOLID acronym stands for:
     
@@ -1384,7 +1396,7 @@
     
     The SOLID principles are guidelines, not strict rules, and they help developers design code that is easy to maintain, extend, and understand. Applying these principles can lead to more robust and adaptable software, as they encourage clean architecture and modular design. However, it's important to balance SOLID principles with practical considerations and avoid overengineering when the context doesn't warrant it.
     
-- **Explain in detail what do you mean by web accessibility**
+29. **Explain in detail what do you mean by web accessibility**
     
     Web accessibility, often abbreviated as "a11y" (a followed by 11 letters and y), refers to the practice of designing and developing websites, applications, and digital content in a way that ensures equal access and usability for all individuals, regardless of their abilities or disabilities. The goal of web accessibility is to create an inclusive online environment that enables people with disabilities to perceive, understand, navigate, and interact with digital content effectively. This includes individuals with visual, auditory, cognitive, motor, and other impairments. Here's a detailed explanation of web accessibility:
     
@@ -1424,7 +1436,7 @@
     
     In summary, web accessibility ensures that digital content is available and usable by people with disabilities. It's a crucial aspect of web development that promotes inclusivity, equal access, and a positive user experience for all individuals.
     
-- **Explain in detail caching mechanism**
+30. **Explain in detail caching mechanism**
     
     Caching is a mechanism used in computing to store and reuse frequently accessed data, which helps improve performance and reduce the need to fetch data from the original source repeatedly. Caching is widely used in various areas, including web applications, databases, operating systems, and more. Let's explore the details of caching mechanisms:
     
@@ -1463,7 +1475,7 @@
     
     Caching plays a crucial role in enhancing system performance, reducing load on resources, and providing a better user experience. However, it requires careful planning and management to ensure that cached data remains accurate and up-to-date.
     
-- **Explain in detail about service workers**
+31. **Explain in detail about service workers**
     
     A service worker is a JavaScript script that runs in the background of a web application, separate from the main browser thread. It acts as a programmable proxy between the web application, the network, and the browser cache. Service workers enable a range of powerful features, including offline support, push notifications, and background synchronization. They are a core technology behind Progressive Web Apps (PWAs) and provide enhanced user experiences. Here's a detailed explanation of service workers:
     
@@ -1499,7 +1511,7 @@
     
     Service workers provide a powerful way to enhance web applications with offline capabilities, real-time updates, and background synchronization. However, they require careful planning and consideration of their capabilities and limitations to ensure a smooth user experience.
     
-- **Explain in detail how to optimise website for better load times**
+32. **Explain in detail how to optimise website for better load times**
     
     Optimizing a website for better load times is crucial for providing a positive user experience, reducing bounce rates, and improving search engine rankings. Here's a detailed guide on how to optimize your website for faster load times:
     
@@ -1546,7 +1558,7 @@
     
     Remember that optimization is an ongoing process. Regularly audit and update your website's performance to ensure that load times remain fast and users have a seamless experience.
     
-- **Explain in detail about webpack**
+33. **Explain in detail about webpack**
     
     Webpack is a popular open-source JavaScript module bundler that simplifies the process of bundling and optimizing assets for web applications. It allows developers to organize and bundle various files, such as JavaScript, CSS, images, and more, into a single bundle that can be efficiently served to users. Webpack is widely used in modern web development to enhance performance, modularity, and code organization. Here's a detailed explanation of Webpack:
     
@@ -1584,7 +1596,7 @@
     
     In summary, Webpack is a powerful tool that streamlines the process of bundling and optimizing assets for web applications. It plays a key role in modern web development by improving performance, code organization, and development workflows.
     
-- **Explain in detail about babel**
+34. **Explain in detail about babel**
     
     Babel is an open-source JavaScript compiler that allows developers to write modern JavaScript code and transform it into an older version of JavaScript that is compatible with most browsers and environments. It enables developers to take advantage of the latest language features and syntax while ensuring that the code runs on a wide range of platforms. Babel is an essential tool in modern web development for achieving cross-browser compatibility and leveraging new language features. Here's a detailed explanation of Babel:
     
@@ -1616,7 +1628,7 @@
     
     In summary, Babel is a crucial tool for modern JavaScript development, enabling developers to write code using the latest language features and syntax while ensuring compatibility with a wide range of browsers and environments.
     
-- **Explain in detail about code splitting**
+35. **Explain in detail about code splitting**
     
     Code splitting is a technique used in web development to improve performance by breaking down a large JavaScript bundle into smaller, more manageable chunks. These chunks, also known as "split points," are loaded on demand when they are needed, rather than loading the entire bundle upfront. Code splitting helps reduce initial page load times and allows users to access essential functionality more quickly. Here's a detailed explanation of code splitting:
     
@@ -1649,7 +1661,7 @@
     
     In summary, code splitting is a powerful technique that improves website performance by breaking down large JavaScript bundles into smaller, more manageable chunks. It's a valuable approach for creating faster, more responsive web applications and providing a better user experience.
     
-- **Explain in detail about minification**
+36. **Explain in detail about minification**
     
     Minification is a process in web development where the size of source code files, such as HTML, CSS, and JavaScript, is reduced by removing unnecessary characters, whitespace, and formatting. The primary goal of minification is to optimize the performance of web applications by reducing file sizes, which leads to faster load times and improved user experience. Here's a detailed explanation of minification:
     
@@ -1684,7 +1696,7 @@
     
     In summary, minification is a crucial optimization technique in web development that reduces the size of code files by removing unnecessary characters and formatting. It leads to faster load times, improved performance, and better user experiences. However, developers need to carefully ensure that minification does not compromise code functionality or readability.
     
-- **Explain in detail about eslint**
+37. **Explain in detail about eslint**
     
     ESLint is an open-source JavaScript linter tool that helps developers identify and fix issues in their code by enforcing consistent coding styles and detecting potential errors. It analyzes your JavaScript code and provides feedback on code quality, stylistic inconsistencies, and possible bugs. ESLint is widely used in modern web development to ensure code consistency, maintainability, and adherence to best practices. Here's a detailed explanation of ESLint:
     
@@ -1720,7 +1732,7 @@
     
     In summary, ESLint is a powerful tool that helps developers maintain consistent coding styles, identify and fix potential issues, and ensure code quality. It plays a crucial role in modern web development by improving code maintainability and collaboration among team members.
     
-- **git commands**
+38. **git commands**
     
     Git is a widely used version control system that helps developers manage and track changes in their codebase. Here are some common Git commands along with explanations of what they do:
     
@@ -1775,7 +1787,7 @@
     
     These are just a few of the many Git commands available. Each command plays a specific role in managing your codebase and collaborating with others. Understanding and using these commands effectively can significantly improve your version control workflow.
     
-- **Execution context in JS**
+39. **Execution context in JS**
     
     Execution context in JavaScript refers to the environment in which code is executed. It includes all the variables, functions, and objects that a piece of code has access to during its execution. Understanding execution contexts is essential for understanding how JavaScript code runs, how variables are scoped, and how function calls are managed. There are three main types of execution contexts in JavaScript:
     
@@ -1804,7 +1816,7 @@
     
     In summary, execution contexts in JavaScript define the environment in which code runs, including variables, functions, and objects accessible at a given point in time. Understanding execution contexts is crucial for grasping variable scope, function behavior, and the concept of closures in JavaScript.
     
-- **Difference b/w micro and macro tasks**
+40. **Difference b/w micro and macro tasks**
     
     Microtasks and macrotasks are two categories of tasks in JavaScript's event loop. They represent different types of asynchronous operations and have distinct characteristics in terms of priority and execution order. Understanding the difference between microtasks and macrotasks is crucial for managing the timing and behavior of asynchronous code in JavaScript.
     
@@ -1869,7 +1881,7 @@
     
     In summary, microtasks and macrotasks are two types of asynchronous tasks in JavaScript that are managed by the event loop. Microtasks have higher priority and are executed before macrotasks, making them suitable for time-sensitive operations. Macrotasks are executed after microtasks and are used for less critical tasks or tasks that can wait until the next event loop iteration.
     
-- **JS Module system**
+41. **JS Module system**
     
     The JavaScript module system is a way to organize and encapsulate code into reusable and maintainable components. Modules allow developers to break down their codebase into smaller, independent files with clear boundaries and well-defined interfaces. This promotes code reusability, separation of concerns, and better code organization. The JavaScript module system has evolved over time, and there are several ways to work with modules:
     
@@ -1936,7 +1948,7 @@
     
     It's important to note that when working with modules, you need to consider how your code will be bundled and transformed for deployment, as different module systems have different requirements. Build tools like Webpack, Rollup, and Babel can help you manage and optimize module dependencies for your application.
     
-- **JS design patterns**
+42. **JS design patterns**
     
     JavaScript design patterns are reusable solutions to common problems that arise in software design and architecture. They provide structured approaches to solving specific challenges and promoting best practices in code organization, readability, and maintainability. By following design patterns, developers can create more robust, scalable, and maintainable codebases. Here are some popular JavaScript design patterns:
     
@@ -1973,7 +1985,7 @@
     
     These are just a few examples of design patterns commonly used in JavaScript development. Each pattern addresses specific problems and promotes best practices. When choosing a design pattern, consider the problem you're trying to solve and how well the pattern fits your use case.
     
-- **Pure functions in js**
+43. **Pure functions in js**
     
     A pure function is a fundamental concept in functional programming, and it plays a crucial role in writing clean, predictable, and maintainable JavaScript code. A pure function is a function that produces the same output for the same input and has no side effects. In other words, it doesn't modify external state or rely on external data that can change. Here are the key characteristics of pure functions:
     
@@ -2002,7 +2014,7 @@
     
     However, not all functions need to be pure. In fact, impure functions are often necessary to perform I/O operations, interact with the DOM, or manage state. The key is to keep impure functions to a minimum and isolate them from the rest of your application logic. By using pure functions wherever possible, you can create more maintainable, testable, and predictable codebases.
     
-- **HTML request lifecycle**
+44. **HTML request lifecycle**
     
     The HTML request lifecycle, often referred to as the browser's request-response cycle, outlines the sequence of steps that occur when a user enters a URL in their web browser, hits Enter, and the browser fetches and displays the requested web page. This lifecycle involves various stages, including sending a request to the server, receiving a response, rendering the page, and handling user interactions. Here's an overview of the HTML request lifecycle:
     
@@ -2039,7 +2051,7 @@
     
     In summary, the HTML request lifecycle involves multiple steps, including DNS resolution, sending HTTP requests, server processing, receiving HTTP responses, client-side rendering, layout, painting, user interaction, JavaScript execution, caching, and resource reuse. Each step contributes to the final rendering and functionality of the web page that the user interacts with in their browser.
     
-- **difference between DOM CSSOM**
+45. **difference between DOM CSSOM**
     
     DOM (Document Object Model) and CSSOM (CSS Object Model) are two distinct models that represent different aspects of a web page in the browser. They play a crucial role in manipulating and rendering web content. Here's a comparison of DOM and CSSOM:
     
@@ -2068,7 +2080,7 @@
     
     In summary, the DOM represents the structure and content of a web page, while the CSSOM represents the styles applied to elements. Both models are essential for manipulating and rendering web content and play key roles in creating dynamic and interactive web experiences.
     
-- **Semantic HTML**
+46. **Semantic HTML**
     
     Semantic HTML refers to the practice of using HTML elements that carry meaningful and descriptive tags to convey the structure and content of a web page. Instead of relying solely on divs and spans for layout purposes, semantic HTML elements provide context to both developers and browsers about the purpose and role of each element in the document. This has several benefits for accessibility, search engine optimization (SEO), and code maintainability.
     
@@ -2101,7 +2113,7 @@
     
     Using semantic HTML not only improves the accessibility and SEO of your website but also makes the code more readable and maintainable. It allows screen readers to understand the structure and content better, helps search engines interpret the page's content, and provides a clear structure for developers working on the codebase.
     
-- **Accessibility guidelines**
+47. **Accessibility guidelines**
     
     Accessibility guidelines, often referred to as Web Content Accessibility Guidelines (WCAG), provide a set of recommendations and standards to ensure that web content is accessible to people with disabilities. These guidelines help designers, developers, and content creators create websites and web applications that are usable by everyone, regardless of their abilities or disabilities. The most widely recognized and accepted set of accessibility guidelines is the WCAG, which is maintained by the Web Accessibility Initiative (WAI) of the World Wide Web Consortium (W3C).
     
@@ -2143,7 +2155,7 @@
     
     Meeting these guidelines helps ensure that websites are usable by a wide range of users, including those with visual, auditory, cognitive, motor, and other disabilities. Web accessibility benefits not only individuals with disabilities but also a broader audience, including older users and users in situations where they might have limited access (e.g., low bandwidth).
     
-- **Forms and validation**
+48. **Forms and validation**
     
     Forms are an integral part of web applications, allowing users to submit data to the server for processing. Form validation is the process of ensuring that the data entered by users is correct, complete, and meets specific requirements before it is submitted. Proper form validation improves the user experience, reduces errors, and ensures the integrity of the data being collected. There are two main types of form validation: client-side validation and server-side validation.
     
@@ -2191,7 +2203,7 @@
     
     It's important to implement both client-side and server-side validation to create a robust and user-friendly form submission process. While client-side validation enhances the user experience, server-side validation ensures data security and integrity. Proper validation helps prevent errors, enhances user trust, and contributes to a smoother interaction with your web application.
     
-- **Explain in detail with examples about Browser side storage workers and caching**
+49. **Explain in detail with examples about Browser side storage workers and caching**
     
     Certainly! Let's delve into Browser-Side Storage, Service Workers, and Caching in detail, along with examples for better understanding.
     
@@ -2266,7 +2278,7 @@
     
     In summary, browser-side storage, service workers, and caching are essential concepts for creating performant web applications. They enable data persistence, offline access, and improved load times, contributing to a better user experience.
     
-- **SEO**
+50. **SEO**
     
     SEO, or Search Engine Optimization, refers to the practice of optimizing a website's content, structure, and other elements to improve its visibility in search engine results pages (SERPs). The goal of SEO is to make a website rank higher in organic (non-paid) search results for relevant search queries, thereby increasing organic traffic and improving the website's overall online presence. Effective SEO strategies involve both on-page and off-page optimization techniques.
     
@@ -2303,7 +2315,7 @@
     
     SEO is a continuous process that requires ongoing monitoring, adaptation to algorithm updates, and staying up-to-date with industry best practices. By implementing effective SEO strategies, you can improve your website's visibility, drive organic traffic, and ultimately achieve your online business goals.
     
-- **OOP concept in js in detail with example**
+51. **OOP concept in js in detail with example**
     
     Object-Oriented Programming (OOP) is a programming paradigm that uses objects and classes to structure code. JavaScript is a versatile language that supports OOP concepts, allowing you to create reusable and organized code. Here's a detailed explanation of OOP concepts in JavaScript with examples:
     
@@ -2402,7 +2414,7 @@
     
     OOP in JavaScript enables code organization, reusability, and modularity. It's worth noting that JavaScript also supports functional programming concepts, and modern JavaScript frameworks often combine both paradigms to create more maintainable and efficient codebases.
     
-- **Authorization and authentication difference**
+52. **Authorization and authentication difference**
     
     Authentication and authorization are both important concepts in computer security, particularly in the context of user access to systems and resources. However, they serve distinct purposes and involve different aspects of security. Here's a detailed explanation of the differences between authentication and authorization:
     
@@ -2433,7 +2445,7 @@
     
     Together, these two concepts play a critical role in maintaining the security and integrity of systems and resources by ensuring that only authorized users have access to specific functionalities and data.
     
-- **Array methods in javascript**
+53. **Array methods in javascript**
     
     In JavaScript, arrays are a fundamental data structure used to store collections of elements. They come with a variety of built-in methods that make it easier to work with arrays. Here are some of the most commonly used array methods:
     
@@ -2557,7 +2569,7 @@
     
     These are just some of the commonly used array methods in JavaScript. Arrays in JavaScript are versatile, and knowing these methods will help you manipulate and process arrays effectively.
     
-- **Difference between typescript and javascript**
+54. **Difference between typescript and javascript**
     
     TypeScript and JavaScript are both programming languages, but they have some key differences:
     
@@ -2585,7 +2597,7 @@
     
     In summary, TypeScript adds static typing to JavaScript, providing enhanced code safety and better development tooling. It's a popular choice for large-scale projects where the benefits of static typing can outweigh the added complexity. JavaScript, on the other hand, is the de facto scripting language for web development and has a more straightforward, dynamic nature. Both languages have their use cases, and the choice between them depends on the project's requirements and development team preferences.
     
-- **diff between foreach and map**
+55. **diff between foreach and map**
     
     `forEach` and `map` are both array methods in JavaScript used for iterating over the elements of an array. However, they have some key differences in terms of their purpose and return values:
     
@@ -2634,7 +2646,7 @@
     
     In summary, use `forEach` when you want to perform an action on each element of the array, and use `map` when you want to create a new array based on the transformation of the original array's elements.
     
-- **different methods to create deep and shallow clone object**
+56. **different methods to create deep and shallow clone object**
     
     In JavaScript, there are various methods to create deep and shallow clone objects. Cloning objects is essential when you need to duplicate the object's properties without modifying the original object. Let's explore the different methods for both deep and shallow cloning:
     
@@ -2707,7 +2719,7 @@
     
     Using these methods, you can create shallow and deep clones of objects as needed, ensuring that the cloned object doesn't modify the original object's properties or their references.
     
-- **diff between let var const**
+57. **diff between let var const**
     
     In JavaScript, `let`, `var`, and `const` are used to declare variables, but they have some key differences in terms of scoping, reassignment, and hoisting:
     
@@ -2767,7 +2779,7 @@
     
     In general, it is recommended to use `const` by default and only use `let` when you know the variable needs to be reassigned. Avoid using `var` in modern JavaScript code due to its scoping and hoisting quirks, as `let` and `const` provide more predictable behavior and help prevent bugs in your code.
     
-- **map reduce and filter**
+58. **map reduce and filter**
     
     `map`, `reduce`, and `filter` are three common array methods in JavaScript that allow you to manipulate and transform arrays in a functional and declarative way.
     
@@ -2839,7 +2851,7 @@
     - Use `map` when you want to transform each element of an array into a new value and create a new array.
     - Use `reduce` when you want to reduce an array to a single value, such as summing the elements, finding the maximum, or concatenating strings.
     - Use `filter` when you want to create a new array containing only elements that pass a certain condition or test.
-- **Difference between promises and async await**
+59. **Difference between promises and async await**
     
     Promises and `async/await` are both mechanisms in JavaScript for handling asynchronous operations, but they have different syntax and offer different ways of dealing with asynchronous code.
     
@@ -2914,7 +2926,7 @@
     
     Both Promises and `async/await` have their merits, and which one to use depends on your preference and the coding style of your project. However, `async/await` is generally considered a more modern and readable way to handle asynchronous operations in JavaScript.
     
-- **uses of promise.all promise.any**
+60. **uses of promise.all promise.any**
     
     Both `Promise.all` and `Promise.any` are methods provided by the JavaScript Promise API for handling multiple promises. They help manage multiple asynchronous operations and provide different ways to handle their outcomes.
     
@@ -2969,7 +2981,7 @@
     - Use `Promise.all` when you need to wait for all promises to complete and retrieve their results as an array.
     - Use `Promise.any` when you want to proceed as soon as any of the promises resolves and retrieve the result of the first resolved promise.
     - Both methods are powerful tools for managing multiple asynchronous operations, and their selection depends on your specific use case and requirements.
-- **difference between defining, assigning, creating any variable**
+61. **difference between defining, assigning, creating any variable**
     
     Defining, assigning, and creating variables are fundamental concepts in programming, and they refer to different stages in the lifecycle of a variable within a program. Here's a breakdown of each term:
     
@@ -3012,7 +3024,7 @@
     
     These concepts are fundamental to programming and understanding how data is stored and manipulated in memory within a program.
     
-- **difference between debouncing and throttling with usecases**
+62. **difference between debouncing and throttling with usecases**
     
     Debouncing and throttling are both techniques used to manage and control the frequency of certain actions, particularly in scenarios where frequent events (such as user input or scroll events) can cause performance issues. They help optimize the execution of these actions by controlling how often they're invoked. However, they operate differently and are suitable for different use cases.
     
@@ -3078,7 +3090,7 @@
     
     The choice between debouncing and throttling depends on the specific use case and the desired behavior of your application.
     
-- **how js interprets**
+63. **how js interprets**
     
     JavaScript is an interpreted language, which means that it is executed line by line by an interpreter, rather than being compiled into machine code like languages such as C++ or Java. Here's a simplified overview of how JavaScript code is interpreted:
     
@@ -3101,7 +3113,7 @@
     
     In summary, JavaScript is an interpreted language where the source code is parsed, converted into an intermediate representation, and executed line by line. It uses execution contexts to manage variable scope and function calls and relies on an event loop to handle asynchronous tasks in the browser environment. This interpretation process enables JavaScript to be a versatile language for both client-side and server-side development.
     
-- **What is diff between interface and type in typescript**
+64. **What is diff between interface and type in typescript**
     
     In TypeScript, both `interface` and `type` are used to define custom types, but they have some key differences and use cases.
     
@@ -3233,7 +3245,7 @@
     Both `interface` and `type` can often be used interchangeably for defining the shape of an object, but each has its strengths and specific use cases.
     
 
-- **Async defer in JS**
+65. **Async defer in JS**
     
     "Async" and "defer" are attributes used in HTML script tags to control how a web page loads and executes JavaScript code.
     
@@ -3348,7 +3360,7 @@
     
     While JavaScript doesn't enforce interfaces like some other languages do, you can use the above approaches to document and define contracts for your objects and classes, helping to maintain consistency and code quality in your projects.
     
-- **Lexical scoping in js**
+66. **Lexical scoping in js**
     
     Lexical scoping, also known as static scoping, is a concept in programming languages, including JavaScript, that determines how variable scope and resolution are determined based on the physical structure of the code (the lexicon) rather than the runtime execution context. Lexical scoping binds variable references to their respective environments or parent scopes at the time the code is written, not when it's executed.
     
@@ -3383,7 +3395,7 @@
     
     Lexical scoping is fundamental to how variables are resolved and accessed in JavaScript and many other programming languages. It helps ensure that variables are used in a predictable and controlled manner based on the code's structure and nesting of functions and blocks.
     
-- **Function Hoisting**
+67. **Function Hoisting**
     
     Hoisting is a concept in JavaScript where variable and function declarations are moved to the top of their containing scope during the compilation phase. This allows you to use variables and functions before they are actually declared in your code.
     
@@ -3416,7 +3428,7 @@
     
     In summary, function hoisting is a behavior in JavaScript that moves function declarations to the top of their scope during compilation. While this behavior can be useful, it's recommended to write code that is clear, organized, and easy to understand, rather than relying on hoisting.
     
-- **Currying**
+68. **Currying**
     
     Currying is a functional programming concept in which a function that takes multiple arguments is transformed into a series of functions that each take a single argument. The curried functions can be called one by one, each accepting an argument, and they return new functions until all the required arguments are provided. Once all the arguments are provided, the final result is returned.
     
@@ -3461,7 +3473,7 @@
     
     Overall, currying is a powerful technique that can enhance the modularity, reusability, and composability of your code, especially in functional programming paradigms.
     
-- **Event loop**
+69. **Event loop**
     
     The event loop is a fundamental concept in JavaScript, particularly in the context of asynchronous programming. It's a mechanism that allows JavaScript to efficiently handle asynchronous operations like timers, network requests, and user interactions while maintaining a single-threaded execution model.
     
@@ -3491,7 +3503,7 @@
     
     It's important to note that the event loop allows JavaScript to handle asynchronous operations, but it also means that long-running synchronous operations can block the event loop and make your application unresponsive. To avoid this, it's best to use asynchronous techniques like Promises, async/await, and callback functions effectively.
     
-- **Is JS synchronous**
+70. **Is JS synchronous**
     
     JavaScript (JS) is primarily single-threaded and synchronous by nature. This means that it executes one operation at a time, in a sequence, and it follows a synchronous execution model. Each line of code is executed in the order it appears, and the next line of code won't execute until the previous one is complete.
     
@@ -3507,7 +3519,7 @@
     
     In summary, JavaScript is inherently synchronous, but its event loop and asynchronous mechanisms allow it to efficiently handle asynchronous tasks and maintain responsiveness, making it suitable for various types of applications, including those that require interacting with servers, user interfaces, and other time-consuming operations.
     
-- **forEach syntax in js**
+71. **forEach syntax in js**
     
     The `forEach` method is used to iterate over the elements of an array in JavaScript and execute a provided function for each element. It's a convenient way to perform an action on each item without manually managing the iteration index.
     
@@ -3561,7 +3573,7 @@
     
     Remember that `forEach` is designed for iterating over elements in an array and performing side effects, such as logging or modifying the elements. If you need to transform or process the elements and create a new array, you might want to consider using `map`.
     
-- **Difference between article section (HTML)**
+72. **Difference between article section (HTML)**
     
     In HTML, both the `<article>` and `<section>` elements are used to structure content on a webpage. However, they serve slightly different purposes and have distinct semantic meanings.
     
@@ -3601,3 +3613,110 @@
     - **`<section>`** represents a thematic grouping of content, helping to organize related content together.
     
     When deciding whether to use `<article>` or `<section>`, consider the nature of the content and its intended purpose within the context of your webpage. Use `<article>` for content that could be a standalone piece, and use `<section>` to group related content together. Properly applying these elements enhances the semantic structure of your webpage and can also have positive effects on accessibility and search engine optimization.
+
+73. **Explain what happens internally and on the front-end when a user clicks a link in a web browser. Clicking a Link in a Web Browser:**
+    
+    When a user clicks a link in a web browser, several things happen both internally (on the server-side) and on the front-end (in the browser):
+    
+    Internal (Server-Side):
+    
+    - The browser sends an HTTP request to the server specified in the link's URL.
+    - The server receives the request and processes it. This typically involves routing the request to the appropriate server-side script or application.
+    - The server-side script or application generates a response, which usually includes HTML content.
+    - The server sends this response back to the browser along with an appropriate HTTP status code (e.g., 200 for a successful response).
+    
+    Front-End (Client-Side):
+    
+    - The browser receives the response from the server.
+    - It parses the HTML content of the response.
+    - If the response includes additional assets like CSS files, JavaScript files, or images, the browser fetches those assets.
+    - The browser renders the HTML content on the screen, applying any associated styles (CSS).
+    - If the HTML content includes JavaScript, the browser executes it as needed, which may involve further interactions with the server via AJAX requests.
+    - If the HTML content contains links to other pages or resources (e.g., images, stylesheets), the process can repeat when the user interacts with those links.
+
+74. **Explain the JavaScript module pattern. When would you use it?JavaScript Module Pattern:**
+    
+    The JavaScript module pattern is a design pattern used to encapsulate and organize code into reusable and maintainable modules. It creates a private scope for variables and functions, preventing them from polluting the global scope. Typically, the module pattern is implemented using closures.
+    
+    Key characteristics:
+    
+    - It encapsulates data and behavior within a module, providing a clean separation of concerns.
+    - It exposes only a limited interface to the outside, hiding internal details.
+    - It can be used to prevent naming conflicts and to maintain data privacy.
+    
+    You would use the module pattern when you want to:
+    
+    - Create reusable components or libraries.
+    - Avoid polluting the global namespace with variables and functions.
+    - Encapsulate data and behavior to prevent unintended modification.
+    - Promote clean and maintainable code organization.
+
+75. **If you have some text on a web page, how many ways do you know to make the text disappear? Ways to Make Text Disappear on a Web Page:**
+    
+    There are several ways to make text disappear on a web page:
+    
+    - **CSS Display Property**: You can set the `display` property of the text element to `none`. This hides the element, but it still occupies space in the layout.
+    - **CSS Visibility Property**: You can set the `visibility` property to `hidden`. This hides the element but retains its space in the layout.
+    - **CSS Opacity Property**: You can set the `opacity` property to `0`. This makes the text invisible while preserving its layout.
+    - **JavaScript**: You can use JavaScript to manipulate the DOM and remove the text element or set its `style.display` property to `"none"`.
+
+76. **How would you get a return response for updating the web page?Return Response for Updating the Web Page:**
+    
+    To get a response when updating a web page, you typically use AJAX (Asynchronous JavaScript and XML) or fetch API to make an HTTP request to a server. The server processes the request and sends back a response, often in JSON or XML format. JavaScript code on the client-side can then handle this response and update the web page dynamically without requiring a full page refresh.
+    
+77. **How would you send data from a web page to a server without a page refresh? Sending Data from a Web Page to a Server without Refresh:**
+    
+    You can send data from a web page to a server without a page refresh using techniques like AJAX, the Fetch API, or WebSocket:
+    
+    - **AJAX**: You can use the XMLHttpRequest object or the more modern Fetch API to send data asynchronously to the server. This allows you to update parts of the page without reloading it.
+    - **WebSocket**: WebSocket enables bidirectional communication between the client and server, allowing real-time updates without page refresh.
+    - **Form Submission**: You can submit a form using JavaScript and prevent the default form submission behavior to handle the submission via AJAX or Fetch.
+    - **Server-Sent Events (SSE)**: SSE allows the server to push updates to the client over a single HTTP connection, facilitating real-time updates.
+
+78. **Define, and describe the need and use of closure. Closure:**
+    
+    A closure is a JavaScript feature that allows a function to access variables from its outer (enclosing) scope, even after that outer function has finished executing. Closures "close over" their lexical environment, preserving the variables and bindings within that scope.
+    
+    Use cases for closures include:
+    
+    - **Data Encapsulation**: You can create private variables and methods by encapsulating them within a closure, ensuring they are not directly accessible from outside.
+    - **Callback Functions**: Closures are commonly used for callback functions, where you want to capture and retain the state of certain variables when an event occurs.
+    - **Module Pattern**: Closures are a fundamental part of the module pattern, allowing you to create encapsulated modules with private data and methods.
+
+79. **Define and describe when you’d use the JavaScript module pattern. JavaScript Module Pattern (again):**
+    
+    As previously explained, the JavaScript module pattern is used when you want to encapsulate code into reusable, self-contained modules, promote clean code organization, and prevent global scope pollution. You would use it when building applications that require modularization and maintainability, especially in large codebases.
+    
+80. **Name and talk about some version control systems you know. Version Control Systems (VCS):**
+    
+    Version control systems are tools used to manage and track changes to source code and other files. Some popular VCS systems include:
+    
+    - **Git**: Git is a distributed VCS known for its speed and flexibility. It allows developers to work offline, branch code easily, and collaborate effectively.
+    - **Subversion (SVN)**: SVN is a centralized VCS that tracks changes to files and directories over time. It offers strong branching and merging capabilities.
+    - **Mercurial**: Mercurial is a distributed VCS similar to Git. It emphasizes simplicity and ease of use, making it suitable for smaller projects.
+    - **Perforce**: Perforce is often used in large enterprise environments. It's known for its performance with binary assets and large codebases.
+    - **TFS (Team Foundation Server)**: TFS, now part of Azure DevOps, provides version control, project management, and continuous integration tools for Microsoft-centric development.
+
+81. **Explain hoisting. Hoisting:**
+    
+    Hoisting is a JavaScript behavior where variable and function declarations are moved to the top of their containing scope during compilation. However, only declarations are hoisted, not initializations. This means that you can use a variable or function before it's declared in your code, but it will be undefined until the declaration is reached.
+    
+    For example:
+    
+    ```jsx
+    console.log(x); // undefined
+    var x = 10;
+    
+    ```
+    
+    Understanding hoisting helps prevent unexpected behavior and underscores the importance of declaring variables and functions before using them.
+    
+82. **Explain some techniques to increase performance when building a new website or maintaining one.**
+
+    Techniques to Increase Website Performance:
+    
+    Improving website performance is essential for providing a better user experience. Here are some techniques to achieve this:
+    
+    - **Optimize Images**: Compress and resize images to reduce their file size without sacrificing quality. Use responsive images to load appropriate sizes based on the device's screen resolution.
+    - **Minify and Bundle Assets**: Minify CSS and JavaScript files to remove unnecessary characters and whitespace. Bundle multiple files into one to reduce HTTP requests.
+    - **Use Content Delivery Networks (CDNs)**: Serve assets, like images

@@ -1,3 +1,14 @@
+---
+title: "Next.js"
+topic: "Next.js"
+format: "Tech Based Interview Questions"
+framework: "Next.js"
+difficulty: "Beginner-Senior"
+description: ""
+companies: []
+publishedAt: "2026-07-31"
+---
+
 **1. What is Next.js, and why is it used?**
 
 **Answer:**

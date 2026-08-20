@@ -1,3 +1,15 @@
+---
+title: "React.js"
+topic: "React.js"
+format: "Tech Based Interview Questions"
+framework: "React.js"
+difficulty: "Beginner-Senior"
+description: ""
+companies: []
+publishedAt: "2026-07-31"
+---
+
+
 1. **What is React and why is it used?**
    React is a JavaScript library for building user interfaces. It is used to create interactive and reusable UI components for web applications. React allows developers to efficiently update and render components as data changes, making it a popular choice for building single-page applications and dynamic web interfaces.
 
