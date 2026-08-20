@@ -1,7 +1,7 @@
 ---
 title: "FE Questions asked in Nagarro"
-topic: "generic"
-format: "CompanyBasedInterviewQuestions"
+topic: "FE Core Concepts"
+format: "Company Based Interview Questions"
 difficulty: "Beginner-Senior"
 companies:
   - Nagarro
